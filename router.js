@@ -22,6 +22,9 @@ router.get("/list-of-currentTesters", (req, res) => {
 router.get("/dilafruzim", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "dilafruzim.html"));
 });
+router.get("/dilnaz", (_, res) => {
+  res.sendFile(path.join(__dirname, "public", "dilnaz.html"));
+});
 router.get("/questions", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "questionsAndEntrances.html"));
 });
