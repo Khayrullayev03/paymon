@@ -1,0 +1,1655 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Указ для принцессы Malikam</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Её Высочеству принцессе Malikam: королевский указ 👑">
+<meta property="og:title" content="Королевский указ для принцессы Malikam 👑">
+<meta property="og:description" content="Сломай печать.">
+<meta name="theme-color" content="#0d0b1f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Kurale&family=Manrope:wght@500;700;800&family=Marck+Script&display=swap">
+<style>
+/* Layout: a torch-lit royal decree with a wax seal opens the page; a dragon swoops past and reveals a fairy-tale castle at dusk (moon, stars, mountains, banners, lit windows, a dragon that keeps circling and breathing fire). A large royal-glass card stands in front, with a knight and a princess on its top edge. Single night theme on purpose. */
+:root {
+  color-scheme: dark;
+  --night: #0d0b1f;
+  --indigo: #1b1640;
+  --royal: #3a1f6b;
+  --ember: #ff8a3d;
+  --gold: #f5c86a;
+  --gold-light: #ffe9b3;
+  --gold-deep: #c98a2b;
+  --rose: #e8456b;
+  --wax: #a3182c;
+  --ink: #fff7ea;
+  --ink-soft: rgba(255, 240, 220, .82);
+  --ink-faint: rgba(255, 230, 205, .62);
+  --parchment: #f3e2bd;
+  --parchment-ink: #4a2a12;
+  --font-name: "Cinzel Decorative", "Cinzel", Georgia, "Times New Roman", serif;
+  --font-display: "Kurale", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-hand: "Marck Script", "Segoe Script", "Comic Sans MS", cursive;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --radius: 44px;
+  --fig-w: clamp(80px, 21vw, 124px);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--night);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body.is-intro { overflow: hidden; }
+::selection { background: var(--rose); color: var(--ink); }
+
+/* ---------- kingdom at dusk ---------- */
+.sky {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(90% 55% at 50% 100%, rgba(255, 120, 60, .55) 0%, rgba(214, 72, 110, .3) 30%, transparent 65%),
+    linear-gradient(180deg, #0b0a1e 0%, #191444 38%, #3a1f6b 66%, #7a2e6e 84%, #c2506a 100%);
+}
+.moon {
+  position: absolute; left: 12%; top: 9%;
+  width: clamp(64px, 11vw, 130px); aspect-ratio: 1; border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 38%, rgba(214, 196, 170, .55) 0 8%, transparent 9%),
+    radial-gradient(circle at 62% 64%, rgba(214, 196, 170, .5) 0 11%, transparent 12%),
+    radial-gradient(circle at 66% 30%, rgba(214, 196, 170, .4) 0 6%, transparent 7%),
+    radial-gradient(circle at 40% 40%, #fffaf0, #fbe8c8 60%, #e7c99b);
+  box-shadow: 0 0 40px 8px rgba(255, 240, 210, .35), 0 0 140px 40px rgba(190, 160, 255, .18);
+  animation: moon 9s ease-in-out infinite alternate;
+}
+@keyframes moon { to { box-shadow: 0 0 52px 12px rgba(255, 240, 210, .42), 0 0 170px 50px rgba(190, 160, 255, .22); } }
+#sky-cv { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+.scene { position: fixed; inset: -16px; z-index: 1; pointer-events: none; overflow: hidden; will-change: transform; }
+.scene > * { position: absolute; }
+.m-far { left: 0; bottom: 11vh; width: 100%; height: 34vh; }
+.m-near { left: 0; bottom: 5vh; width: 100%; height: 25vh; }
+.dragons { inset: 0; }
+.castle { left: 50%; bottom: 6.5vh; height: clamp(220px, 50vh, 500px); transform: translateX(-50%); }
+.castle svg { display: block; height: 100%; width: auto; overflow: visible; }
+.castle .win { animation: win var(--t, 3s) ease-in-out infinite; animation-delay: var(--d, 0s); }
+.castle .wins { filter: drop-shadow(0 0 5px rgba(255, 190, 90, .9)); }
+@keyframes win { 0%, 100% { opacity: .7; } 40% { opacity: 1; } 70% { opacity: .82; } }
+.castle .flag { transform-box: fill-box; transform-origin: 0 50%; animation: flag 1.3s ease-in-out infinite alternate; }
+@keyframes flag { from { transform: skewY(-9deg) scaleX(.88); } to { transform: skewY(7deg) scaleX(1); } }
+.castle .gate-glow { animation: win 2.2s ease-in-out infinite; }
+.hill { left: 0; bottom: 0; width: 100%; height: 14vh; }
+.mist {
+  left: -20%; right: -20%; bottom: 4vh; height: 20vh; opacity: .45;
+  background:
+    radial-gradient(40% 60% at 20% 60%, rgba(200, 180, 255, .35), transparent 70%),
+    radial-gradient(35% 50% at 60% 50%, rgba(255, 200, 230, .25), transparent 70%),
+    radial-gradient(40% 60% at 90% 65%, rgba(200, 180, 255, .3), transparent 70%);
+  animation: mist 26s ease-in-out infinite alternate;
+}
+@keyframes mist { to { transform: translateX(12%); } }
+
+.dragon { position: absolute; left: 0; top: 0; will-change: transform; }
+.dragon-face.flip { transform: scaleX(-1); }
+.dragon-bob { animation: dbob var(--flap, .95s) ease-in-out infinite; }
+.dragon svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 0 10px rgba(255, 120, 60, .25)); }
+.dragon .d-wing { transform-box: view-box; transform-origin: 150px 85px; animation: flap var(--flap, .95s) ease-in-out infinite; }
+.dragon .d-wing-far { animation-delay: -.1s; }
+.dragon .d-eye { animation: eye 1.6s ease-in-out infinite alternate; }
+@keyframes flap { 0%, 100% { transform: scaleY(1) rotate(0deg); } 50% { transform: scaleY(-.5) rotate(10deg); } }
+@keyframes dbob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes eye { to { opacity: .55; } }
+
+.layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+#front-cv { position: fixed; inset: 0; z-index: 8; width: 100%; height: 100%; pointer-events: none; }
+#fx { z-index: 9; }
+.bit { position: absolute; left: 0; top: 0; margin: -.5em 0 0 -.5em; line-height: 1; pointer-events: none; will-change: transform; }
+
+/* ---------- intro: the royal decree ---------- */
+.intro { position: fixed; inset: 0; z-index: 50; overflow: hidden; }
+.intro::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(75% 60% at 50% 48%, rgba(26, 14, 40, .55), rgba(5, 3, 10, .95) 78%);
+  transition: opacity 1.2s ease;
+}
+.intro.leaving { pointer-events: none; }
+.intro.leaving::before { opacity: 0; }
+#intro-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.torch { position: absolute; top: 34%; width: 22px; height: 150px; z-index: 1; transition: opacity .8s; }
+.torch-l { left: max(6%, 18px); }
+.torch-r { right: max(6%, 18px); }
+.torch::before {
+  content: ""; position: absolute; left: 50%; top: 18px; width: 9px; height: 132px; transform: translateX(-50%);
+  border-radius: 4px; background: linear-gradient(90deg, #3b2412, #6b4523 45%, #2a180b);
+}
+.torch::after {
+  content: ""; position: absolute; left: 50%; top: 6px; width: 26px; height: 18px; transform: translateX(-50%);
+  border-radius: 3px 3px 12px 12px; background: linear-gradient(180deg, #8d8a99, #3d3a48);
+  box-shadow: 0 0 0 2px #24212d;
+}
+.torch-glow {
+  position: absolute; left: 50%; top: 0; width: 360px; aspect-ratio: 1; margin: -180px 0 0 -180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 160, 70, .34), rgba(255, 110, 40, .12) 40%, transparent 68%);
+  animation: torch-glow .18s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes torch-glow { to { transform: scale(1.05); opacity: .85; } }
+.intro.leaving .torch { opacity: 0; }
+
+.decree {
+  position: absolute; left: 50%; top: 50%; z-index: 3; transform: translate(-50%, -50%);
+  width: min(88vw, 430px);
+  display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+  transition: opacity .5s ease, transform .7s var(--ease), filter .5s ease;
+}
+.intro.accepted .decree { opacity: 0; transform: translate(-50%, -46%) scale(.9); filter: blur(6px); pointer-events: none; }
+.decree-kicker {
+  margin: 0; font-family: var(--font-display); font-size: clamp(26px, 7vw, 36px); line-height: 1.1;
+  background: linear-gradient(180deg, #fff3d0, var(--gold) 55%, var(--gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 16px rgba(255, 190, 100, .45));
+  animation: rise 1.4s var(--ease) both .3s;
+}
+.decree-sub { margin: -8px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-faint); animation: rise 1.2s var(--ease) both .7s; }
+.scroll { position: relative; width: 100%; margin-top: 8px; animation: rise 1.3s var(--ease) both 1.1s; }
+.roller {
+  position: relative; z-index: 2; height: 24px; margin: 0 -16px; border-radius: 12px;
+  background: linear-gradient(180deg, #a0682f 0%, #6b3f18 45%, #3e220b 100%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .5), inset 0 2px 0 rgba(255, 220, 170, .35);
+}
+.roller::before, .roller::after {
+  content: ""; position: absolute; top: -3px; width: 20px; height: 30px; border-radius: 6px;
+  background: linear-gradient(180deg, #ffe39a, #c98a2b 60%, #7a4c10); box-shadow: inset 0 1px 0 #fff3c8;
+}
+.roller::before { left: -8px; }
+.roller::after { right: -8px; }
+.paper {
+  position: relative; height: 22px; overflow: hidden; margin: -4px 4px;
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(120, 70, 20, .35) 100%),
+    linear-gradient(180deg, #f7e9c8, #efdaa9 50%, #f2dfb2);
+  box-shadow: inset 0 10px 12px -8px rgba(90, 50, 10, .5), inset 0 -10px 12px -8px rgba(90, 50, 10, .5);
+}
+.paper-inner { padding: 28px 26px 26px; color: var(--parchment-ink); font-family: var(--font-display); }
+.ink { margin: 0; clip-path: inset(0 100% 0 0); }
+.ink.shown { clip-path: inset(0 0 0 0); }
+.p-to { font-size: 12px; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #7a4a1e; font-family: var(--font-body); }
+.p-title { margin-top: 10px; font-size: 22px; }
+.p-name {
+  font-family: var(--font-name); font-weight: 900; font-size: clamp(36px, 11vw, 52px); line-height: 1.1; color: #8a1c2b;
+  text-shadow: 0 1px 0 rgba(255, 240, 200, .6);
+}
+.p-orn { margin: 8px 0; font-size: 18px; letter-spacing: .5em; color: #9a6a2c; }
+.p-text { font-size: 19px; line-height: 1.45; }
+.accept {
+  margin-top: 18px; padding: 15px 26px; border: 0; border-radius: 999px; cursor: pointer;
+  font: 800 14px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: #ffe9b3;
+  background: radial-gradient(120% 140% at 30% 20%, #d83a4c, var(--wax) 55%, #6a0c1a);
+  box-shadow: inset 0 2px 0 rgba(255, 190, 180, .45), inset 0 -3px 6px rgba(60, 0, 10, .5), 0 8px 18px -6px rgba(100, 0, 20, .7);
+  opacity: 0; transform: translateY(8px); transition: opacity .6s ease, transform .6s var(--ease);
+}
+.accept.shown { opacity: 1; transform: none; }
+.accept:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.seal {
+  position: absolute; left: 50%; top: 50%; z-index: 4; width: 104px; height: 104px; margin: -52px 0 0 -52px;
+  padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: seal-pulse 1.8s ease-in-out infinite 2.4s;
+}
+.seal:focus-visible { outline: 3px solid var(--gold); outline-offset: 6px; }
+.seal svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .55)); }
+.seal .half { transition: transform .9s var(--ease), opacity .9s ease; transform-box: fill-box; transform-origin: center; }
+.seal.broken { pointer-events: none; animation: none; }
+.seal .ring { transition: opacity .4s ease; }
+.seal.broken .ring { opacity: 0; }
+.seal.broken .half-l { transform: translate(-70px, 40px) rotate(-60deg); opacity: 0; }
+.seal.broken .half-r { transform: translate(70px, 50px) rotate(55deg); opacity: 0; }
+@keyframes seal-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+.decree-tap { margin: 6px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); animation: rise 1s var(--ease) both 2.2s, blink 1.8s ease-in-out infinite 3.2s; }
+.decree-tap.gone { opacity: 0; transition: opacity .4s; animation: none; }
+@keyframes blink { 50% { opacity: .45; } }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); filter: blur(10px); } }
+.intro-dragon { position: absolute; left: 0; top: 0; z-index: 4; width: min(92vw, 880px); pointer-events: none; opacity: 0; }
+.intro-skip {
+  position: absolute; z-index: 5;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  padding: 10px 6px; border: 0; background: none; cursor: pointer;
+  font: 700 13px var(--font-body); letter-spacing: .06em; color: var(--ink-faint);
+  text-decoration: underline; text-decoration-color: rgba(255, 230, 205, .3); text-underline-offset: 4px;
+  animation: rise .8s ease both 1.2s;
+}
+.intro-skip:hover { color: var(--ink); }
+.intro-skip:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+.intro.accepted .intro-skip { opacity: 0; pointer-events: none; transition: opacity .3s; }
+.shake { animation: shake .6s cubic-bezier(.36, .07, .19, .97) both; }
+@keyframes shake {
+  10%, 90% { transform: translate(-2px, 1px); } 20%, 80% { transform: translate(4px, -2px); }
+  30%, 50%, 70% { transform: translate(-7px, 3px); } 40%, 60% { transform: translate(7px, -3px); }
+}
+
+/* ---------- stage + royal glass card ---------- */
+.stage {
+  position: relative; z-index: 3;
+  min-height: 100%;
+  display: grid; place-items: center; grid-template-columns: minmax(0, 1fr);
+  padding-block: calc(var(--fig-w) * 1.37 + 26px) 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+  transition: opacity 1.4s var(--ease);
+}
+body.is-intro .stage { opacity: 0; }
+body.from-intro .stage { transition-delay: .6s; }
+.card-float { width: min(100%, 740px); pointer-events: auto; }
+body.is-revealed .card-float { animation: float 8s ease-in-out infinite; }
+body.is-revealed .card-jelly { animation: card-in 1.5s var(--ease) both; }
+body.from-intro .card-jelly { animation-delay: .6s; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes card-in { from { transform: translateY(46px) scale(.94); } }
+
+.card {
+  position: relative; isolation: isolate;
+  border-radius: var(--radius);
+  padding: clamp(30px, 6.6vw, 56px) clamp(22px, 6.2vw, 58px) clamp(28px, 6vw, 48px);
+  background:
+    linear-gradient(155deg, rgba(255, 244, 225, .19) 0%, rgba(255, 244, 225, .06) 34%, rgba(255, 244, 225, .03) 62%, rgba(255, 244, 225, .12) 100%),
+    rgba(26, 16, 52, .42);
+  -webkit-backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
+  backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 236, 200, .62),
+    inset 0 -1px 1px rgba(255, 236, 200, .14),
+    inset 0 26px 52px -32px rgba(255, 236, 200, .45),
+    inset 0 -44px 80px -44px rgba(245, 200, 106, .28),
+    0 70px 130px -44px rgba(0, 0, 0, .8),
+    0 0 120px -40px rgba(245, 200, 106, .5);
+  transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .8s var(--ease);
+}
+.card.refract { backdrop-filter: url(#lg-refract) blur(12px) saturate(180%) brightness(1.07); }
+.card::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: linear-gradient(135deg,
+    rgba(255, 240, 200, 1) 0%, rgba(255, 240, 200, .14) 22%, rgba(245, 200, 106, .5) 50%,
+    rgba(255, 240, 200, .08) 72%, rgba(255, 220, 150, .9) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.glass-fx { position: absolute; inset: 0; z-index: -1; border-radius: inherit; overflow: hidden; pointer-events: none; }
+.sheen {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(110% 50% at 50% -14%, rgba(255, 240, 210, .26), transparent 58%),
+    radial-gradient(60% 40% at 100% 100%, rgba(232, 69, 107, .2), transparent 70%);
+}
+.glare {
+  position: absolute; left: -30%; top: -75%; width: 150%; aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255, 240, 210, .22) 0%, rgba(255, 240, 210, .06) 26%, rgba(255, 240, 210, 0) 52%);
+  transition: transform .5s var(--ease);
+}
+.glare.drift { animation: glare-drift 12s ease-in-out infinite alternate; }
+@keyframes glare-drift { from { transform: translate(-18%, 4%); } to { transform: translate(22%, 28%); } }
+
+/* ---------- knight + princess on the card's edge ---------- */
+.duo { position: absolute; left: 0; right: 0; top: calc(var(--fig-w) * -1.37 + 5px); height: calc(var(--fig-w) * 1.37); z-index: 3; pointer-events: none; }
+.fig { position: absolute; bottom: 0; width: var(--fig-w); }
+.fig svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .45)); }
+.knight { left: 0; }
+.princess { right: clamp(10px, 7%, 56px); }
+.knight-walk { position: absolute; bottom: 0; left: clamp(10px, 7%, 56px); width: var(--fig-w); height: 100%; transition: transform 2.4s cubic-bezier(.3, .2, .3, 1); }
+.knight-walk.away { transform: translateX(-230%); }
+.k-cape { transform-box: fill-box; transform-origin: 50% 0; animation: cape 1.6s ease-in-out infinite alternate; }
+.k-plume { transform-box: view-box; transform-origin: 56px 12px; animation: plume 2.2s ease-in-out infinite alternate; }
+.k-arm { transform-box: view-box; transform-origin: 74px 70px; animation: salute 7s ease-in-out infinite 3s; transition: opacity .3s; }
+.k-leg { transform-box: view-box; transform-origin: 60px 116px; }
+.walking .k-leg-f { animation: leg .45s ease-in-out infinite alternate; }
+.walking .k-leg-b { animation: leg .45s ease-in-out infinite alternate-reverse; }
+.walking .k-body { animation: step .225s ease-in-out infinite alternate; }
+.k-rose { opacity: 0; transition: opacity .4s ease .3s; }
+.k-alert { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; }
+.knight.alert .k-alert { animation: alert 1s var(--spring); }
+.knight.kneel .k-all { transform: translateY(13px) rotate(9deg); }
+.knight .k-all { transform-box: view-box; transform-origin: 60px 160px; transition: transform .6s var(--spring); }
+.knight.kneel .k-arm { opacity: 0; }
+.knight.kneel .k-rose { opacity: 1; }
+@keyframes cape { from { transform: skewX(-3deg); } to { transform: skewX(4deg) scaleY(1.02); } }
+@keyframes plume { from { transform: rotate(-5deg); } to { transform: rotate(7deg); } }
+@keyframes salute { 0%, 78%, 100% { transform: rotate(0); } 84%, 94% { transform: rotate(-34deg); } }
+@keyframes leg { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes step { to { transform: translateY(-2.5px); } }
+@keyframes alert { 0% { opacity: 0; transform: scale(.3); } 25% { opacity: 1; transform: scale(1.2); } 70% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
+.p-dress { transform-box: fill-box; transform-origin: 50% 0; animation: dress 2.6s ease-in-out infinite alternate; }
+.p-hair { transform-box: fill-box; transform-origin: 50% 0; animation: hair 3.1s ease-in-out infinite alternate; }
+.p-arm { transform-box: view-box; transform-origin: 50px 62px; animation: wave 8s ease-in-out infinite 4s; }
+.p-eyes, .k-eyes { transform-box: fill-box; transform-origin: center; animation: eyes 4.4s infinite; }
+.p-spark { transform-box: fill-box; transform-origin: center; animation: twinkle 1.8s ease-in-out infinite; }
+.princess.happy svg { animation: hop .5s var(--spring) 3; }
+@keyframes dress { from { transform: skewX(-2.5deg); } to { transform: skewX(2.5deg); } }
+@keyframes hair { from { transform: rotate(-2deg); } to { transform: rotate(2.5deg); } }
+@keyframes wave { 0%, 80%, 100% { transform: rotate(0); } 84% { transform: rotate(105deg); } 87% { transform: rotate(80deg); } 90% { transform: rotate(108deg); } 93% { transform: rotate(84deg); } 96% { transform: rotate(100deg); } }
+@keyframes eyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes twinkle { 0%, 100% { transform: scale(.6) rotate(0); opacity: .5; } 50% { transform: scale(1.2) rotate(30deg); opacity: 1; } }
+@keyframes hop { 50% { transform: translateY(-14px); } }
+.love { position: absolute; left: 50%; bottom: 18%; width: 40px; margin-left: -20px; opacity: 0; transform: scale(.3); transition: opacity .6s, transform .8s var(--spring); }
+.love.shown { opacity: 1; transform: scale(1); }
+.love svg { display: block; width: 100%; height: auto; animation: beat 1.3s ease-in-out infinite; filter: drop-shadow(0 0 12px rgba(232, 69, 107, .8)); }
+.love i { position: absolute; left: 50%; top: 0; font-style: normal; font-size: 14px; color: var(--rose); opacity: 0; }
+.love.shown i { animation: float-heart 2.6s ease-out infinite; animation-delay: var(--d); }
+@keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+@keyframes float-heart { 0% { transform: translate(-50%, 0) scale(.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--x)), -60px) scale(1.1); opacity: 0; } }
+
+/* ---------- card content ---------- */
+.steps { position: relative; }
+.step { display: flex; flex-direction: column; align-items: flex-start; }
+.step > * { max-width: 100%; }
+.step-title:focus { outline: none; }
+.kicker {
+  display: inline-flex; align-items: center; gap: 9px; margin: 0;
+  padding: 8px 15px 8px 11px; border-radius: 999px;
+  font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--gold-light);
+  background: rgba(255, 236, 200, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 236, 200, .28), inset 0 0 0 1px rgba(255, 236, 200, .08);
+}
+.kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(245, 200, 106, .2), 0 0 12px var(--gold); animation: dot 1.6s ease-in-out infinite; }
+@keyframes dot { 50% { box-shadow: 0 0 0 8px rgba(245, 200, 106, 0), 0 0 12px var(--gold); } }
+.hand {
+  margin: 24px 0 0 4px;
+  font-family: var(--font-hand); font-size: clamp(22px, 5.8vw, 32px); line-height: 1.05;
+  color: #ffb3c7; text-wrap: balance;
+  transform: rotate(-3deg); transform-origin: left center;
+  text-shadow: 0 0 16px rgba(232, 69, 107, .55);
+}
+.name-wrap { position: relative; margin-top: 18px; }
+.crown { position: absolute; left: 2px; top: -26px; width: clamp(34px, 8vw, 46px); animation: crown 3s ease-in-out infinite alternate; filter: drop-shadow(0 0 10px rgba(245, 200, 106, .7)); }
+@keyframes crown { from { transform: rotate(-12deg) translateY(0); } to { transform: rotate(-6deg) translateY(-4px); } }
+.name {
+  margin: 0;
+  font-family: var(--font-name); font-weight: 900;
+  font-size: clamp(44px, 12.4vw, 92px); line-height: 1.05; letter-spacing: .01em;
+  white-space: nowrap;
+  background: linear-gradient(100deg, var(--gold-deep) 0%, #fff4cf 12%, var(--gold) 24%, var(--gold-deep) 40%, var(--gold) 60%, #fff4cf 72%, var(--gold) 84%, var(--gold-deep) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 22px rgba(245, 200, 106, .45)) drop-shadow(0 2px 1px rgba(0, 0, 0, .4));
+  animation: shimmer 5s linear infinite;
+}
+body.is-revealed .name { animation: shimmer 5s linear infinite, name-in 1.6s var(--ease) both .8s; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+@keyframes name-in { from { clip-path: inset(-40% 100% -40% -10%); } to { clip-path: inset(-40% -12% -40% -10%); } }
+.name-title { margin: 2px 0 0; font-family: var(--font-display); font-size: clamp(18px, 4.4vw, 22px); color: var(--gold); letter-spacing: .06em; }
+
+.ask-body { width: 100%; margin-top: 20px; display: grid; gap: 14px 40px; }
+.lead { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-soft); max-width: 34ch; }
+.question {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(29px, 4.6vw, 42px); line-height: 1.1;
+  text-wrap: balance;
+}
+.answers { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.no-slot { display: inline-flex; }
+@media (min-width: 760px) {
+  .ask-body { grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); align-items: start; }
+  .lead { padding-top: 8px; }
+}
+
+.btn {
+  font: 800 17px/1 var(--font-body);
+  border: 0; border-radius: 999px; padding: 18px 30px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.btn:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+.btn-yes {
+  position: relative;
+  color: #2a1606;
+  background: linear-gradient(180deg, #fff1c2 0%, var(--gold) 45%, var(--gold-deep) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 240, .8),
+    inset 0 -3px 8px rgba(120, 70, 10, .35),
+    0 0 34px -6px rgba(245, 200, 106, .8),
+    0 16px 30px -14px rgba(0, 0, 0, .6);
+  transform: scale(var(--grow, 1)); transform-origin: left center;
+  transition: transform .5s var(--spring), box-shadow .3s;
+}
+.btn-yes::after {
+  content: ""; position: absolute; inset: -4px; border-radius: inherit; pointer-events: none;
+  border: 2px solid rgba(255, 233, 179, .6);
+  animation: ring 1.9s ease-out infinite;
+}
+@keyframes ring { from { transform: scale(.96); opacity: .9; } to { transform: scale(1.16, 1.3); opacity: 0; } }
+.btn-yes:hover { box-shadow: inset 0 1px 0 rgba(255,255,240,.8), inset 0 -3px 8px rgba(120,70,10,.35), 0 0 52px -4px rgba(245,200,106,1), 0 16px 30px -14px rgba(0,0,0,.6); }
+.btn-yes:active { transform: scale(calc(var(--grow, 1) * .95)); }
+.btn-wide { width: 100%; white-space: normal; line-height: 1.25; text-align: center; }
+.btn-no {
+  color: var(--ink-soft);
+  background: rgba(255, 236, 200, .1);
+  box-shadow: inset 0 1px 0 rgba(255, 236, 200, .3), inset 0 0 0 1px rgba(255, 236, 200, .12);
+}
+.btn-no.is-loose {
+  position: fixed; z-index: 6; left: 0; top: 0;
+  background: rgba(40, 24, 64, .55);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  transition: left .42s var(--spring), top .42s var(--spring);
+}
+.btn-no.is-surrender { color: var(--gold-light); }
+.hint { margin: 18px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-faint); min-height: 1.45em; }
+
+.title {
+  margin: 20px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 7.2vw, 54px); line-height: 1.05;
+  text-wrap: balance;
+}
+.title em {
+  font-style: normal;
+  background: linear-gradient(180deg, #fff4cf, var(--gold) 60%, var(--gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.title .t-name { font-family: var(--font-name); font-weight: 900; font-size: .86em; }
+
+.field { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; width: 100%; }
+.field-label, .field legend {
+  display: block; padding: 0; margin: 0 0 10px;
+  font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.tabs { display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: rgba(255, 236, 200, .07); box-shadow: inset 0 0 0 1px rgba(255, 236, 200, .1); margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 1 0 auto; padding: 11px 14px; border: 0; border-radius: 999px; cursor: pointer;
+  font: 800 13.5px/1 var(--font-body); color: var(--ink-soft); background: none; white-space: nowrap;
+  transition: background .25s, color .25s, box-shadow .25s;
+}
+.tab[aria-selected="true"] { color: #2a1606; background: linear-gradient(180deg, #fff1c2, var(--gold)); box-shadow: 0 4px 14px -6px rgba(245, 200, 106, .9); }
+.tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.tab .n { opacity: .6; margin-left: 4px; font-weight: 700; }
+.chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 760px) { .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.chip { position: relative; display: block; min-width: 0; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.chip-face {
+  display: flex; align-items: center; gap: 10px; height: 100%;
+  padding: 14px 14px; border-radius: 20px;
+  font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink);
+  background: rgba(255, 236, 200, .07);
+  box-shadow: inset 0 1px 0 rgba(255, 236, 200, .22), inset 0 0 0 1px rgba(255, 236, 200, .08);
+  cursor: pointer;
+  transition: transform .3s var(--spring), background .2s, box-shadow .2s;
+}
+.chip-emoji { font-size: 22px; line-height: 1; flex: none; }
+.chip:hover .chip-face { transform: translateY(-2px); background: rgba(255, 236, 200, .12); }
+.chip input:checked + .chip-face, .chip-face.roll {
+  background: linear-gradient(135deg, rgba(245, 200, 106, .4), rgba(232, 69, 107, .28));
+  box-shadow: inset 0 1px 0 rgba(255, 240, 210, .4), inset 0 0 0 1.5px var(--gold), 0 0 28px -8px rgba(245, 200, 106, .9);
+}
+.chip-face.roll { transform: scale(1.04); }
+.chip input:focus-visible + .chip-face { outline: 3px solid var(--gold); outline-offset: 2px; }
+.fate-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-top: 12px; }
+.picked { margin: 0; font-size: 14.5px; color: var(--ink-soft); min-height: 1.4em; }
+.picked b { color: var(--gold-light); }
+.fate {
+  padding: 11px 16px; border-radius: 999px; border: 1px solid rgba(255, 233, 179, .45); cursor: pointer;
+  font: 800 13.5px/1 var(--font-body); color: var(--gold-light); background: rgba(245, 200, 106, .1);
+  transition: background .2s, transform .3s var(--spring);
+}
+.fate:hover { background: rgba(245, 200, 106, .2); transform: translateY(-1px); }
+.fate:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.fate[disabled] { opacity: .6; cursor: progress; }
+
+.when { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; width: 100%; margin-top: 18px; }
+.when > div { min-width: 0; }
+.input {
+  display: block; width: 100%; min-height: 54px;
+  font: 700 16px var(--font-body); color: var(--ink);
+  padding: 14px 15px; border: 0; border-radius: 18px;
+  background: rgba(255, 236, 200, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 236, 200, .22), inset 0 0 0 1px rgba(255, 236, 200, .1);
+  -webkit-appearance: none; appearance: none;
+}
+.input::-webkit-date-and-time-value { text-align: left; }
+.input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.plan-actions { width: 100%; margin-top: 24px; }
+
+.decree-ticket {
+  position: relative; width: 100%; margin-top: 24px; padding: 26px 24px 24px; border-radius: 10px;
+  color: var(--parchment-ink); font-family: var(--font-display);
+  background:
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(120, 70, 20, .3) 100%),
+    linear-gradient(180deg, #f7e9c8, #efdaa9 50%, #f2dfb2);
+  box-shadow: 0 22px 40px -16px rgba(0, 0, 0, .65), 0 0 40px -10px rgba(245, 200, 106, .3);
+}
+.decree-ticket::before, .decree-ticket::after {
+  content: ""; position: absolute; left: -8px; right: -8px; height: 16px; border-radius: 8px;
+  background: linear-gradient(180deg, #a0682f, #5a3312);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+}
+.decree-ticket::before { top: -8px; }
+.decree-ticket::after { bottom: -8px; }
+.dt-label { margin: 0 0 14px; font-family: var(--font-body); font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #8a1c2b; }
+.dt-rows { display: grid; gap: 10px; margin: 0; padding-right: 64px; }
+.dt-rows > div { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.dt-rows dt { font-family: var(--font-body); font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(74, 42, 18, .6); }
+.dt-rows dd { margin: 0; font-size: 20px; line-height: 1.25; }
+.dt-count { margin: 16px 0 0; padding-top: 12px; border-top: 1px dashed rgba(122, 74, 30, .4); font-family: var(--font-body); font-weight: 800; font-size: 14.5px; color: #8a1c2b; font-variant-numeric: tabular-nums; }
+.stamp { position: absolute; right: 14px; bottom: 14px; width: 74px; height: 74px; filter: drop-shadow(0 4px 4px rgba(60, 0, 10, .4)); }
+.stamp.hit { animation: stamp .7s cubic-bezier(.2, .9, .3, 1.2) both .35s; }
+@keyframes stamp { from { transform: scale(2.4) rotate(-30deg); opacity: 0; } 60% { opacity: 1; } to { transform: scale(1) rotate(-12deg); opacity: 1; } }
+.note { font-size: clamp(25px, 5.6vw, 31px); margin-top: 24px; transform: rotate(-2deg); text-wrap: balance; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 14px; }
+.btn-link {
+  background: none; border: 0; padding: 8px 2px; cursor: pointer;
+  font: 700 14.5px var(--font-body); color: var(--ink-faint);
+  text-decoration: underline; text-decoration-color: rgba(255, 230, 205, .3); text-underline-offset: 4px;
+}
+.btn-link:hover { color: var(--ink); }
+.btn-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+@media (max-width: 420px) {
+  .chip-face { padding: 12px 11px; font-size: 14px; gap: 8px; }
+  .btn { padding: 17px 24px; font-size: 16px; }
+  .tab { padding: 10px 8px; font-size: 13px; }
+  .tab .n { display: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .card { background: rgba(26, 16, 52, .95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
+}
+</style>
+</head>
+<body class="is-intro">
+
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f3f6fb"/><stop offset=".5" stop-color="#c3cbdc"/><stop offset="1" stop-color="#8a93aa"/></linearGradient>
+    <linearGradient id="gown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb8d6"/><stop offset="1" stop-color="#d93a66"/></linearGradient>
+    <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1c2"/><stop offset=".55" stop-color="#f5c86a"/><stop offset="1" stop-color="#b9781f"/></linearGradient>
+    <linearGradient id="castleG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d2160"/><stop offset="1" stop-color="#120c28"/></linearGradient>
+    <linearGradient id="farG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a6e"/><stop offset="1" stop-color="#241a4c"/></linearGradient>
+    <linearGradient id="nearG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#271c55"/><stop offset="1" stop-color="#161034"/></linearGradient>
+    <linearGradient id="hillG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1238"/><stop offset="1" stop-color="#0b0818"/></linearGradient>
+    <radialGradient id="gateG" cx="50%" cy="80%" r="70%"><stop offset="0" stop-color="#ffd88a"/><stop offset=".5" stop-color="#ff9a3c"/><stop offset="1" stop-color="#7a2e10"/></radialGradient>
+    <radialGradient id="waxG" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#e0485a"/><stop offset=".55" stop-color="#a3182c"/><stop offset="1" stop-color="#5e0a16"/></radialGradient>
+    <filter id="lg-refract" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="0" y="0" width="740" height="720" color-interpolation-filters="sRGB">
+      <feImage id="lg-map" x="0" y="0" width="740" height="720" preserveAspectRatio="none" result="map"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="56" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="sky" aria-hidden="true"><div class="moon"></div></div>
+<canvas id="sky-cv" aria-hidden="true"></canvas>
+<div class="scene" id="scene" aria-hidden="true">
+  <svg class="m-far" viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="M0 300 L0 170 L90 110 L160 150 L250 70 L330 140 L420 90 L520 160 L610 80 L700 140 L790 100 L880 150 L1000 90 L1000 300 Z" fill="url(#farG)"/><path d="M250 70 L272 92 L262 90 L250 100 L240 88 L232 86 Z M610 80 L632 102 L620 100 L610 110 L600 98 L590 96 Z M420 90 L436 106 L428 105 L420 112 L412 104 L406 103 Z" fill="#e9defc" opacity=".22"/></svg>
+  <div class="dragons" id="dragons"></div>
+  <svg class="m-near" viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="M0 300 L0 200 L120 130 L200 180 L300 120 L380 170 L470 140 L560 190 L660 130 L760 180 L860 140 L1000 190 L1000 300 Z" fill="url(#nearG)"/></svg>
+  <div class="castle" id="castle"></div>
+  <div class="mist"></div>
+  <svg class="hill" viewBox="0 0 1000 160" preserveAspectRatio="none"><path d="M0 160 L0 70 C 200 30, 380 40, 500 50 C 650 62, 800 30, 1000 55 L1000 160 Z" fill="url(#hillG)"/></svg>
+</div>
+
+<main class="stage" id="stage" inert>
+  <div class="card-float">
+    <div class="card-jelly" id="jelly">
+      <article class="card" id="card">
+        <div class="glass-fx" aria-hidden="true"><div class="sheen"></div><div class="glare" id="glare"></div></div>
+
+        <div class="duo" aria-hidden="true">
+          <div class="knight-walk" id="knight-walk">
+            <div class="fig knight" id="knight">
+              <svg viewBox="0 0 120 164">
+                <g class="k-all"><g class="k-body">
+                  <g class="k-cape"><path d="M42 64 C 32 92, 26 122, 20 152 C 34 156, 52 156, 62 152 C 60 122, 58 92, 56 64 Z" fill="#a51f3a"/><path d="M44 66 C 38 94, 33 122, 28 150 L 36 152 C 40 124, 44 94, 49 66 Z" fill="#d23c58" opacity=".55"/></g>
+                  <g class="k-leg k-leg-b"><rect x="46" y="116" width="12" height="36" rx="4" fill="#8e97ad"/><path d="M43 150 H 61 V 158 H 41 Z" fill="#3f3128"/></g>
+                  <g class="k-leg k-leg-f"><rect x="60" y="116" width="12" height="36" rx="4" fill="#cfd6e4"/><path d="M58 150 H 78 V 158 H 58 Z" fill="#54402f"/></g>
+                  <path d="M44 120 L 76 120 L 79 131 L 41 131 Z" fill="#aab3c7"/>
+                  <path d="M42 72 C 42 65, 49 60, 60 60 C 71 60, 78 65, 78 72 L 76 118 C 70 124, 50 124, 44 118 Z" fill="url(#steel)"/>
+                  <rect x="43" y="110" width="34" height="6" rx="2" fill="#d9a441"/>
+                  <path d="M54 80 C 54 77, 58 76, 60 79 C 62 76, 66 77, 66 80 C 66 84, 60 88, 60 88 C 60 88, 54 84, 54 80 Z" fill="#d23c58"/>
+                  <g class="k-arm">
+                    <path d="M74 70 C 84 76, 88 86, 88 96" stroke="#b8c1d4" stroke-width="10" stroke-linecap="round" fill="none"/>
+                    <path d="M90 98 L 103 36 L 108 37 L 96 100 Z" fill="#eef3fb" stroke="#9aa6bd" stroke-width="1"/>
+                    <path d="M83 93 L 101 101" stroke="#d9a441" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="88" cy="97" r="5.5" fill="#cfd6e4"/>
+                  </g>
+                  <g class="k-rose">
+                    <path d="M80 92 C 90 92, 100 90, 110 84" stroke="#3f8a4a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                    <path d="M94 90 C 96 84, 102 84, 102 88 C 98 90, 96 90, 94 90 Z" fill="#4fa35b"/>
+                    <circle cx="112" cy="82" r="7" fill="#d6304c"/><path d="M108 80 C 111 76, 116 78, 115 82 C 113 80, 110 80, 108 80 Z" fill="#ff5a73"/>
+                    <circle cx="88" cy="94" r="5.5" fill="#cfd6e4"/>
+                  </g>
+                  <g class="k-shield"><path d="M28 78 C 28 72, 52 72, 52 78 L 52 100 C 52 112, 40 122, 40 122 C 40 122, 28 112, 28 100 Z" fill="#26398a" stroke="#d9a441" stroke-width="3"/><path d="M34 90 C 34 86, 39 85, 40 89 C 41 85, 46 86, 46 90 C 46 95, 40 100, 40 100 C 40 100, 34 95, 34 90 Z" fill="#e8456b"/></g>
+                  <g class="k-head">
+                    <g class="k-plume"><path d="M58 10 C 50 -4, 34 -6, 24 6 C 36 2, 44 6, 50 14 Z" fill="#d6304c"/><path d="M56 12 C 48 2, 38 0, 30 6 C 40 4, 46 8, 50 14 Z" fill="#ff5a73" opacity=".6"/></g>
+                    <path d="M44 30 C 44 15, 52 7, 62 7 C 74 7, 82 15, 82 30 L 82 50 C 82 57, 75 61, 63 61 C 50 61, 44 57, 44 50 Z" fill="url(#steel)"/>
+                    <g class="k-eyes"><rect x="58" y="31" width="24" height="4.5" rx="2" fill="#1d2233"/></g>
+                    <rect x="68" y="31" width="4.5" height="15" rx="2" fill="#1d2233"/>
+                    <path d="M63 8 V 60" stroke="#9aa6bd" stroke-width="1.4"/>
+                    <circle cx="50" cy="44" r="1.6" fill="#9aa6bd"/><circle cx="50" cy="52" r="1.6" fill="#9aa6bd"/>
+                  </g>
+                </g></g>
+                <g class="k-alert"><circle cx="92" cy="6" r="11" fill="#fff7ea"/><path d="M92 -1 V 8" stroke="#a3182c" stroke-width="3.4" stroke-linecap="round"/><circle cx="92" cy="12.5" r="1.9" fill="#a3182c"/></g>
+              </svg>
+            </div>
+          </div>
+          <div class="love" id="love">
+            <svg viewBox="0 0 100 90"><path d="M50 86 C 20 64, 2 46, 4 26 C 6 10, 20 2, 34 4 C 42 5, 47 10, 50 16 C 53 10, 58 5, 66 4 C 80 2, 94 10, 96 26 C 98 46, 80 64, 50 86 Z" fill="#e8456b"/><ellipse cx="29" cy="24" rx="11" ry="6.5" transform="rotate(-32 29 24)" fill="#fff" opacity=".55"/></svg>
+            <i style="--d:0s;--x:-16px">♥</i><i style="--d:.9s;--x:14px">♥</i><i style="--d:1.7s;--x:-2px">♥</i>
+          </div>
+          <div class="fig princess" id="princess">
+            <svg viewBox="0 0 120 164">
+              <g class="p-hair"><path d="M50 22 C 32 26, 30 56, 34 84 C 36 100, 44 108, 52 112 L 72 112 C 76 92, 78 62, 72 30 Z" fill="#c07a2c"/></g>
+              <g class="p-dress"><path d="M48 70 C 46 92, 34 122, 18 160 L 102 160 C 88 122, 76 92, 74 70 Z" fill="url(#gown)"/><path d="M18 160 C 40 151, 80 151, 102 160" stroke="#f5c86a" stroke-width="3" fill="none"/><path d="M52 80 C 48 108, 40 134, 32 156 M61 80 V 156 M70 80 C 74 108, 82 134, 90 156" stroke="#ffffff" stroke-opacity=".2" stroke-width="2" fill="none"/></g>
+              <path d="M48 62 C 48 58, 54 56, 61 56 C 68 56, 74 58, 74 62 L 74 76 C 68 80, 54 80, 48 76 Z" fill="#ff7fae"/>
+              <path d="M50 60 Q 61 68 72 60" stroke="#f5c86a" stroke-width="2" fill="none"/>
+              <circle cx="61" cy="66" r="2.4" fill="#7fd3ff"/>
+              <g class="p-arm"><path d="M50 62 C 40 66, 34 74, 32 82" stroke="#ffb3d1" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="31" cy="84" r="4.6" fill="#ffdcc6"/></g>
+              <path d="M72 62 C 79 70, 79 80, 75 88" stroke="#ffb3d1" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="74" cy="90" r="4.6" fill="#ffdcc6"/>
+              <rect x="57" y="46" width="8" height="12" rx="3" fill="#ffd2bb"/>
+              <circle cx="61" cy="36" r="16" fill="#ffdcc6"/>
+              <path d="M45 34 C 45 19, 56 15, 66 18 C 73 21, 77 28, 77 37 C 71 29, 61 25, 51 29 Z" fill="#c07a2c"/>
+              <g class="p-eyes"><circle cx="53" cy="38" r="1.9" fill="#3a1e2a"/><circle cx="62" cy="38" r="1.9" fill="#3a1e2a"/></g>
+              <ellipse cx="49" cy="43" rx="3.2" ry="2" fill="#ff8fb3" opacity=".7"/><ellipse cx="65" cy="43" rx="3.2" ry="2" fill="#ff8fb3" opacity=".7"/>
+              <path d="M53 45 Q 56.5 48 60 45" stroke="#c2456b" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path d="M49 21 L 51 9 L 56 16 L 61 5 L 66 16 L 71 9 L 73 21 Z" fill="url(#goldG)" stroke="#b07a1e" stroke-width="1"/>
+              <circle cx="61" cy="13" r="1.8" fill="#e8456b"/><circle cx="54" cy="17" r="1.3" fill="#7fd3ff"/><circle cx="68" cy="17" r="1.3" fill="#7fd3ff"/>
+              <path class="p-spark" d="M78 4 L 80 9 L 85 11 L 80 13 L 78 18 L 76 13 L 71 11 L 76 9 Z" fill="#fff4cf"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="steps" id="steps">
+          <!-- step 1: the question -->
+          <section class="step" id="step-ask" aria-labelledby="ask-title">
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Королевское приглашение</p>
+            <p class="hand">для самой прекрасной принцессы</p>
+            <div class="name-wrap">
+              <svg class="crown" viewBox="0 0 60 40" aria-hidden="true"><path d="M4 34 L 8 8 L 20 22 L 30 2 L 40 22 L 52 8 L 56 34 Z" fill="url(#goldG)" stroke="#b07a1e" stroke-width="1.5"/><rect x="4" y="32" width="52" height="6" rx="2" fill="#c98a2b"/><circle cx="30" cy="20" r="3.2" fill="#e8456b"/><circle cx="17" cy="26" r="2.2" fill="#7fd3ff"/><circle cx="43" cy="26" r="2.2" fill="#7fd3ff"/></svg>
+              <h1 class="name" id="name">Malikam</h1>
+              <p class="name-title">Её Высочество, принцесса</p>
+            </div>
+            <div class="ask-body">
+              <p class="lead">Рыцарь, принцесса, целый замок и даже дракон собрались здесь, чтобы задать тебе один вопрос.</p>
+              <div>
+                <h2 class="question step-title" id="ask-title" tabindex="-1">Пойдёшь со мной на свидание?</h2>
+                <div class="answers">
+                  <button class="btn btn-yes" id="yes" type="button">Да, мой рыцарь <span aria-hidden="true">👑</span></button>
+                  <span class="no-slot" id="no-slot"><button class="btn btn-no" id="no" type="button">Нет</button></span>
+                </div>
+                <p class="hint" id="hint" aria-live="polite">Подсказка: правильный ответ сияет, как корона 👑</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- step 2: the plan -->
+          <section class="step" id="step-plan" aria-labelledby="plan-title" hidden>
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Принцесса сказала «да»</p>
+            <h2 class="title step-title" id="plan-title" tabindex="-1">Ура! Тогда давай <em>всё спланируем</em></h2>
+            <form id="plan-form" novalidate style="width:100%">
+              <fieldset class="field">
+                <legend>Куда пойдём?</legend>
+                <div class="tabs" role="tablist" aria-label="Категории">
+                  <button class="tab" type="button" role="tab" id="tab-tasty" aria-controls="panel-tasty" aria-selected="true">🍽 Вкусно<span class="n">6</span></button>
+                  <button class="tab" type="button" role="tab" id="tab-romance" aria-controls="panel-romance" aria-selected="false" tabindex="-1">🌹 Романтично<span class="n">6</span></button>
+                  <button class="tab" type="button" role="tab" id="tab-fun" aria-controls="panel-fun" aria-selected="false" tabindex="-1">🎉 Весело<span class="n">6</span></button>
+                </div>
+                <div class="chips" role="tabpanel" id="panel-tasty" aria-labelledby="tab-tasty">
+                  <label class="chip"><input type="radio" name="place" id="place-ramen" value="Рамён" data-emoji="🍜"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍜</span>Рамён</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-sushi" value="Суши" data-emoji="🍣"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍣</span>Суши</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-pizza" value="Пицца" data-emoji="🍕"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍕</span>Пицца</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-burger" value="Бургеры" data-emoji="🍔"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍔</span>Бургеры</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-coffee" value="Кофе и десерты" data-emoji="☕"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">☕</span>Кофе и десерты</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-dinner" value="Уютный ужин" data-emoji="🍝"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍝</span>Уютный ужин</span></label>
+                </div>
+                <div class="chips" role="tabpanel" id="panel-romance" aria-labelledby="tab-romance" hidden>
+                  <label class="chip"><input type="radio" name="place" id="place-park" value="Прогулка в парке" data-emoji="🌸"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🌸</span>Прогулка в парке</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-sunset" value="Закат на крыше" data-emoji="🌅"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🌅</span>Закат на крыше</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-picnic" value="Пикник" data-emoji="🍓"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍓</span>Пикник</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-icecream" value="Мороженое" data-emoji="🍦"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🍦</span>Мороженое</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-cinema" value="Кино" data-emoji="🎬"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🎬</span>Кино</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-aquarium" value="Океанариум" data-emoji="🐠"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🐠</span>Океанариум</span></label>
+                </div>
+                <div class="chips" role="tabpanel" id="panel-fun" aria-labelledby="tab-fun" hidden>
+                  <label class="chip"><input type="radio" name="place" id="place-karaoke" value="Караоке" data-emoji="🎤"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🎤</span>Караоке</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-bowling" value="Боулинг" data-emoji="🎳"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🎳</span>Боулинг</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-skating" value="Каток" data-emoji="⛸️"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">⛸️</span>Каток</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-rides" value="Парк аттракционов" data-emoji="🎡"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🎡</span>Аттракционы</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-quest" value="Квест-комната" data-emoji="🗝️"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🗝️</span>Квест-комната</span></label>
+                  <label class="chip"><input type="radio" name="place" id="place-art" value="Мастер-класс" data-emoji="🎨"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">🎨</span>Мастер-класс</span></label>
+                </div>
+                <div class="fate-row">
+                  <p class="picked" id="picked" aria-live="polite">Выбери что-нибудь или доверься судьбе</p>
+                  <button class="fate" id="fate" type="button">🎲 Пусть решит судьба</button>
+                </div>
+              </fieldset>
+              <div class="when">
+                <div>
+                  <label class="field-label" for="date">День</label>
+                  <input class="input" type="date" id="date" name="date" required>
+                </div>
+                <div>
+                  <label class="field-label" for="time">Время</label>
+                  <input class="input" type="time" id="time" name="time" value="19:00" step="900" required>
+                </div>
+              </div>
+              <div class="plan-actions">
+                <button class="btn btn-yes btn-wide" id="plan-submit" type="submit">Скрепить королевской печатью <span aria-hidden="true">📜</span></button>
+              </div>
+              <p class="hint" id="plan-hint" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <!-- step 3: the decree -->
+          <section class="step" id="step-done" aria-labelledby="done-title" hidden>
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Указ подписан</p>
+            <h2 class="title step-title" id="done-title" tabindex="-1">До встречи, <em class="t-name">Malikam</em>!</h2>
+            <div class="decree-ticket">
+              <p class="dt-label">Королевский указ · на двоих</p>
+              <dl class="dt-rows">
+                <div><dt>Кто</dt><dd>Принцесса Malikam и её рыцарь</dd></div>
+                <div><dt>Куда</dt><dd id="t-place">Рамён</dd></div>
+                <div><dt>Когда</dt><dd id="t-when">суббота, в 19:00</dd></div>
+              </dl>
+              <p class="dt-count" id="t-count"></p>
+              <svg class="stamp" id="stamp" viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M50 4 C 62 2, 70 10, 80 12 C 92 16, 96 28, 96 40 C 98 52, 92 60, 94 70 C 94 84, 82 92, 70 94 C 60 98, 50 94, 40 96 C 26 98, 14 90, 8 80 C 2 70, 6 60, 4 50 C 2 38, 6 26, 14 18 C 22 8, 38 6, 50 4 Z" fill="url(#waxG)"/>
+                <circle cx="50" cy="50" r="30" fill="none" stroke="#6a0c1a" stroke-width="3" opacity=".6"/>
+                <path d="M30 60 L 33 38 L 42 50 L 50 32 L 58 50 L 67 38 L 70 60 Z" fill="#f2b8a0" opacity=".85"/>
+                <text x="50" y="78" text-anchor="middle" font-family="Cinzel Decorative, serif" font-size="14" font-weight="900" fill="#f2b8a0" opacity=".9">M</text>
+              </svg>
+            </div>
+            <p class="hand note">Сделай скриншот и отправь мне. Я уже жду 💌</p>
+            <div class="links">
+              <button class="btn-link" id="edit" type="button">Изменить план</button>
+              <button class="btn-link" id="restart" type="button">Начать сначала</button>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<canvas id="front-cv" aria-hidden="true"></canvas>
+<div class="layer" id="fx" aria-hidden="true"></div>
+
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="decree-title">
+  <div class="torch torch-l" id="torch-l" aria-hidden="true"><div class="torch-glow"></div></div>
+  <div class="torch torch-r" id="torch-r" aria-hidden="true"><div class="torch-glow"></div></div>
+  <canvas id="intro-cv" aria-hidden="true"></canvas>
+  <div class="decree" id="decree">
+    <p class="decree-kicker" id="decree-title">Королевский указ</p>
+    <p class="decree-sub">для Её Высочества</p>
+    <div class="scroll">
+      <div class="roller"></div>
+      <div class="paper" id="paper">
+        <div class="paper-inner" id="paper-inner">
+          <p class="ink p-to">Её Высочеству</p>
+          <p class="ink p-title">Принцессе</p>
+          <p class="ink p-name">Malikam</p>
+          <p class="ink p-orn" aria-hidden="true">✦ ❦ ✦</p>
+          <p class="ink p-text">Отважный рыцарь этого королевства</p>
+          <p class="ink p-text">смиренно просит чести</p>
+          <p class="ink p-text">пригласить Вас на свидание.</p>
+          <button class="accept" id="accept" type="button" tabindex="-1">Принять указ</button>
+        </div>
+      </div>
+      <div class="roller"></div>
+      <button class="seal" id="seal" type="button" aria-label="Сломать печать и открыть указ">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <g class="half half-l"><path d="M50 4 C 38 6, 22 8, 14 18 C 6 26, 2 38, 4 50 C 6 60, 2 70, 8 80 C 14 90, 26 98, 40 96 C 44 96, 47 96, 50 96 L 46 80 L 54 66 L 44 52 L 54 38 L 46 22 Z" fill="url(#waxG)"/><path d="M38 60 L 40 40 L 46 50 L 50 34 L 50 60 Z" fill="#f2b8a0" opacity=".85"/></g>
+          <g class="half half-r"><path d="M50 4 C 62 2, 70 10, 80 12 C 92 16, 96 28, 96 40 C 98 52, 92 60, 94 70 C 94 84, 82 92, 70 94 C 60 98, 54 96, 50 96 L 46 80 L 54 66 L 44 52 L 54 38 L 46 22 Z" fill="url(#waxG)"/><path d="M50 34 L 54 50 L 60 40 L 62 60 L 50 60 Z" fill="#f2b8a0" opacity=".85"/></g>
+          <circle class="ring" cx="50" cy="50" r="31" fill="none" stroke="#6a0c1a" stroke-width="3" opacity=".55"/>
+        </svg>
+      </button>
+    </div>
+    <p class="decree-tap" id="decree-tap">нажми на печать</p>
+  </div>
+  <div class="intro-dragon" id="intro-dragon" aria-hidden="true"></div>
+  <button class="intro-skip" id="intro-skip" type="button">Пропустить</button>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fineHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const vw = () => window.innerWidth;
+  const vh = () => window.innerHeight;
+  const small = () => vw() < 600;
+  const body = document.body;
+
+  const card = $("#card"), glare = $("#glare"), jelly = $("#jelly"), stepsWrap = $("#steps"), stage = $("#stage");
+  const yesBtn = $("#yes"), noBtn = $("#no"), slot = $("#no-slot"), hint = $("#hint");
+  const fx = $("#fx"), scene = $("#scene"), dragonsEl = $("#dragons");
+  const knight = $("#knight"), knightWalk = $("#knight-walk"), princess = $("#princess"), love = $("#love");
+  const intro = $("#intro");
+  const steps = { ask: $("#step-ask"), plan: $("#step-plan"), done: $("#step-done") };
+  let current = steps.ask;
+
+  /* ================= artwork ================= */
+  const DRAGON = `<svg viewBox="-14 0 314 150">
+    <g class="d-wing d-wing-far"><path d="M150 80 C 146 52, 132 24, 112 8 C 116 28, 112 38, 106 46 C 98 36, 86 32, 72 34 C 82 44, 84 56, 80 64 C 72 58, 60 58, 50 62 C 74 72, 106 80, 150 84 Z" fill="#1c0f30"/></g>
+    <path d="M78 98 C 54 94, 36 102, 22 112 C 10 120, 2 128, -2 136 C 10 128, 24 120, 38 116 C 52 112, 66 108, 80 108 Z" fill="#150b24"/>
+    <path d="M-2 136 L -14 126 L -6 146 Z" fill="#150b24"/>
+    <path d="M70 92 C 100 72, 160 70, 190 82 C 205 88, 212 98, 200 106 C 175 120, 110 118, 80 110 C 64 106, 60 98, 70 92 Z" fill="#150b24"/>
+    <path d="M98 81 L104 70 L110 79 Z M116 77 L122 66 L128 76 Z M134 75 L140 64 L146 75 Z M152 76 L158 66 L163 77 Z M170 79 L176 70 L180 81 Z" fill="#150b24"/>
+    <path d="M90 108 C 120 116, 170 114, 196 102" stroke="#ff9a52" stroke-opacity=".3" stroke-width="2" fill="none"/>
+    <path d="M186 84 C 208 72, 226 58, 244 54 C 256 51, 268 54, 280 60 L 296 64 L 284 69 C 276 73, 266 75, 256 73 C 244 73, 230 82, 212 96 Z" fill="#150b24"/>
+    <path d="M258 70 L 290 66" stroke="#ff9a52" stroke-opacity=".4" stroke-width="1.2"/>
+    <path d="M250 55 L 238 38 L 256 52 Z M262 54 L 258 38 L 268 54 Z" fill="#150b24"/>
+    <circle cx="266" cy="60" r="6" fill="#ffb347" opacity=".35"/><circle class="d-eye" cx="266" cy="60" r="2.8" fill="#ffd36b"/>
+    <circle class="d-mouth" cx="293" cy="65" r=".6" fill="none"/><circle class="d-neck" cx="250" cy="63" r=".6" fill="none"/>
+    <path d="M118 112 L 110 128 L 122 127 L 130 113 Z M166 110 L 160 126 L 172 125 L 176 108 Z" fill="#150b24"/>
+    <g class="d-wing d-wing-near"><path d="M152 82 C 144 48, 124 16, 96 0 C 104 22, 100 34, 92 42 C 82 30, 66 26, 50 28 C 62 40, 64 54, 60 62 C 50 56, 36 56, 24 60 C 52 72, 96 84, 152 88 Z" fill="#22122f" stroke="#ff9a52" stroke-opacity=".32" stroke-width="1.2"/><path d="M152 86 L 96 0 M152 86 L 50 28 M152 86 L 24 60" stroke="#130a1f" stroke-width="2" fill="none"/></g>
+  </svg>`;
+
+  function buildCastle() {
+    const ground = 560;
+    let s = `<svg viewBox="0 0 1000 ${ground}">`;
+    const rect = (x, y, w, h, f = "url(#castleG)") => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}"/>`;
+    const crenels = (x, y, w) => { let r = ""; for (let cx = x; cx + 12 <= x + w; cx += 22) r += rect(cx, y - 13, 12, 14); return r; };
+    const wins = [];
+    const win = (x, y, w = 11, h = 20) => wins.push(`<path class="win" style="--d:${(-Math.random() * 3).toFixed(2)}s;--t:${(2 + Math.random() * 2.5).toFixed(2)}s" d="M${x} ${y + h} V${y + w / 2} A${w / 2} ${w / 2} 0 0 1 ${x + w} ${y + w / 2} V${y + h} Z" fill="#ffc861"/>`);
+    // outer wall + keep
+    s += rect(240, 395, 520, ground - 395) + crenels(240, 395, 520);
+    s += rect(392, 285, 216, ground - 285) + crenels(392, 285, 216);
+    const towers = [
+      { x: 232, w: 54, top: 318, roof: 58 },
+      { x: 714, w: 54, top: 302, roof: 58 },
+      { x: 330, w: 70, top: 228, roof: 74, flag: "#e8456b" },
+      { x: 600, w: 70, top: 212, roof: 78, flag: "#f5c86a" },
+      { x: 455, w: 90, top: 140, roof: 92, flag: "#e8456b" }
+    ];
+    let flags = "";
+    for (const t of towers) {
+      s += rect(t.x, t.top, t.w, ground - t.top);
+      s += `<rect x="${t.x}" y="${t.top}" width="3" height="${ground - t.top}" fill="#b7a6ff" opacity=".14"/>`;
+      const cx = t.x + t.w / 2, tip = t.top - t.roof;
+      s += `<path d="M${t.x - 9} ${t.top} L${cx} ${tip} L${cx} ${t.top} Z" fill="#3e2579"/><path d="M${cx} ${tip} L${t.x + t.w + 9} ${t.top} L${cx} ${t.top} Z" fill="#251450"/>`;
+      s += `<rect x="${t.x - 9}" y="${t.top - 3}" width="${t.w + 18}" height="6" fill="#1a1238"/>`;
+      if (t.flag) flags += `<path d="M${cx} ${tip} V${tip - 30}" stroke="#2a1d4a" stroke-width="3"/><path class="flag" d="M${cx + 1} ${tip - 30} L${cx + 34} ${tip - 23} L${cx + 1} ${tip - 15} Z" fill="${t.flag}"/>`;
+      const n = Math.max(1, Math.floor((ground - t.top - 150) / 70));
+      for (let i = 0; i < n; i++) win(cx - 5.5, t.top + 30 + i * 62);
+    }
+    [418, 448, 541, 571].forEach((x) => win(x, 320));
+    [418, 571].forEach((x) => win(x, 372));
+    [275, 310, 680, 715].forEach((x) => win(x, 440, 10, 16));
+    // the gate
+    s += `<path d="M466 ${ground} V505 A34 34 0 0 1 534 505 V${ground} Z" fill="url(#gateG)" class="gate-glow"/>`;
+    s += `<path d="M466 ${ground} V505 A34 34 0 0 1 534 505 V${ground}" fill="none" stroke="#1a1238" stroke-width="7"/>`;
+    s += `<path d="M478 ${ground} V488 M490 ${ground} V476 M502 ${ground} V472 M514 ${ground} V476 M526 ${ground} V488 M468 512 H532 M468 532 H532" stroke="#2a1608" stroke-width="3" opacity=".75"/>`;
+    s += `<g class="wins">${wins.join("")}</g>${flags}</svg>`;
+    $("#castle").innerHTML = s;
+  }
+  buildCastle();
+
+  /* ================= canvases + particles ================= */
+  function setupCanvas(cv) {
+    const ctx = cv.getContext("2d");
+    const L = { cv, ctx, W: 0, H: 0, parts: [] };
+    L.size = () => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      L.W = vw(); L.H = vh();
+      cv.width = Math.round(L.W * dpr); cv.height = Math.round(L.H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    L.size();
+    return L;
+  }
+  const SKY = setupCanvas($("#sky-cv")), FRONT = setupCanvas($("#front-cv")), INTRO = setupCanvas($("#intro-cv"));
+  const sprite = (stops) => {
+    const c = document.createElement("canvas");
+    c.width = c.height = 64;
+    const g = c.getContext("2d"), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    stops.forEach(([o, col]) => gr.addColorStop(o, col));
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    return c;
+  };
+  const SPR = {
+    core: sprite([[0, "rgba(255,255,240,1)"], [.3, "rgba(255,230,150,.9)"], [1, "rgba(255,160,60,0)"]]),
+    flame: sprite([[0, "rgba(255,220,120,1)"], [.35, "rgba(255,130,40,.8)"], [1, "rgba(255,80,20,0)"]]),
+    red: sprite([[0, "rgba(255,120,40,.9)"], [.4, "rgba(200,40,20,.55)"], [1, "rgba(120,10,10,0)"]]),
+    smoke: sprite([[0, "rgba(80,66,96,.45)"], [1, "rgba(60,50,80,0)"]]),
+    gold: sprite([[0, "rgba(255,252,230,1)"], [.3, "rgba(255,214,110,.85)"], [1, "rgba(255,170,60,0)"]]),
+    pink: sprite([[0, "rgba(255,245,250,1)"], [.3, "rgba(255,120,170,.85)"], [1, "rgba(232,69,107,0)"]]),
+    lilac: sprite([[0, "rgba(250,245,255,1)"], [.3, "rgba(190,150,255,.85)"], [1, "rgba(140,90,255,0)"]]),
+    wax: sprite([[0, "rgba(255,120,120,1)"], [.4, "rgba(170,20,40,.9)"], [1, "rgba(100,0,20,0)"]])
+  };
+  const caps = { sky: 900, front: 500, intro: 1200 };
+  function add(L, p, cap) { if (L.parts.length < cap) L.parts.push(p); }
+  function fire(L, x, y, ang, n = 5, power = 1, evx = 0, evy = 0) {
+    for (let i = 0; i < n; i++) {
+      const a = ang + rnd(-.18, .18), sp = rnd(5, 9.5) * power;
+      add(L, { k: "fire", x, y, vx: Math.cos(a) * sp + evx, vy: Math.sin(a) * sp + evy, drag: .955, g: -.035, life: 0, max: rnd(34, 54), s: rnd(10, 18) * power, grow: 2.4 }, 2000);
+    }
+  }
+  function sparkle(L, x, y, n = 30, palette = ["gold", "gold", "pink"], power = 1) {
+    for (let i = 0; i < n; i++) {
+      const a = rnd(0, Math.PI * 2), sp = rnd(1.5, 7) * power;
+      add(L, { k: "spark", spr: pick(palette), x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1, drag: .95, g: .06, life: 0, max: rnd(40, 80), s: rnd(8, 16), grow: -.5 }, 2000);
+    }
+  }
+  function firework(x, ty, shape) {
+    const palette = pick([["gold", "gold", "pink"], ["pink", "pink", "gold"], ["lilac", "pink", "gold"]]);
+    add(SKY, { k: "rocket", x, y: SKY.H + 10, vx: rnd(-.6, .6), vy: -Math.sqrt(2 * .09 * (SKY.H - ty + 10)), drag: 1, g: .09, life: 0, max: 400, s: 10, grow: 0, ty, shape, palette }, caps.sky);
+  }
+  function explode(p) {
+    const n = p.shape === "heart" ? 90 : 70;
+    for (let i = 0; i < n; i++) {
+      let vx, vy;
+      if (p.shape === "heart") {
+        const t = (i / n) * Math.PI * 2;
+        vx = 16 * Math.pow(Math.sin(t), 3) * .32;
+        vy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * .32;
+      } else {
+        const a = rnd(0, Math.PI * 2), sp = rnd(1.5, 5.5);
+        vx = Math.cos(a) * sp; vy = Math.sin(a) * sp;
+      }
+      add(SKY, { k: "spark", spr: pick(p.palette), x: p.x, y: p.y, vx, vy, drag: .965, g: .035, life: 0, max: rnd(60, 95), s: rnd(9, 15), grow: -.4 }, 2000);
+    }
+    add(SKY, { k: "flash", x: p.x, y: p.y, life: 0, max: 14, s: 140 }, 2000);
+  }
+  function step(L) {
+    const ctx = L.ctx, out = [];
+    for (const p of L.parts) {
+      p.life++;
+      if (p.k === "rocket") {
+        p.vy += p.g; p.x += p.vx; p.y += p.vy;
+        if (Math.random() < .8) add(L, { k: "spark", spr: "gold", x: p.x, y: p.y, vx: rnd(-.4, .4), vy: rnd(0, 1), drag: .9, g: .02, life: 0, max: rnd(14, 24), s: rnd(5, 9), grow: -.5 }, 2000);
+        if (p.vy >= -.4 || p.y <= p.ty) { explode(p); continue; }
+      } else if (p.k !== "flash") {
+        p.vx *= p.drag; p.vy = p.vy * p.drag + p.g; p.x += p.vx; p.y += p.vy;
+      }
+      if (p.life < p.max) out.push(p);
+    }
+    L.parts = out;
+    ctx.globalCompositeOperation = "lighter";
+    for (const p of L.parts) {
+      const t = p.life / p.max;
+      if (p.k === "fire") {
+        const spr = t < .2 ? SPR.core : t < .5 ? SPR.flame : t < .78 ? SPR.red : SPR.smoke;
+        if (spr === SPR.smoke) ctx.globalCompositeOperation = "source-over";
+        const s = p.s * (1 + p.grow * t);
+        ctx.globalAlpha = Math.max(0, 1 - t) * (spr === SPR.smoke ? .7 : 1);
+        ctx.drawImage(spr, p.x - s / 2, p.y - s / 2, s, s);
+        ctx.globalCompositeOperation = "lighter";
+      } else if (p.k === "flash") {
+        const s = p.s * (1 + t);
+        ctx.globalAlpha = (1 - t) * .55;
+        ctx.drawImage(SPR.gold, p.x - s / 2, p.y - s / 2, s, s);
+      } else {
+        const spr = SPR[p.spr] || SPR.gold;
+        const s = Math.max(1, p.s * (1 + p.grow * t));
+        ctx.globalAlpha = Math.max(0, 1 - t * t) * (p.k === "ember" ? .8 : 1);
+        ctx.drawImage(spr, p.x - s / 2, p.y - s / 2, s, s);
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  /* stars + shooting stars live on the sky canvas, under everything */
+  let stars = [], shoots = [], nextShoot = performance.now() + 3000;
+  function makeStars() {
+    const n = Math.min(240, Math.round((SKY.W * SKY.H) / 6500));
+    stars = Array.from({ length: n }, () => ({ x: Math.random() * SKY.W, y: Math.random() * SKY.H * .62, r: rnd(.35, 1.5), p: rnd(0, 6.28), s: rnd(.5, 2), c: Math.random() < .25 ? "255,220,190" : "255,252,245" }));
+  }
+  makeStars();
+  function drawSky(t) {
+    const ctx = SKY.ctx;
+    ctx.clearRect(0, 0, SKY.W, SKY.H);
+    for (const st of stars) {
+      const a = reduced ? .7 : .25 + .75 * Math.abs(Math.sin(t / 1000 * st.s + st.p));
+      ctx.fillStyle = `rgba(${st.c},${a.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283); ctx.fill();
+    }
+    if (reduced) return;
+    if (t > nextShoot) { shoots.push({ x: rnd(.2, .9) * SKY.W, y: rnd(0, .25) * SKY.H, vx: rnd(-9, -6), vy: rnd(2.5, 4), life: 0, max: rnd(44, 70) }); nextShoot = t + rnd(4000, 8000); }
+    for (let i = shoots.length - 1; i >= 0; i--) {
+      const s = shoots[i];
+      s.life++; s.x += s.vx; s.y += s.vy;
+      const a = Math.sin(Math.PI * (s.life / s.max)), tx = s.x - s.vx * 14, ty = s.y - s.vy * 14;
+      const g = ctx.createLinearGradient(s.x, s.y, tx, ty);
+      g.addColorStop(0, `rgba(255,246,230,${a.toFixed(3)})`); g.addColorStop(1, "rgba(255,200,140,0)");
+      ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(tx, ty); ctx.stroke();
+      if (s.life >= s.max) shoots.splice(i, 1);
+    }
+    if (Math.random() < .25) add(SKY, { k: "ember", spr: Math.random() < .7 ? "flame" : "gold", x: rnd(0, SKY.W), y: SKY.H + 10, vx: rnd(-.3, .3), vy: rnd(-1.1, -.4), drag: .998, g: -.002, life: 0, max: rnd(240, 420), s: rnd(3, 7), grow: 0 }, caps.sky);
+    step(SKY);
+  }
+
+  /* golden dust that follows the pointer */
+  let lastDust = 0;
+  window.addEventListener("pointermove", (e) => {
+    if (reduced) return;
+    const now = performance.now();
+    if (now - lastDust < 16) return;
+    lastDust = now;
+    for (let i = 0; i < 2; i++) add(FRONT, { k: "spark", spr: Math.random() < .75 ? "gold" : "pink", x: e.clientX + rnd(-4, 4), y: e.clientY + rnd(-4, 4), vx: rnd(-.6, .6), vy: rnd(-.8, .3), drag: .97, g: .03, life: 0, max: rnd(30, 55), s: rnd(6, 12), grow: -.6 }, caps.front);
+  }, { passive: true });
+  window.addEventListener("pointerdown", (e) => { if (!reduced && !e.target.closest("button, input, label")) sparkle(FRONT, e.clientX, e.clientY, 14, ["gold", "pink"], .7); }, { passive: true });
+
+  let introLive = true;
+  function frame(t) {
+    drawSky(t);
+    FRONT.ctx.clearRect(0, 0, FRONT.W, FRONT.H);
+    step(FRONT);
+    if (introLive) { INTRO.ctx.clearRect(0, 0, INTRO.W, INTRO.H); torchFire(); step(INTRO); }
+    requestAnimationFrame(frame);
+  }
+  if (reduced) drawSky(0); else requestAnimationFrame(frame);
+  let resizeT = 0;
+  window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(() => { SKY.size(); FRONT.size(); INTRO.size(); makeStars(); measureTorches(); }, 150); });
+
+  /* ================= the dragon ================= */
+  function dragonEl(w, flip) {
+    const el = document.createElement("div");
+    el.className = "dragon";
+    el.style.width = w + "px";
+    el.style.setProperty("--flap", rnd(.8, 1.05).toFixed(2) + "s");
+    el.innerHTML = `<div class="dragon-bob"><div class="dragon-face${flip ? " flip" : ""}">${DRAGON}</div></div>`;
+    return el;
+  }
+  // Two invisible markers in the head give the exact mouth position and heading, whatever the dragon's tilt.
+  function mouthOf(el) {
+    const m = el.querySelector(".d-mouth").getBoundingClientRect(), n = el.querySelector(".d-neck").getBoundingClientRect();
+    const mx = m.left + m.width / 2, my = m.top + m.height / 2, nx = n.left + n.width / 2, ny = n.top + n.height / 2;
+    return { x: mx, y: my, ang: Math.atan2(my - ny, mx - nx) };
+  }
+  let dragonBusy = false;
+  function flyDragon(o = {}) {
+    if (dragonBusy || reduced) return;
+    dragonBusy = true;
+    const W = vw(), H = vh(), dir = o.dir || (Math.random() < .5 ? 1 : -1);
+    const w = (o.size || rnd(170, 300)) * (small() ? .62 : 1);
+    const el = dragonEl(w, dir < 0);
+    dragonsEl.appendChild(el);
+    const y0 = rnd(.08, .3) * H, N = 6, pts = [];
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1);
+      pts.push({ x: dir > 0 ? -w - 40 + t * (W + w * 2 + 80) : W + 40 - t * (W + w * 2 + 80), y: y0 + Math.sin(t * Math.PI * 1.4 + rnd(0, 1)) * H * .07 });
+    }
+    const frames = pts.map((p, i) => {
+      const q = pts[Math.min(i + 1, N - 1)], b = pts[Math.max(i - 1, 0)];
+      const a = Math.atan2((i < N - 1 ? q.y - p.y : p.y - b.y), Math.abs(i < N - 1 ? q.x - p.x : p.x - b.x)) * 180 / Math.PI;
+      return { transform: `translate3d(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px, 0) rotate(${(a * .6 * dir).toFixed(1)}deg)`, offset: i / (N - 1), easing: "ease-in-out" };
+    });
+    const dur = o.dur || rnd(11000, 15000);
+    const anim = el.animate(frames, { duration: dur, fill: "both" });
+    const breathAt = rnd(.32, .6) * dur;
+    setTimeout(() => breathe(el, dir, 1100, SKY), breathAt);
+    if (Math.random() < .5) setTimeout(() => breathe(el, dir, 800, SKY), breathAt + 2600);
+    anim.onfinish = () => { el.remove(); dragonBusy = false; };
+  }
+  function breathe(el, dir, ms, L) {
+    if (!el.isConnected) return;
+    const t0 = performance.now();
+    let last = null;
+    const tick = (now) => {
+      if (!el.isConnected || now - t0 > ms) return;
+      const m = mouthOf(el);
+      const evx = last ? (m.x - last.x) * .85 : 0, evy = last ? (m.y - last.y) * .85 : 0;
+      last = m;
+      fire(L, m.x, m.y, m.ang + .3 * (Math.cos(m.ang) >= 0 ? 1 : -1), small() ? 3 : 5, L === INTRO ? 1.6 : 1, evx, evy);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  let dragonLoop = 0;
+  function startDragons() {
+    if (reduced) {
+      const el = dragonEl(small() ? 140 : 230, false);
+      el.style.transform = `translate3d(${vw() * .62}px, ${vh() * .12}px, 0) rotate(-6deg)`;
+      dragonsEl.appendChild(el);
+      return;
+    }
+    const tick = () => { if (!document.hidden) flyDragon(); dragonLoop = setTimeout(tick, rnd(15000, 22000)); };
+    dragonLoop = setTimeout(tick, 2500);
+  }
+
+  /* gentle parallax on desktop */
+  if (fineHover && !reduced) {
+    let px = 0, py = 0, tx = 0, ty = 0;
+    window.addEventListener("pointermove", (e) => { tx = (e.clientX / vw() - .5) * 2; ty = (e.clientY / vh() - .5) * 2; }, { passive: true });
+    const loop = () => {
+      px += (tx - px) * .04; py += (ty - py) * .04;
+      scene.style.transform = `translate3d(${(-px * 10).toFixed(2)}px, ${(-py * 6).toFixed(2)}px, 0)`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+
+  /* ================= bursts ================= */
+  function burst(x, y, n = 20, set = ["💖", "👑", "✨", "💗", "🌹"]) {
+    if (reduced) n = Math.min(n, 6);
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement("span");
+      p.className = "bit";
+      p.textContent = pick(set);
+      p.style.left = x + "px";
+      p.style.top = y + "px";
+      p.style.fontSize = rnd(14, 28) + "px";
+      fx.appendChild(p);
+      const a = rnd(0, Math.PI * 2), d = rnd(70, 240);
+      const dx = Math.cos(a) * d, dy = Math.sin(a) * d - rnd(30, 110), rot = rnd(-160, 160);
+      p.animate([
+        { transform: "translate(0px, 0px) scale(.2) rotate(0deg)", opacity: 1 },
+        { transform: `translate(${dx}px, ${dy}px) scale(1) rotate(${rot}deg)`, opacity: 1, offset: .55 },
+        { transform: `translate(${dx * 1.15}px, ${dy + 150}px) scale(.85) rotate(${rot * 1.4}deg)`, opacity: 0 }
+      ], { duration: rnd(1300, 2100), easing: "cubic-bezier(.2,.7,.3,1)" }).onfinish = () => p.remove();
+    }
+  }
+  const centerOf = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+  function celebrate(fromEl, big) {
+    const [x, y] = centerOf(fromEl);
+    sparkle(FRONT, x, y, big ? 70 : 45, ["gold", "gold", "pink", "lilac"], 1.2);
+    burst(x, y, big ? 22 : 14);
+    jiggle();
+    if (reduced) return;
+    const W = vw();
+    firework(W * rnd(.2, .35), vh() * rnd(.12, .25), "heart");
+    setTimeout(() => firework(W * rnd(.62, .82), vh() * rnd(.1, .22)), 350);
+    setTimeout(() => firework(W * rnd(.4, .6), vh() * rnd(.08, .18), big ? "heart" : null), 750);
+    if (big) setTimeout(() => firework(W * rnd(.1, .9), vh() * rnd(.1, .2)), 1150);
+  }
+  function jiggle() {
+    if (reduced) return;
+    jelly.animate([
+      { transform: "scale(1, 1)" },
+      { transform: "scale(1.03, .97)", offset: .25 },
+      { transform: "scale(.988, 1.016)", offset: .55 },
+      { transform: "scale(1.005, .997)", offset: .8 },
+      { transform: "scale(1, 1)" }
+    ], { duration: 760, easing: "ease-out" });
+  }
+
+  /* ================= liquid glass: tilt, glare, refraction ================= */
+  if (fineHover && !reduced) {
+    let raf = 0, last = null;
+    const apply = () => {
+      raf = 0;
+      const r = card.getBoundingClientRect();
+      const x = (last.clientX - r.left) / r.width, y = (last.clientY - r.top) / r.height;
+      const cx = Math.max(-1, Math.min(1, x * 2 - 1)), cy = Math.max(-1, Math.min(1, y * 2 - 1));
+      card.style.setProperty("--ry", (cx * 4).toFixed(2) + "deg");
+      card.style.setProperty("--rx", (-cy * 3).toFixed(2) + "deg");
+      glare.style.transform = `translate(${((x - .5) * r.width * .8).toFixed(1)}px, ${((y - .25) * r.height * .7).toFixed(1)}px)`;
+    };
+    window.addEventListener("pointermove", (e) => { if (body.classList.contains("is-intro")) return; last = e; if (!raf) raf = requestAnimationFrame(apply); }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", () => {
+      card.style.setProperty("--ry", "0deg");
+      card.style.setProperty("--rx", "0deg");
+      glare.style.transform = "";
+    });
+  } else if (!reduced) {
+    glare.classList.add("drift");
+  }
+  const canRefract = (() => {
+    const ua = navigator.userAgent;
+    const brands = (navigator.userAgentData && navigator.userAgentData.brands) || [];
+    const chromium = brands.some((b) => /Chromium/i.test(b.brand)) || (/\bChrome\/\d+/.test(ua) && !/CriOS|FxiOS|EdgiOS|Firefox/.test(ua));
+    return chromium && (navigator.hardwareConcurrency || 4) >= 4;
+  })();
+  const filt = $("#lg-refract"), feMap = $("#lg-map");
+  function buildMap() {
+    const w = Math.round(card.offsetWidth), h = Math.round(card.offsetHeight);
+    if (w < 40 || h < 40) return;
+    const R = Math.min(parseFloat(getComputedStyle(card).borderTopLeftRadius) || 40, w / 2, h / 2);
+    const band = Math.min(36, Math.min(w, h) / 5);
+    const cv = document.createElement("canvas");
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+    const img = ctx.createImageData(w, h), d = img.data;
+    const hw = w / 2, hh = h / 2, bx = hw - R, by = hh - R;
+    for (let y = 0; y < h; y++) {
+      const ppy = y + .5 - hh, sy = ppy < 0 ? -1 : 1, qy = Math.abs(ppy) - by;
+      for (let x = 0; x < w; x++) {
+        const ppx = x + .5 - hw, sx = ppx < 0 ? -1 : 1, qx = Math.abs(ppx) - bx;
+        let sdf, nx, ny;
+        if (qx > 0 && qy > 0) { const L = Math.hypot(qx, qy); sdf = L - R; nx = (qx / L) * sx; ny = (qy / L) * sy; }
+        else if (qx > qy) { sdf = qx - R; nx = sx; ny = 0; }
+        else { sdf = qy - R; nx = 0; ny = sy; }
+        const dist = -sdf;
+        let m = 0;
+        if (dist < band) { const t = 1 - Math.max(0, dist) / band; m = t * t; }
+        const i = (y * w + x) * 4;
+        d[i] = 128 - nx * m * 127; d[i + 1] = 128 - ny * m * 127; d[i + 2] = 128; d[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    for (const el of [filt, feMap]) { el.setAttribute("width", w); el.setAttribute("height", h); }
+    feMap.setAttribute("href", cv.toDataURL("image/png"));
+    card.classList.add("refract");
+  }
+  if (canRefract) {
+    let t = 0, lw = 0, lh = 0;
+    new ResizeObserver(() => {
+      const w = card.offsetWidth, h = card.offsetHeight;
+      if (Math.abs(w - lw) < 2 && Math.abs(h - lh) < 2) return;
+      lw = w; lh = h;
+      clearTimeout(t);
+      t = setTimeout(buildMap, 140);
+    }).observe(card);
+  }
+
+  /* ================= knight + princess ================= */
+  // The knight waits off the card's left edge and walks in once the decree is accepted.
+  knightWalk.classList.add("away");
+  function knightArrives(instant) {
+    if (instant || reduced) {
+      knightWalk.style.transition = "none";
+      knightWalk.classList.remove("away");
+      void knightWalk.offsetWidth;
+      knightWalk.style.transition = "";
+      love.classList.add("shown");
+      return;
+    }
+    knightWalk.classList.remove("away");
+    knight.classList.add("walking");
+    setTimeout(() => {
+      knight.classList.remove("walking");
+      love.classList.add("shown");
+      const [x, y] = centerOf(love);
+      sparkle(FRONT, x, y, 22, ["pink", "gold"], .8);
+    }, 2400);
+  }
+
+  /* ================= intro: the royal decree ================= */
+  let torchPts = [];
+  function measureTorches() {
+    torchPts = ["#torch-l", "#torch-r"].map((s) => { const r = $(s).getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + 4 }; });
+  }
+  measureTorches();
+  function torchFire() {
+    if (intro.classList.contains("leaving")) return;
+    for (const p of torchPts) {
+      for (let i = 0; i < 2; i++) add(INTRO, { k: "fire", x: p.x + rnd(-6, 6), y: p.y, vx: rnd(-.5, .5), vy: rnd(-2.6, -1.4), drag: .97, g: -.05, life: 0, max: rnd(22, 40), s: rnd(12, 20), grow: .6 }, caps.intro);
+      if (Math.random() < .08) add(INTRO, { k: "spark", spr: "flame", x: p.x, y: p.y - 10, vx: rnd(-1, 1), vy: rnd(-3, -1.6), drag: .98, g: -.01, life: 0, max: rnd(50, 90), s: rnd(4, 7), grow: 0 }, caps.intro);
+    }
+  }
+
+  const seal = $("#seal"), paper = $("#paper"), paperInner = $("#paper-inner"), acceptBtn = $("#accept");
+  let introDone = false;
+  function breakSeal() {
+    if (seal.classList.contains("broken")) return;
+    seal.classList.add("broken");
+    $("#decree-tap").classList.add("gone");
+    const [sx, sy] = centerOf(seal);
+    sparkle(INTRO, sx, sy, 40, ["wax", "wax", "gold"], 1.1);
+    sparkle(INTRO, sx, sy, 24, ["gold"], .6);
+    const full = paperInner.scrollHeight;
+    const open = paper.animate([{ height: "22px" }, { height: full + "px" }], { duration: reduced ? 1 : 1300, easing: "cubic-bezier(.3,.1,.2,1)", fill: "forwards" });
+    open.onfinish = () => { paper.style.height = full + "px"; open.cancel(); };
+    const lines = [...paperInner.querySelectorAll(".ink")];
+    lines.forEach((ln, i) => {
+      setTimeout(() => {
+        if (reduced) { ln.classList.add("shown"); return; }
+        ln.animate([{ clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0 0 0)" }], { duration: ln.classList.contains("p-name") ? 1100 : 750, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }).onfinish = () => ln.classList.add("shown");
+      }, reduced ? 0 : 700 + i * 430);
+    });
+    setTimeout(() => { acceptBtn.classList.add("shown"); acceptBtn.tabIndex = 0; acceptBtn.focus({ preventScroll: true }); }, reduced ? 0 : 700 + lines.length * 430 + 300);
+  }
+  seal.addEventListener("click", breakSeal);
+
+  function reveal(mode) {
+    stage.inert = false;
+    body.classList.remove("is-intro");
+    body.classList.add("is-revealed", mode === "intro" ? "from-intro" : "from-plain");
+    startDragons();
+  }
+  function acceptDecree() {
+    if (introDone) return;
+    introDone = true;
+    intro.classList.add("accepted");
+    if (reduced) {
+      intro.hidden = true; introLive = false;
+      reveal("plain"); knightArrives(true);
+      current.querySelector(".step-title")?.focus({ preventScroll: true });
+      return;
+    }
+    // a dragon swoops across the screen, breathing fire
+    const holder = $("#intro-dragon");
+    const w = Math.min(vw() * .92, 880);
+    holder.style.width = w + "px";
+    holder.innerHTML = `<div class="dragon-bob"><div class="dragon-face">${DRAGON}</div></div>`;
+    holder.classList.add("dragon");
+    holder.style.setProperty("--flap", ".55s");
+    holder.style.opacity = "1";
+    const W = vw(), H = vh();
+    const swoop = holder.animate([
+      { transform: `translate3d(${-w * 1.1}px, ${H * .62}px, 0) rotate(-14deg) scale(.7)` },
+      { transform: `translate3d(${W * .5 - w * .5}px, ${H * .3 - w * .2}px, 0) rotate(-8deg) scale(1)`, offset: .5 },
+      { transform: `translate3d(${W + w * .2}px, ${-w * .6}px, 0) rotate(-18deg) scale(1.15)` }
+    ], { duration: 2000, easing: "cubic-bezier(.45,.05,.55,.95)", fill: "both" });
+    setTimeout(() => breathe(holder, 1, 900, INTRO), 450);
+    setTimeout(() => { document.documentElement.classList.add("shake"); setTimeout(() => document.documentElement.classList.remove("shake"), 650); }, 700);
+    setTimeout(() => { intro.classList.add("leaving"); reveal("intro"); }, 1100);
+    setTimeout(() => knightArrives(false), 2300);
+    swoop.onfinish = () => { holder.style.opacity = "0"; };
+    setTimeout(() => { intro.hidden = true; introLive = false; current.querySelector(".step-title")?.focus({ preventScroll: true }); }, 3000);
+  }
+  acceptBtn.addEventListener("click", acceptDecree);
+  $("#intro-skip").addEventListener("click", () => {
+    if (introDone) return;
+    introDone = true;
+    intro.classList.add("accepted", "leaving");
+    intro.animate([{ opacity: 1 }, { opacity: 0 }], { duration: reduced ? 1 : 600, fill: "forwards" }).onfinish = () => { intro.hidden = true; introLive = false; };
+    reveal("plain");
+    knightArrives(false);
+    setTimeout(() => current.querySelector(".step-title")?.focus({ preventScroll: true }), 650);
+  });
+  setTimeout(() => { if (!seal.classList.contains("broken")) seal.focus({ preventScroll: true }); }, reduced ? 0 : 2400);
+
+  /* ================= step transitions ================= */
+  function show(next, instant) {
+    if (next === current) return;
+    const prev = current;
+    current = next;
+    if (instant || reduced) {
+      prev.hidden = true;
+      next.hidden = false;
+      if (!instant) next.querySelector(".step-title")?.focus({ preventScroll: true });
+      afterShow(next, instant);
+      return;
+    }
+    const h0 = stepsWrap.offsetHeight;
+    const out = prev.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateY(-12px) scale(.98)" }], { duration: 220, easing: "ease-in", fill: "forwards" });
+    out.onfinish = () => {
+      prev.hidden = true;
+      out.cancel();
+      next.hidden = false;
+      const h1 = stepsWrap.offsetHeight;
+      stepsWrap.style.overflow = "hidden";
+      stepsWrap.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: 480, easing: "cubic-bezier(.22,1,.36,1)" }).onfinish = () => { stepsWrap.style.overflow = ""; };
+      [...next.children].forEach((child, i) => {
+        child.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 540, delay: 60 + i * 55, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" });
+      });
+      next.querySelector(".step-title")?.focus({ preventScroll: true });
+      afterShow(next, false);
+    };
+  }
+  function afterShow(next, instant) {
+    if (next === steps.done) {
+      const st = $("#stamp");
+      st.classList.remove("hit");
+      if (!instant && !reduced) { void st.getBoundingClientRect(); st.classList.add("hit"); setTimeout(() => { const [x, y] = centerOf(st); sparkle(FRONT, x, y, 26, ["wax", "gold"], .9); jiggle(); }, 900); }
+    }
+  }
+
+  /* ================= step 1: the shy "no" ================= */
+  const NO_TEXTS = ["Нет", "Точно нет?", "Подумай ещё 🥺", "Ну пожалуйста!", "Рыцарь расстроится", "Дракон заплачет 🐉", "Ладно, да 💕"];
+  const HINTS = [
+    "Подсказка: правильный ответ сияет, как корона 👑",
+    "Ой, кнопка «Нет» сегодня очень стеснительная",
+    "Кажется, она не хочет, чтобы её нажимали 🙈",
+    "Зато кнопка «Да» становится всё больше",
+    "Рыцарь уже волнуется ⚔️",
+    "Даже дракон затаил дыхание 🐉",
+    "Всё, кнопка «Нет» сдалась"
+  ];
+  const SURRENDER = NO_TEXTS.length - 1;
+  let dodges = 0, lastDodge = 0, movingTimer = 0;
+  function placeNo(avoidX, avoidY) {
+    const b = noBtn.getBoundingClientRect();
+    const y0 = yesBtn.getBoundingClientRect();
+    const m = 16, W = vw(), H = vh(), pad = 28;
+    const onYes = (x, y) => x < y0.right + pad && x + b.width > y0.left - pad && y < y0.bottom + pad && y + b.height > y0.top - pad;
+    let best = null;
+    for (let k = 0; k < 40; k++) {
+      const x = rnd(m, Math.max(m, W - b.width - m));
+      const y = rnd(m + 10, Math.max(m + 10, H - b.height - m - 40));
+      if (onYes(x, y)) continue;
+      const dist = Math.hypot(x + b.width / 2 - avoidX, y + b.height / 2 - avoidY);
+      if (!best || dist > best.dist) best = { x, y, dist };
+      if (dist > 180) break;
+    }
+    if (!best) best = { x: m, y: m + 10 };
+    noBtn.style.pointerEvents = "none";
+    clearTimeout(movingTimer);
+    movingTimer = setTimeout(() => { noBtn.style.pointerEvents = ""; }, 460);
+    noBtn.style.left = best.x + "px";
+    noBtn.style.top = best.y + "px";
+  }
+  function dodge(e) {
+    if (noBtn.dataset.surrender) return;
+    if (e) e.preventDefault();
+    lastDodge = performance.now();
+    dodges++;
+    const r = noBtn.getBoundingClientRect();
+    if (!noBtn.classList.contains("is-loose")) {
+      slot.style.width = r.width + "px";
+      slot.style.height = r.height + "px";
+      noBtn.classList.add("is-loose");
+      noBtn.style.transition = "none";
+      noBtn.style.left = r.left + "px";
+      noBtn.style.top = r.top + "px";
+      document.body.appendChild(noBtn);
+      void noBtn.offsetWidth;
+      noBtn.style.transition = "";
+    }
+    noBtn.textContent = NO_TEXTS[Math.min(dodges, SURRENDER)];
+    hint.textContent = HINTS[Math.min(dodges, HINTS.length - 1)];
+    if (dodges >= SURRENDER) { noBtn.dataset.surrender = "1"; noBtn.classList.add("is-surrender"); }
+    const ex = e && "clientX" in e ? e.clientX : r.left + r.width / 2;
+    const ey = e && "clientY" in e ? e.clientY : r.top + r.height / 2;
+    sparkle(FRONT, r.left + r.width / 2, r.top + r.height / 2, 10, ["lilac", "pink"], .6);
+    placeNo(ex, ey);
+    yesBtn.style.setProperty("--grow", (1 + Math.min(dodges, 6) * .055).toFixed(3));
+    knight.classList.remove("alert"); void knight.getBoundingClientRect(); knight.classList.add("alert");
+  }
+  noBtn.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") dodge(e); });
+  noBtn.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") dodge(e); });
+  noBtn.addEventListener("click", (e) => {
+    if (noBtn.dataset.surrender) { sayYes(noBtn); return; }
+    if (performance.now() - lastDodge < 600) return;
+    dodge(e);
+  });
+  window.addEventListener("resize", () => {
+    if (noBtn.classList.contains("is-loose") && !noBtn.hidden) {
+      const b = noBtn.getBoundingClientRect();
+      if (b.right > vw() || b.bottom > vh()) placeNo(vw() / 2, vh() / 2);
+    }
+  });
+  function sayYes(fromEl) {
+    celebrate(fromEl, true);
+    noBtn.hidden = true;
+    knight.classList.add("kneel");
+    princess.classList.remove("happy"); void princess.getBoundingClientRect(); princess.classList.add("happy");
+    if (!reduced) { dragonBusy = false; setTimeout(() => flyDragon({ dir: 1, size: 260, dur: 9000 }), 600); }
+    show(steps.plan);
+  }
+  yesBtn.addEventListener("click", () => sayYes(yesBtn));
+
+  /* ================= step 2: categories, fate, date ================= */
+  const form = $("#plan-form"), dateIn = $("#date"), timeIn = $("#time"), planHint = $("#plan-hint"), picked = $("#picked"), fateBtn = $("#fate");
+  const tabs = [...document.querySelectorAll(".tab")];
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+  const allInputs = [...form.querySelectorAll('input[name="place"]')];
+  function selectTab(i, focus) {
+    tabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; });
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(i));
+    t.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); selectTab((i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length, true); }
+    });
+  });
+  const panelOf = (input) => panels.findIndex((p) => p.contains(input));
+  function updatePicked() {
+    const c = form.querySelector('input[name="place"]:checked');
+    picked.innerHTML = c ? `Выбрано: <b>${c.dataset.emoji} ${c.value}</b>` : "Выбери что-нибудь или доверься судьбе";
+  }
+  allInputs.forEach((inp) => inp.addEventListener("change", () => {
+    updatePicked();
+    const r = inp.nextElementSibling.getBoundingClientRect();
+    sparkle(FRONT, r.left + r.width / 2, r.top + r.height / 2, 10, ["gold", "pink"], .5);
+  }));
+  fateBtn.addEventListener("click", () => {
+    if (fateBtn.disabled) return;
+    const target = Math.floor(Math.random() * allInputs.length);
+    if (reduced) { allInputs[target].checked = true; selectTab(panelOf(allInputs[target])); updatePicked(); return; }
+    fateBtn.disabled = true;
+    let i = Math.floor(Math.random() * allInputs.length), stepN = 0;
+    const total = allInputs.length + 1 + ((target - i + allInputs.length) % allInputs.length);
+    const spin = () => {
+      allInputs.forEach((x) => x.nextElementSibling.classList.remove("roll"));
+      const inp = allInputs[i];
+      selectTab(panelOf(inp));
+      inp.nextElementSibling.classList.add("roll");
+      stepN++;
+      if (stepN >= total) {
+        inp.nextElementSibling.classList.remove("roll");
+        inp.checked = true;
+        updatePicked();
+        const r = inp.nextElementSibling.getBoundingClientRect();
+        sparkle(FRONT, r.left + r.width / 2, r.top + r.height / 2, 34, ["gold", "pink", "lilac"], 1);
+        burst(r.left + r.width / 2, r.top + r.height / 2, 8, ["🎲", "✨", "👑"]);
+        fateBtn.disabled = false;
+        return;
+      }
+      i = (i + 1) % allInputs.length;
+      setTimeout(spin, 50 + Math.pow(stepN / total, 3) * 320);
+    };
+    spin();
+  });
+
+  const pad = (n) => String(n).padStart(2, "0");
+  const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  (() => {
+    const now = new Date(), d = new Date(now);
+    let add = (6 - now.getDay() + 7) % 7;
+    if (add === 0 && now.getHours() >= 18) add = 7;
+    d.setDate(now.getDate() + add);
+    dateIn.min = isoDay(now);
+    dateIn.value = isoDay(d);
+  })();
+  const toDate = (day, time) => {
+    const [y, m, dd] = day.split("-").map(Number);
+    const [hh, mm] = (time || "19:00").split(":").map(Number);
+    return new Date(y, m - 1, dd, hh || 0, mm || 0);
+  };
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const place = form.querySelector('input[name="place"]:checked');
+    if (!place) {
+      planHint.textContent = "Выбери, куда пойдём, или нажми «Пусть решит судьба» 🎲";
+      panels.find((p) => !p.hidden).animate([{ transform: "translateX(0)" }, { transform: "translateX(-8px)" }, { transform: "translateX(7px)" }, { transform: "translateX(-4px)" }, { transform: "translateX(0)" }], { duration: 380 });
+      return;
+    }
+    if (!dateIn.value) { planHint.textContent = "Выбери день для встречи"; dateIn.focus(); return; }
+    const when = toDate(dateIn.value, timeIn.value);
+    if (when < new Date(Date.now() - 60000)) { planHint.textContent = "Это время уже прошло, выбери другое"; dateIn.focus(); return; }
+    planHint.textContent = "";
+    const p = { place: place.value, emoji: place.dataset.emoji, day: dateIn.value, time: timeIn.value || "19:00" };
+    save(p);
+    renderTicket(p);
+    celebrate($("#plan-submit"), false);
+    show(steps.done);
+  });
+
+  /* ================= step 3: the decree ================= */
+  const plural = (n, one, few, many) => {
+    const a = n % 10, b = n % 100;
+    if (a === 1 && b !== 11) return one;
+    if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+    return many;
+  };
+  const dayFmt = new Intl.DateTimeFormat("ru-RU", { weekday: "long", day: "numeric", month: "long" });
+  let countTimer = 0, plan = null;
+  function renderCount() {
+    if (!plan) return;
+    const diff = toDate(plan.day, plan.time) - new Date();
+    const out = $("#t-count");
+    if (diff <= 0) { out.textContent = "Время пришло!"; return; }
+    const mins = Math.floor(diff / 60000), days = Math.floor(mins / 1440), hours = Math.floor((mins % 1440) / 60), m = mins % 60;
+    let s;
+    if (days > 0) s = `${days} ${plural(days, "день", "дня", "дней")}` + (hours ? ` ${hours} ${plural(hours, "час", "часа", "часов")}` : "");
+    else if (hours > 0) s = `${hours} ${plural(hours, "час", "часа", "часов")}` + (m ? ` ${m} мин` : "");
+    else s = `${Math.max(1, m)} ${plural(Math.max(1, m), "минута", "минуты", "минут")}`;
+    out.textContent = "До встречи " + s;
+  }
+  function renderTicket(p) {
+    plan = p;
+    $("#t-place").textContent = `${p.emoji || "💗"} ${p.place}`;
+    $("#t-when").textContent = `${dayFmt.format(toDate(p.day, p.time))}, в ${p.time}`;
+    renderCount();
+    clearInterval(countTimer);
+    countTimer = setInterval(renderCount, 30000);
+  }
+  $("#edit").addEventListener("click", () => {
+    if (plan) {
+      const input = allInputs.find((x) => x.value === plan.place);
+      if (input) { input.checked = true; selectTab(panelOf(input)); }
+      dateIn.value = plan.day;
+      timeIn.value = plan.time;
+      updatePicked();
+    }
+    show(steps.plan);
+  });
+  $("#restart").addEventListener("click", () => {
+    clear();
+    plan = null;
+    clearInterval(countTimer);
+    dodges = 0;
+    delete noBtn.dataset.surrender;
+    noBtn.className = "btn btn-no";
+    noBtn.textContent = NO_TEXTS[0];
+    noBtn.style.left = noBtn.style.top = noBtn.style.pointerEvents = "";
+    noBtn.hidden = false;
+    slot.appendChild(noBtn);
+    slot.style.width = slot.style.height = "";
+    yesBtn.style.removeProperty("--grow");
+    hint.textContent = HINTS[0];
+    form.reset();
+    timeIn.value = "19:00";
+    selectTab(0);
+    updatePicked();
+    knight.classList.remove("kneel");
+    show(steps.ask);
+  });
+
+  /* ================= remember the answer on this device ================= */
+  const KEY = "malikam-date-v1";
+  function save(p) { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (_) {} }
+  function clear() { try { localStorage.removeItem(KEY); } catch (_) {} }
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (saved && saved.place && saved.day) {
+      introDone = true;
+      intro.hidden = true; introLive = false;
+      noBtn.hidden = true;
+      renderTicket(saved);
+      show(steps.done, true);
+      knight.classList.add("kneel");
+      reveal("plain");
+      knightArrives(true);
+    }
+  } catch (_) {}
+})();
+</script>
+</body>
+</html>

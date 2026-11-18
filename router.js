@@ -31,6 +31,9 @@ router.get("/asal", (_, res) => {
 router.get("/ella", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "ella.html"));
 });
+router.get("/malikam", (_, res) => {
+  res.sendFile(path.join(__dirname, "public", "malikam.html"));
+});
 router.get("/questions", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "questionsAndEntrances.html"));
 });
