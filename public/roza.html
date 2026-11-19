@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Для Розы</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Роза, для тебя расцвёл один цветок 🌹">
+<meta property="og:title" content="Роза, это для тебя 🌹">
+<meta property="og:description" content="Коснись бутона.">
+<meta name="theme-color" content="#ffe4ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600;1,700&family=Manrope:wght@500;700;800&family=Marck+Script&family=Prata&display=swap">
+<style>
+/* Layout: a rose grows and blooms when she touches it, a storm of petals opens the page; the page is a rose garden (big blooming roses in the corners, falling petals) with one glass card wreathed in roses; the outro builds a wrapped bouquet with a tag. Single blush theme on purpose. */
+:root {
+  color-scheme: light;
+  --cream: #fff6f3;
+  --blush: #ffe4ea;
+  --petal: #f7a1b5;
+  --rose: #e0285a;
+  --crimson: #a3123a;
+  --wine: #5c0a24;
+  --leaf: #4f9a5a;
+  --leaf-deep: #2f6b3d;
+  --gold: #e8b86b;
+  --ink: #4a1022;
+  --ink-soft: #7d3a52;
+  --white: #ffffff;
+  --font-name: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+  --font-display: "Prata", "Cormorant Garamond", Georgia, serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-hand: "Marck Script", "Segoe Script", "Comic Sans MS", cursive;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --radius: 46px;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; font-family: var(--font-body); color: var(--ink); background: var(--blush); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body.is-film { overflow: hidden; }
+::selection { background: var(--rose); color: var(--white); }
+
+/* ================= rose garden ================= */
+.garden {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 50% 45%, #fff8f5 0%, rgba(255, 246, 243, 0) 70%),
+    radial-gradient(60% 50% at 0% 0%, rgba(247, 161, 181, .55), transparent 70%),
+    radial-gradient(60% 55% at 100% 100%, rgba(224, 40, 90, .35), transparent 70%),
+    linear-gradient(160deg, #ffeef2 0%, #ffe0e8 55%, #ffd2de 100%);
+}
+.bokeh { position: absolute; border-radius: 50%; left: var(--x); top: var(--y); width: var(--s); aspect-ratio: 1; background: radial-gradient(circle, rgba(255, 255, 255, .8), rgba(255, 255, 255, 0) 70%); animation: bokeh var(--d, 9s) ease-in-out infinite alternate; }
+@keyframes bokeh { to { transform: translate(var(--dx, 20px), var(--dy, -30px)) scale(1.2); opacity: .5; } }
+.big-rose { position: absolute; width: var(--s); aspect-ratio: 1; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
+.big-rose .spin { width: 100%; height: 100%; animation: spin var(--sp, 120s) linear infinite; animation-direction: var(--dir, normal); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.rtop svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.rtop .lay { transform-box: view-box; transform-origin: 0 0; }
+.rtop.closed .lay { transform: scale(0); }
+.rtop.blooming .lay { animation: lay-bloom 1.6s var(--spring) both; animation-delay: calc(var(--bd, 0s) + (5 - var(--li)) * 110ms); }
+.rtop .leafs { transform-box: view-box; transform-origin: 0 0; }
+.rtop.closed .leafs { transform: scale(0); }
+.rtop.blooming .leafs { animation: lay-bloom 1.4s var(--ease) both; animation-delay: var(--bd, 0s); }
+@keyframes lay-bloom { from { transform: scale(.12) rotate(-80deg); opacity: 0; } }
+#petals-back { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+#petals-front { position: fixed; inset: 0; z-index: 8; width: 100%; height: 100%; pointer-events: none; }
+.layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+#fx { z-index: 9; }
+.bit { position: absolute; left: 0; top: 0; margin: -.5em 0 0 -.5em; line-height: 1; pointer-events: none; will-change: transform; }
+
+/* ================= stage + card ================= */
+.stage {
+  position: relative; z-index: 3; min-height: 100%;
+  display: grid; place-items: center; grid-template-columns: minmax(0, 1fr);
+  padding-block: 84px 84px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+  transition: opacity 1s var(--ease);
+}
+body.is-film .stage { opacity: 0; }
+.card-float { width: min(100%, 680px); pointer-events: auto; }
+body.is-revealed .card-float { animation: float 7s ease-in-out infinite; }
+body.is-revealed .card-jelly { animation: card-in 1.4s var(--spring) both; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes card-in { from { transform: translateY(50px) scale(.9); opacity: .2; } }
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.card {
+  position: relative; isolation: isolate;
+  border-radius: var(--radius);
+  padding: clamp(64px, 12vw, 96px) clamp(22px, 6vw, 56px) clamp(56px, 10vw, 84px);
+  background: linear-gradient(155deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.3) 36%, rgba(255,240,244,.22) 62%, rgba(255,255,255,.4) 100%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.95),
+    inset 0 22px 44px -28px rgba(255,255,255,.95),
+    inset 0 -30px 60px -36px rgba(224, 40, 90, .3),
+    0 44px 90px -34px rgba(163, 18, 58, .5),
+    0 14px 30px -14px rgba(92, 10, 36, .22);
+  transform: perspective(1300px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .7s var(--ease);
+}
+.card.refract { backdrop-filter: url(#lg-refract) blur(13px) saturate(180%) brightness(1.05); }
+.card::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; padding: 2px; pointer-events: none;
+  background: conic-gradient(from var(--ang), #ffffff, #f7a1b5, #e8b86b, #ffffff, #e0285a, #ffffff);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: spin-border 7s linear infinite;
+}
+@keyframes spin-border { to { --ang: 360deg; } }
+.glass-fx { position: absolute; inset: 0; z-index: -1; border-radius: inherit; overflow: hidden; pointer-events: none; }
+.sheen { position: absolute; inset: 0; background: radial-gradient(120% 55% at 50% -12%, rgba(255,255,255,.7), transparent 58%); }
+.glare { position: absolute; left: -30%; top: -75%; width: 150%; aspect-ratio: 1; background: radial-gradient(circle, rgba(255,255,255,.5) 0%, rgba(255,255,255,.15) 26%, rgba(255,255,255,0) 52%); transition: transform .5s var(--ease); }
+.glare.drift { animation: glare-drift 11s ease-in-out infinite alternate; }
+@keyframes glare-drift { from { transform: translate(-18%, 4%); } to { transform: translate(22%, 28%); } }
+.cluster { position: absolute; z-index: 3; pointer-events: none; width: var(--cw); aspect-ratio: 1; }
+.cluster .rtop { position: absolute; width: var(--s); aspect-ratio: 1; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
+.cluster .sway { width: 100%; height: 100%; animation: sway var(--sw, 6s) ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+.c-tl { --cw: clamp(110px, 26vw, 170px); left: calc(var(--cw) * -.45); top: calc(var(--cw) * -.45); }
+.c-br { --cw: clamp(100px, 24vw, 160px); right: calc(var(--cw) * -.45); bottom: calc(var(--cw) * -.45); }
+.c-tr { --cw: clamp(70px, 17vw, 110px); right: calc(var(--cw) * -.2); top: calc(var(--cw) * -.28); }
+.c-bl { --cw: clamp(76px, 18vw, 120px); left: calc(var(--cw) * -.24); bottom: calc(var(--cw) * -.26); }
+.cluster .rtop svg { filter: drop-shadow(0 8px 10px rgba(92, 10, 36, .22)); }
+
+/* card content */
+.steps { position: relative; }
+.step { display: flex; flex-direction: column; align-items: flex-start; }
+.step > * { max-width: 100%; }
+.step-title:focus { outline: none; }
+.kicker { display: inline-flex; align-items: center; gap: 9px; margin: 0; padding: 8px 15px 8px 11px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--crimson); background: rgba(255,255,255,.66); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(163, 18, 58, .12); }
+.kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rose); box-shadow: 0 0 0 4px rgba(224, 40, 90, .18); animation: dot 1.6s ease-in-out infinite; }
+@keyframes dot { 50% { box-shadow: 0 0 0 8px rgba(224, 40, 90, 0); } }
+.hand { margin: 24px 0 0 4px; font-family: var(--font-hand); font-size: clamp(24px, 6vw, 32px); line-height: 1.05; color: var(--rose); transform: rotate(-4deg); transform-origin: left center; text-wrap: balance; }
+.name {
+  margin: 0 0 0 -6px; padding: 0 .12em .08em .02em;
+  font-family: var(--font-name); font-style: italic; font-weight: 700;
+  font-size: clamp(92px, 26vw, 176px); line-height: .95; letter-spacing: -.01em; white-space: nowrap;
+  background: linear-gradient(100deg, var(--crimson) 0%, var(--rose) 30%, #ff8fb0 45%, var(--rose) 60%, var(--crimson) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 10px 18px rgba(163, 18, 58, .28));
+  animation: shimmer 6s ease-in-out infinite alternate;
+}
+@keyframes shimmer { to { background-position: 100% 0; } }
+.ask-body { width: 100%; margin-top: 12px; display: grid; gap: 14px 36px; }
+.lead { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-soft); max-width: 34ch; }
+.question { margin: 0; font-family: var(--font-display); font-size: clamp(25px, 4.5vw, 36px); line-height: 1.22; text-wrap: balance; }
+.answers { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.no-slot { display: inline-flex; }
+@media (min-width: 760px) { .ask-body { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; } .lead { padding-top: 6px; } }
+.btn { font: 800 17px/1 var(--font-body); border: 0; border-radius: 999px; padding: 17px 28px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.btn:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; box-shadow: 0 0 0 6px var(--rose); }
+.btn-yes { position: relative; color: var(--white); background: linear-gradient(180deg, #f05a82 0%, var(--rose) 50%, var(--crimson) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 8px rgba(92, 10, 36, .3), 0 14px 28px -12px rgba(163, 18, 58, .75); transform: scale(var(--grow, 1)); transform-origin: left center; transition: transform .5s var(--spring), box-shadow .3s; text-shadow: 0 1px 1px rgba(92, 10, 36, .3); }
+.btn-yes::after { content: ""; position: absolute; inset: -4px; border-radius: inherit; pointer-events: none; border: 2px solid rgba(224, 40, 90, .5); animation: ring 1.9s ease-out infinite; }
+@keyframes ring { from { transform: scale(.96); opacity: .9; } to { transform: scale(1.16, 1.3); opacity: 0; } }
+.btn-yes:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 8px rgba(92,10,36,.3), 0 18px 36px -12px rgba(163,18,58,.9); }
+.btn-yes:active { transform: scale(calc(var(--grow, 1) * .95)); }
+.btn-wide { width: 100%; white-space: normal; line-height: 1.25; text-align: center; }
+.btn-no { color: var(--ink-soft); background: rgba(255,255,255,.58); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(255,255,255,.6), 0 4px 12px -6px rgba(92, 10, 36, .3); }
+.btn-no.is-loose { position: fixed; z-index: 6; left: 0; top: 0; background: rgba(255,255,255,.68); -webkit-backdrop-filter: blur(12px) saturate(180%); backdrop-filter: blur(12px) saturate(180%); transition: left .42s var(--spring), top .42s var(--spring); }
+.btn-no.is-surrender { color: var(--rose); }
+.hint { margin: 18px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-soft); min-height: 1.45em; }
+.title { margin: 20px 0 0; font-family: var(--font-display); font-size: clamp(30px, 6.4vw, 46px); line-height: 1.15; text-wrap: balance; }
+.title em { font-family: var(--font-name); font-style: italic; font-weight: 700; font-size: 1.2em; color: var(--rose); }
+.field { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; width: 100%; }
+.field-label, .field legend { display: block; padding: 0; margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tab { padding: 10px 14px; border: 0; border-radius: 999px; cursor: pointer; font: 800 13.5px/1 var(--font-body); color: var(--ink-soft); background: rgba(255,255,255,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(255,255,255,.6); white-space: nowrap; transition: background .25s, color .25s, box-shadow .25s, transform .3s var(--spring); }
+.tab:hover { transform: translateY(-1px); }
+.tab[aria-selected="true"] { color: var(--white); background: linear-gradient(180deg, #f05a82, var(--rose)); box-shadow: 0 6px 14px -6px rgba(163, 18, 58, .8); }
+.tab:focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; }
+.chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 760px) { .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.chip { position: relative; display: block; min-width: 0; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.chip-face { display: flex; align-items: center; gap: 10px; height: 100%; padding: 13px 14px; border-radius: 18px; font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink); background: rgba(255,255,255,.48); box-shadow: inset 0 1px 0 rgba(255,255,255,.9), inset 0 0 0 1px rgba(255,255,255,.55); cursor: pointer; transition: transform .3s var(--spring), background .2s, box-shadow .2s, color .2s; }
+.chip-emoji { font-size: 22px; line-height: 1; flex: none; }
+.chip:hover .chip-face { transform: translateY(-2px); background: rgba(255,255,255,.68); }
+.chip input:checked + .chip-face, .chip-face.roll { color: var(--crimson); background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,220,230,.94)); box-shadow: inset 0 0 0 2px var(--rose), 0 10px 20px -12px rgba(163, 18, 58, .7); }
+.chip-face.roll { transform: scale(1.05); }
+.chip input:focus-visible + .chip-face { outline: 3px solid var(--rose); outline-offset: 2px; }
+.fate-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-top: 12px; }
+.picked { margin: 0; font-size: 14.5px; color: var(--ink-soft); min-height: 1.4em; }
+.picked b { color: var(--crimson); }
+.fate { padding: 11px 16px; border-radius: 999px; border: 0; cursor: pointer; font: 800 13.5px/1 var(--font-body); color: var(--crimson); background: rgba(255,255,255,.72); box-shadow: inset 0 0 0 1.5px rgba(224, 40, 90, .45); transition: transform .3s var(--spring), background .2s; }
+.fate:hover { transform: translateY(-1px) rotate(-2deg); background: #fff; }
+.fate:focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; }
+.fate[disabled] { opacity: .6; cursor: progress; }
+.when { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px; width: 100%; margin-top: 18px; }
+.when > div { min-width: 0; }
+.input { display: block; width: 100%; min-height: 52px; font: 700 16px var(--font-body); color: var(--ink); padding: 13px 14px; border: 0; border-radius: 16px; background: rgba(255,255,255,.62); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(255,255,255,.6); -webkit-appearance: none; appearance: none; }
+.input::-webkit-date-and-time-value { text-align: left; }
+.input:focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; }
+.plan-actions { width: 100%; margin-top: 24px; }
+.ticket-wrap { width: 100%; margin-top: 22px; filter: drop-shadow(0 16px 22px rgba(92, 10, 36, .22)); }
+.ticket { --cut: calc(100% - 66px); border-radius: 24px; background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,236,241,.92));
+  -webkit-mask: radial-gradient(circle 12px at left var(--cut), #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 12px at right var(--cut), #0000 97%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 12px at left var(--cut), #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 12px at right var(--cut), #0000 97%, #000) right / 51% 100% no-repeat; }
+.ticket-main { padding: 20px 22px 18px; }
+.ticket-label { margin: 0 0 14px; font-size: 11.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--rose); }
+.ticket-rows { display: grid; gap: 10px; margin: 0; }
+.ticket-rows > div { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.ticket-rows dt { font-size: 11.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.ticket-rows dd { margin: 0; font-family: var(--font-display); font-size: 17px; line-height: 1.35; }
+.ticket-stub { height: 66px; margin: 0 16px; padding: 0 6px; border-top: 2px dashed rgba(224, 40, 90, .32); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stamp { flex: none; width: 44px; height: 44px; transform: rotate(-12deg); }
+.stamp svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.count { font-weight: 800; font-size: 14.5px; color: var(--rose); text-align: right; font-variant-numeric: tabular-nums; }
+.note { font-size: clamp(24px, 5.6vw, 30px); margin-top: 20px; transform: rotate(-2deg); }
+.done-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 14px; }
+.btn-ride { padding: 14px 22px; font-size: 15px; }
+.btn-link { background: none; border: 0; padding: 8px 2px; cursor: pointer; font: 700 14.5px var(--font-body); color: var(--ink-soft); text-decoration: underline; text-decoration-color: rgba(125, 58, 82, .4); text-underline-offset: 4px; }
+.btn-link:hover { color: var(--rose); }
+.btn-link:focus-visible { outline: 3px solid var(--rose); outline-offset: 2px; border-radius: 6px; }
+
+/* ================= side-view rose (intro + bouquet) ================= */
+.srose svg { display: block; width: 100%; height: auto; overflow: visible; }
+.srose .head { transform-box: view-box; transform-origin: 100px 136px; transition: transform 1.1s var(--spring); }
+.srose .p { transform-box: view-box; transition: transform 1.4s var(--spring); }
+.srose .pb-l { transform-origin: 94px 128px; } .srose .pb-r { transform-origin: 106px 128px; }
+.srose .pm-l { transform-origin: 98px 130px; } .srose .pm-r { transform-origin: 102px 130px; }
+.srose .pf-l, .srose .pf-r { transform-origin: 100px 134px; } .srose .pf-c { transform-origin: 100px 136px; }
+.srose .po-l, .srose .po-r { transform-origin: 100px 138px; }
+.srose.bud .po-l { transform: rotate(42deg); } .srose.bud .po-r { transform: rotate(-42deg); }
+.srose.open .po-l { transform: rotate(-12deg); } .srose.open .po-r { transform: rotate(12deg); }
+.srose .sep { transform-box: view-box; transform-origin: 100px 134px; transition: transform 1.2s var(--spring); }
+.srose .stem-path { stroke-dasharray: 200; stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(.3,.1,.3,1); }
+.srose .leaf { transform-box: view-box; transition: transform .9s var(--spring); }
+.srose .leaf-l { transform-origin: 99px 240px; } .srose .leaf-r { transform-origin: 101px 200px; }
+.srose.bud .head { transform: translateY(16px) scale(.7); }
+.srose.bud .pb-l { transform: rotate(16deg); } .srose.bud .pb-r { transform: rotate(-16deg); }
+.srose.bud .pm-l { transform: rotate(14deg); } .srose.bud .pm-r { transform: rotate(-14deg); }
+.srose.bud .pf-l { transform: rotate(32deg); } .srose.bud .pf-r { transform: rotate(-32deg); }
+.srose.bud .pf-c { transform: translateY(-6px) scale(.84, .9); }
+.srose.bud .sep-l { transform: rotate(18deg); } .srose.bud .sep-r { transform: rotate(-18deg); }
+.srose.open .pf-l { transform: rotate(-20deg); } .srose.open .pf-r { transform: rotate(20deg); }
+.srose.open .pf-c { transform: scale(1.07); }
+.srose.open .pm-l { transform: rotate(-8deg); transition-delay: .14s; } .srose.open .pm-r { transform: rotate(8deg); transition-delay: .14s; }
+.srose.open .pb-l { transform: rotate(-13deg); transition-delay: .28s; } .srose.open .pb-r { transform: rotate(13deg); transition-delay: .28s; }
+.srose.open .sep-l { transform: rotate(-10deg); } .srose.open .sep-r { transform: rotate(10deg); }
+.srose.seed .head { transform: scale(0); }
+.srose.seed .stem-path { stroke-dashoffset: 200; }
+.srose.seed .leaf { transform: scale(0); }
+.srose.growing .leaf-l { transition-delay: .6s; } .srose.growing .leaf-r { transition-delay: .85s; }
+.srose.growing .head { transition-delay: 1s; }
+.srose .glow { opacity: 0; transition: opacity 1s ease; }
+.srose.open .glow { opacity: 1; }
+
+/* ================= the film (intro + outro) ================= */
+.film { position: fixed; inset: 0; z-index: 50; overflow: hidden; background: radial-gradient(80% 60% at 50% 40%, #fff7f4 0%, #ffe6ec 55%, #ffcfdc 100%); }
+.rays { position: absolute; left: 50%; top: 42%; width: 160vmax; aspect-ratio: 1; margin: -80vmax 0 0 -80vmax; background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.35) 0deg 6deg, rgba(255,255,255,0) 6deg 18deg); -webkit-mask: radial-gradient(closest-side, #000 10%, transparent 70%); mask: radial-gradient(closest-side, #000 10%, transparent 70%); animation: rays 60s linear infinite; opacity: .6; }
+@keyframes rays { to { transform: rotate(360deg); } }
+.film-rose { position: absolute; left: 50%; bottom: -2vh; height: min(68vh, 560px); aspect-ratio: 200 / 320; transform: translateX(-50%); cursor: pointer; -webkit-tap-highlight-color: transparent; border: 0; padding: 0; background: none; }
+.film-rose:focus { outline: none; }
+.film-rose:focus-visible .srose { filter: drop-shadow(0 0 12px rgba(224, 40, 90, .8)); }
+.film-rose .srose { width: 100%; height: 100%; }
+.film-rose svg { filter: drop-shadow(0 14px 24px rgba(92, 10, 36, .25)); }
+.halo { position: absolute; left: 50%; top: calc(100% - min(68vh, 560px) * .6 - 2vh); width: min(60vh, 480px); aspect-ratio: 1; margin: calc(min(60vh, 480px) / -2) 0 0 calc(min(60vh, 480px) / -2); border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, .95), rgba(255, 200, 215, .5) 35%, transparent 68%); opacity: .5; pointer-events: none; animation: halo 3s ease-in-out infinite alternate; }
+@keyframes halo { to { transform: scale(1.08); opacity: .75; } }
+.wreath .rtop { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
+.wreath .rtop .spin { width: 100%; height: 100%; animation: spin var(--sp, 80s) linear infinite; }
+.wreath .rtop svg { filter: drop-shadow(0 8px 10px rgba(92, 10, 36, .2)); }
+.caption { position: absolute; left: 50%; top: 9%; transform: translateX(-50%); width: min(92vw, 720px); margin: 0; text-align: center; pointer-events: none; }
+.cap-name.sm { font-size: clamp(44px, 10vw, 76px); white-space: nowrap; }
+.cap-name { display: block; font-family: var(--font-name); font-style: italic; font-weight: 700; font-size: clamp(64px, 17vw, 120px); line-height: 1; background: linear-gradient(180deg, #ff8fb0, var(--rose) 50%, var(--crimson)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 8px 16px rgba(163, 18, 58, .25)); padding: 0 .1em .06em; }
+.cap-line { display: block; margin-top: 8px; font-family: var(--font-display); font-size: clamp(19px, 4.6vw, 28px); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+.tap { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(min(68vh, 560px) * .5); margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--rose); pointer-events: none; animation: blink 1.8s ease-in-out infinite; white-space: nowrap; background: rgba(255,255,255,.7); padding: 8px 14px; border-radius: 999px; }
+@keyframes blink { 50% { opacity: .45; } }
+.film-cta { position: absolute; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 18px; width: min(92vw, 560px); }
+.film-cta .btn { box-shadow: 0 14px 28px -10px rgba(92, 10, 36, .55); }
+.film-link { background: none; border: 0; padding: 10px 6px; cursor: pointer; font: 800 14px var(--font-body); color: var(--crimson); text-decoration: underline; text-underline-offset: 4px; }
+.film-link:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 6px; }
+.film-skip { position: absolute; z-index: 5; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); padding: 10px 6px; border: 0; background: none; cursor: pointer; font: 800 13px var(--font-body); letter-spacing: .04em; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+.film-skip:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 6px; }
+
+/* bouquet */
+.bouquet { position: absolute; left: 50%; bottom: 2vh; height: min(56vh, 480px); aspect-ratio: 200 / 320; transform: translateX(-50%); pointer-events: none; }
+.bq-paper, .bq-front, .bq-ribbon { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bq-paper { z-index: 0; transform-origin: 50% 94%; transition: transform 1s var(--spring), opacity .6s; }
+.bq-front { z-index: 7; transform-origin: 50% 94%; transition: transform 1s var(--spring) .1s, opacity .6s; }
+.bq-ribbon { z-index: 8; transform-origin: 50% 88%; transition: transform .9s var(--spring), opacity .4s; }
+.bouquet.wrap-off .bq-paper, .bouquet.wrap-off .bq-front { transform: scaleY(0); opacity: 0; }
+.bouquet.wrap-off .bq-ribbon { transform: scale(0) rotate(-40deg); opacity: 0; }
+/* each rose is scaled so its stem tie point (100, 280) lands on the ribbon (100, 272) and its head rises above the paper */
+.bq-rose { position: absolute; left: 50%; top: -15.8%; width: 115%; transform-origin: 50% 87.5%; z-index: var(--z, 2); transform: translateX(-50%) rotate(var(--a)) scale(var(--sc, 1)); }
+.tag { position: absolute; left: 58%; top: 70%; z-index: 9; width: min(52vw, 230px); padding: 12px 14px 12px 18px; border-radius: 6px 14px 14px 6px; background: #fffaf3; color: var(--ink); font: 700 13.5px/1.4 var(--font-body); box-shadow: 0 10px 22px -10px rgba(92, 10, 36, .5); transform-origin: 0 0; opacity: 0; transform: rotate(-30deg) scale(.6); transition: transform 1.1s var(--spring), opacity .4s; }
+.tag::before { content: ""; position: absolute; left: 6px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: var(--blush); box-shadow: inset 0 0 0 1.5px #e0b8c4; }
+.tag b { display: block; font-family: var(--font-name); font-style: italic; font-size: 22px; color: var(--rose); }
+.tag.shown { opacity: 1; transform: rotate(8deg); animation: tag-swing 3s ease-in-out infinite alternate 1.1s; }
+@keyframes tag-swing { from { transform: rotate(8deg); } to { transform: rotate(2deg); } }
+.storm { position: fixed; inset: 0; z-index: 80; width: 100%; height: 100%; pointer-events: none; }
+
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+@media (max-width: 600px) { .tag { left: 30%; top: 76%; width: min(60vw, 230px); } }
+@media (max-width: 420px) {
+  .chip-face { padding: 12px 11px; font-size: 14px; gap: 8px; }
+  .btn { padding: 16px 22px; font-size: 16px; }
+  .tab { padding: 9px 11px; font-size: 13px; }
+}
+@media (prefers-reduced-transparency: reduce) { .card { background: rgba(255, 246, 248, .94); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .001ms !important; transition-delay: 0s !important; }
+}
+</style>
+</head>
+<body class="is-film">
+
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="lg-refract" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="0" y="0" width="680" height="700" color-interpolation-filters="sRGB">
+      <feImage id="lg-map" x="0" y="0" width="680" height="700" preserveAspectRatio="none" result="map"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="52" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <linearGradient id="paperG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3ef"/><stop offset="1" stop-color="#f6c9d4"/></linearGradient>
+    <linearGradient id="paperF" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f9d7df"/><stop offset=".5" stop-color="#fff5f2"/><stop offset="1" stop-color="#f3bfcc"/></linearGradient>
+  </defs>
+</svg>
+
+<div class="garden" id="garden" aria-hidden="true"></div>
+<canvas id="petals-back" aria-hidden="true"></canvas>
+
+<main class="stage" id="stage" inert>
+  <div class="card-float">
+    <div class="card-jelly" id="jelly">
+      <article class="card" id="card">
+        <div class="glass-fx" aria-hidden="true"><div class="sheen"></div><div class="glare" id="glare"></div></div>
+        <div class="cluster c-tl" aria-hidden="true" id="c-tl"></div>
+        <div class="cluster c-tr" aria-hidden="true" id="c-tr"></div>
+        <div class="cluster c-bl" aria-hidden="true" id="c-bl"></div>
+        <div class="cluster c-br" aria-hidden="true" id="c-br"></div>
+
+        <div class="steps" id="steps">
+          <section class="step" id="step-ask" aria-labelledby="ask-title">
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Приглашение на свидание</p>
+            <p class="hand">для самой нежной девушки</p>
+            <h1 class="name">Роза</h1>
+            <div class="ask-body">
+              <p class="lead">Даже самые красивые розы сегодня распустились ради тебя. И у них есть к тебе один вопрос.</p>
+              <div>
+                <h2 class="question step-title" id="ask-title" tabindex="-1">Пойдёшь со мной на свидание?</h2>
+                <div class="answers">
+                  <button class="btn btn-yes" id="yes" type="button">Да, конечно <span aria-hidden="true">🌹</span></button>
+                  <span class="no-slot" id="no-slot"><button class="btn btn-no" id="no" type="button">Нет</button></span>
+                </div>
+                <p class="hint" id="hint" aria-live="polite">Подсказка: правильный ответ цвета розы 🌹</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="step" id="step-plan" aria-labelledby="plan-title" hidden>
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Ты сказала «да»</p>
+            <h2 class="title step-title" id="plan-title" tabindex="-1">Ура! Тогда давай <em>всё спланируем</em></h2>
+            <form id="plan-form" novalidate style="width:100%">
+              <fieldset class="field">
+                <legend>Куда пойдём? 30 идей в 5 категориях</legend>
+                <div class="tabs" role="tablist" aria-label="Категории" id="tabs"></div>
+                <div id="panels"></div>
+                <div class="fate-row">
+                  <p class="picked" id="picked" aria-live="polite">Выбери что-нибудь или доверься судьбе</p>
+                  <button class="fate" id="fate" type="button">🎲 Пусть решит судьба</button>
+                </div>
+              </fieldset>
+              <div class="when">
+                <div>
+                  <label class="field-label" for="date">День</label>
+                  <input class="input" type="date" id="date" name="date" required>
+                </div>
+                <div>
+                  <label class="field-label" for="time">Время</label>
+                  <input class="input" type="time" id="time" name="time" value="19:00" step="900" required>
+                </div>
+              </div>
+              <div class="plan-actions">
+                <button class="btn btn-yes btn-wide" id="plan-submit" type="submit">Назначить свидание <span aria-hidden="true">💐</span></button>
+              </div>
+              <p class="hint" id="plan-hint" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="step" id="step-done" aria-labelledby="done-title" hidden>
+            <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Свидание назначено</p>
+            <h2 class="title step-title" id="done-title" tabindex="-1">До встречи, <em>Роза</em>!</h2>
+            <div class="ticket-wrap">
+              <div class="ticket">
+                <div class="ticket-main">
+                  <p class="ticket-label">Билет на свидание · на двоих</p>
+                  <dl class="ticket-rows">
+                    <div><dt>Кто</dt><dd>Роза и я</dd></div>
+                    <div><dt>Куда</dt><dd id="t-place">Рамён</dd></div>
+                    <div><dt>Когда</dt><dd id="t-when">суббота, в 19:00</dd></div>
+                    <div><dt>С собой</dt><dd>Букет роз для тебя 💐</dd></div>
+                  </dl>
+                </div>
+                <div class="ticket-stub"><span class="stamp" id="stamp" aria-hidden="true"></span><span class="count" id="t-count"></span></div>
+              </div>
+            </div>
+            <p class="hand note">Сделай скриншот и отправь мне. Я уже жду 💌</p>
+            <div class="done-actions">
+              <button class="btn btn-yes btn-ride" id="replay-bouquet" type="button">Посмотреть букет <span aria-hidden="true">💐</span></button>
+              <button class="btn-link" id="edit" type="button">Изменить план</button>
+              <button class="btn-link" id="restart" type="button">Начать сначала</button>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<canvas id="petals-front" aria-hidden="true"></canvas>
+<div class="layer" id="fx" aria-hidden="true"></div>
+
+<div class="film" id="film" role="dialog" aria-modal="true" aria-label="Цветок для Розы">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="wreath" id="wreath" aria-hidden="true"></div>
+  <div class="halo" id="halo" aria-hidden="true"></div>
+  <button class="film-rose" id="film-rose" type="button" aria-label="Коснуться бутона"></button>
+  <div class="bouquet wrap-off" id="bouquet" hidden aria-hidden="true">
+    <svg class="bq-paper" viewBox="0 0 200 320" preserveAspectRatio="none"><path d="M100 306 L 6 112 Q 54 140 100 128 Q 146 140 194 112 Z" fill="url(#paperG)"/><path d="M100 306 L 30 140 M100 306 L 170 140 M100 306 L 100 132" stroke="#e7b3c1" stroke-width="1.2" opacity=".7"/></svg>
+    <div id="bq-roses"></div>
+    <svg class="bq-front" viewBox="0 0 200 320" preserveAspectRatio="none"><path d="M100 312 L 34 196 Q 100 222 166 196 Z" fill="url(#paperF)"/><path d="M34 196 Q 100 222 166 196" stroke="#fff" stroke-width="2" fill="none" opacity=".8"/></svg>
+    <svg class="bq-ribbon" viewBox="0 0 200 320"><path d="M100 272 C 78 252, 56 252, 58 266 C 60 280, 82 280, 100 274 Z M100 272 C 122 252, 144 252, 142 266 C 140 280, 118 280, 100 274 Z" fill="#e0285a"/><path d="M96 276 L 84 308 L 92 304 L 98 312 L 100 278 Z M104 276 L 116 308 L 108 304 L 102 312 L 100 278 Z" fill="#c21d4d"/><ellipse cx="100" cy="273" rx="8" ry="7" fill="#a3123a"/><path d="M66 262 C 74 258, 84 262, 92 268" stroke="#ff8fb0" stroke-width="2" fill="none" opacity=".8"/></svg>
+    <div class="tag" id="tag"></div>
+  </div>
+  <p class="caption" id="caption" aria-live="polite"></p>
+  <p class="tap" id="tap" hidden>коснись бутона</p>
+  <div class="film-cta" id="film-cta" hidden></div>
+  <button class="film-skip" id="film-skip" type="button">Пропустить</button>
+</div>
+<canvas class="storm" id="storm" aria-hidden="true"></canvas>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s) => document.querySelector(s);
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fineHover = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const vw = () => window.innerWidth;
+  const vh = () => window.innerHeight;
+  const small = () => vw() < 600;
+  const body = document.body;
+  const wait = (ms) => new Promise((r) => setTimeout(r, reduced ? Math.min(ms, 60) : ms));
+
+  const card = $("#card"), glare = $("#glare"), jelly = $("#jelly"), stepsWrap = $("#steps"), stage = $("#stage");
+  const yesBtn = $("#yes"), noBtn = $("#no"), slot = $("#no-slot"), hint = $("#hint");
+  const fx = $("#fx");
+  const steps = { ask: $("#step-ask"), plan: $("#step-plan"), done: $("#step-done") };
+  let current = steps.ask;
+
+  /* ================= roses ================= */
+  // [deep, mid, main, light]
+  const PAL = {
+    red: ["#5c0a24", "#a3123a", "#e0285a", "#ff8fb0"],
+    crimson: ["#4a061b", "#8a0f2e", "#c8183f", "#ff6f8f"],
+    pink: ["#a3123a", "#e0457a", "#f7a1b5", "#ffe1e8"],
+    blush: ["#c2456b", "#f28fab", "#ffc6d4", "#fff3f5"],
+    peach: ["#b84a3a", "#f08a6e", "#ffc2a8", "#fff1e8"],
+    white: ["#d9a7b5", "#f6dce3", "#fff4f6", "#ffffff"]
+  };
+  let uid = 0;
+  const petalPath = (len, w) => `M0 0 C ${-w * .6} ${-len * .1}, ${-w * 1.1} ${-len * .55}, ${-w * .7} ${-len * .92} C ${-w * .35} ${-len * 1.05}, ${w * .35} ${-len * 1.05}, ${w * .7} ${-len * .92} C ${w * 1.1} ${-len * .55}, ${w * .6} ${-len * .1}, 0 0 Z`;
+  function roseTop(pal = "red", { leaves = true } = {}) {
+    const id = "rt" + (++uid), P = PAL[pal];
+    const layers = [{ n: 8, len: 100, w: 50 }, { n: 7, len: 84, w: 46 }, { n: 6, len: 67, w: 40 }, { n: 5, len: 50, w: 33 }, { n: 4, len: 34, w: 25 }, { n: 3, len: 20, w: 16 }];
+    let s = `<svg viewBox="-115 -115 230 230"><defs><radialGradient id="${id}" cx="0" cy="0" r="104" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P[0]}"/><stop offset=".36" stop-color="${P[1]}"/><stop offset=".76" stop-color="${P[2]}"/><stop offset="1" stop-color="${P[3]}"/></radialGradient></defs>`;
+    if (leaves) {
+      s += `<g class="leafs">`;
+      for (const a of [rnd(20, 50), rnd(140, 170), rnd(250, 290)]) s += `<g transform="rotate(${a.toFixed(0)})"><path d="M10 0 C 40 -24, 84 -22, 114 0 C 84 22, 40 24, 10 0 Z" fill="#4f9a5a"/><path d="M14 0 C 50 -2, 84 -1, 110 0" stroke="#2f6b3d" stroke-width="1.6" fill="none"/></g>`;
+      s += `</g>`;
+    }
+    const off = rnd(0, 40);
+    layers.forEach((L, li) => {
+      s += `<g class="lay" style="--li:${li}">`;
+      if (li > 0) s += `<circle r="${(L.len * .98).toFixed(0)}" fill="${P[0]}" opacity=".22"/>`;
+      for (let k = 0; k < L.n; k++) {
+        const a = off + li * 23 + k * (360 / L.n) + rnd(-6, 6);
+        s += `<path d="${petalPath(L.len * rnd(.94, 1.04), L.w)}" transform="rotate(${a.toFixed(1)})" fill="url(#${id})" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1.3"/>`;
+      }
+      s += `</g>`;
+    });
+    s += `<g class="lay" style="--li:5"><path d="M-7 3 C -8 -6, 6 -9, 8 -1 C 9 7, -3 10, -6 4 C -8 -1, -1 -4, 2 -1" stroke="${P[0]}" stroke-width="2.6" fill="none" stroke-linecap="round"/></g></svg>`;
+    return s;
+  }
+  function roseSide(pal = "red") {
+    const id = "rs" + (++uid), P = PAL[pal];
+    const g = `url(#${id})`, gb = `url(#${id}b)`;
+    return `<svg viewBox="0 0 200 320"><defs>
+      <linearGradient id="${id}" x1="0" y1="56" x2="0" y2="140" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P[3]}"/><stop offset=".42" stop-color="${P[2]}"/><stop offset=".8" stop-color="${P[1]}"/><stop offset="1" stop-color="${P[0]}"/></linearGradient>
+      <linearGradient id="${id}b" x1="0" y1="44" x2="0" y2="130" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P[2]}"/><stop offset=".6" stop-color="${P[1]}"/><stop offset="1" stop-color="${P[0]}"/></linearGradient>
+      <radialGradient id="${id}g"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".5" stop-color="${P[3]}" stop-opacity=".35"/><stop offset="1" stop-color="${P[3]}" stop-opacity="0"/></radialGradient></defs>
+      <circle class="glow" cx="100" cy="96" r="80" fill="url(#${id}g)"/>
+      <path class="stem-path" d="M100 320 C 96 270, 104 210, 100 138" stroke="#2f6b3d" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M99 270 L 91 266 L 98 261 Z M101 226 L 109 222 L 102 217 Z" fill="#2f6b3d"/>
+      <g class="leaf leaf-l"><path d="M99 240 C 80 225, 60 226, 46 236 C 60 248, 82 250, 99 240 Z" fill="#4f9a5a"/><path d="M99 240 C 80 236, 62 236, 50 236" stroke="#2f6b3d" stroke-width="1.4" fill="none"/></g>
+      <g class="leaf leaf-r"><path d="M101 200 C 120 185, 140 186, 154 196 C 140 208, 118 210, 101 200 Z" fill="#4f9a5a"/><path d="M101 200 C 120 196, 138 196, 150 196" stroke="#2f6b3d" stroke-width="1.4" fill="none"/></g>
+      <g class="head">
+        <path class="sep sep-l" d="M100 134 C 88 138, 76 150, 72 160 C 84 156, 94 148, 100 140 Z" fill="#3f8a4a"/>
+        <path class="sep sep-r" d="M100 134 C 112 138, 124 150, 128 160 C 116 156, 106 148, 100 140 Z" fill="#3f8a4a"/>
+        <path d="M100 136 C 96 146, 98 156, 100 164 C 102 156, 104 146, 100 136 Z" fill="#3f8a4a"/>
+        <path class="p pb-l" d="M94 128 C 66 122, 54 92, 62 64 C 70 46, 90 44, 100 58 L 100 128 Z" fill="${gb}" stroke="${P[3]}" stroke-opacity=".5" stroke-width="1"/>
+        <path class="p pb-r" d="M106 128 C 134 122, 146 92, 138 64 C 130 46, 110 44, 100 58 L 100 128 Z" fill="${gb}" stroke="${P[3]}" stroke-opacity=".5" stroke-width="1"/>
+        <path d="M100 126 C 84 122, 82 94, 90 78 C 95 70, 105 70, 110 78 C 118 94, 116 122, 100 126 Z" fill="${g}"/>
+        <path d="M95 84 C 97 79, 105 79, 105 85 C 105 90, 98 90, 98 86" stroke="${P[3]}" stroke-width="1.4" fill="none" opacity=".55"/>
+        <path class="p pm-l" d="M98 130 C 74 126, 66 100, 74 80 C 80 70, 92 70, 96 80 C 94 98, 96 116, 98 130 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".55" stroke-width="1"/>
+        <path class="p pm-r" d="M102 130 C 126 126, 134 100, 126 80 C 120 70, 108 70, 104 80 C 106 98, 104 116, 102 130 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".55" stroke-width="1"/>
+        <path class="p po-l" d="M100 138 C 80 142, 58 134, 50 114 C 62 112, 74 115, 84 121 C 92 126, 97 131, 100 138 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1"/>
+        <path class="p po-r" d="M100 138 C 120 142, 142 134, 150 114 C 138 112, 126 115, 116 121 C 108 126, 103 131, 100 138 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1"/>
+        <path class="p pf-l" d="M100 134 C 82 134, 66 120, 64 104 C 72 108, 84 110, 92 108 C 96 114, 98 124, 100 134 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1"/>
+        <path class="p pf-r" d="M100 134 C 118 134, 134 120, 136 104 C 128 108, 116 110, 108 108 C 104 114, 102 124, 100 134 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1"/>
+        <g class="p pf-c"><path d="M100 136 C 80 134, 72 116, 78 102 C 86 108, 94 106, 100 104 C 106 106, 114 108, 122 102 C 128 116, 120 134, 100 136 Z" fill="${g}" stroke="${P[3]}" stroke-opacity=".6" stroke-width="1"/><path d="M100 107 C 99 117, 99 126, 100 133" stroke="${P[1]}" stroke-width="1.2" fill="none" opacity=".4"/></g>
+      </g>
+    </svg>`;
+  }
+  const mkSide = (pal, cls = "seed") => { const d = document.createElement("div"); d.className = "srose " + cls; d.innerHTML = roseSide(pal); return d; };
+  const bloomTop = (el, delay = 0) => { el.style.setProperty("--bd", delay + "ms"); el.classList.remove("closed", "blooming"); void el.offsetWidth; el.classList.add("blooming"); };
+
+  /* background garden */
+  const gardenEl = $("#garden");
+  const BIG = [
+    { x: "4%", y: "6%", s: "min(52vmin, 460px)", pal: "red", sp: "160s" },
+    { x: "98%", y: "96%", s: "min(60vmin, 520px)", pal: "crimson", sp: "200s", dir: "reverse" },
+    { x: "96%", y: "8%", s: "min(26vmin, 220px)", pal: "pink", sp: "120s" },
+    { x: "2%", y: "92%", s: "min(32vmin, 270px)", pal: "pink", sp: "140s", dir: "reverse" },
+    { x: "84%", y: "46%", s: "min(14vmin, 120px)", pal: "blush", sp: "90s" },
+    { x: "12%", y: "52%", s: "min(12vmin, 100px)", pal: "white", sp: "100s", dir: "reverse" },
+    { x: "48%", y: "-4%", s: "min(16vmin, 130px)", pal: "peach", sp: "110s" },
+    { x: "56%", y: "103%", s: "min(18vmin, 150px)", pal: "blush", sp: "130s", dir: "reverse" }
+  ];
+  const bigRoses = [];
+  (() => {
+    let s = "";
+    for (let i = 0; i < 9; i++) s += `<div class="bokeh" style="--x:${rnd(5, 90)}%;--y:${rnd(5, 90)}%;--s:${rnd(40, 140)}px;--d:${rnd(7, 13)}s;--dx:${rnd(-40, 40)}px;--dy:${rnd(-40, 40)}px"></div>`;
+    gardenEl.innerHTML = s;
+    BIG.forEach((b) => {
+      const el = document.createElement("div");
+      el.className = "big-rose rtop closed";
+      el.style.cssText = `--x:${b.x};--y:${b.y};--s:${b.s};--sp:${b.sp};--dir:${b.dir || "normal"}`;
+      el.innerHTML = `<div class="spin">${roseTop(b.pal)}</div>`;
+      gardenEl.appendChild(el);
+      bigRoses.push(el);
+    });
+  })();
+  /* card corner clusters */
+  const CLUSTERS = {
+    "#c-tl": [{ x: 42, y: 42, s: 78, pal: "red" }, { x: 80, y: 22, s: 42, pal: "pink" }, { x: 20, y: 82, s: 38, pal: "blush" }],
+    "#c-br": [{ x: 56, y: 56, s: 76, pal: "crimson" }, { x: 20, y: 70, s: 40, pal: "pink" }, { x: 76, y: 18, s: 36, pal: "white" }],
+    "#c-tr": [{ x: 50, y: 50, s: 80, pal: "pink" }, { x: 14, y: 70, s: 40, pal: "red" }],
+    "#c-bl": [{ x: 50, y: 50, s: 78, pal: "blush" }, { x: 86, y: 74, s: 38, pal: "red" }]
+  };
+  const clusterRoses = [];
+  for (const [sel, list] of Object.entries(CLUSTERS)) {
+    const host = $(sel);
+    list.forEach((r, i) => {
+      const el = document.createElement("div");
+      el.className = "rtop closed";
+      el.style.cssText = `--x:${r.x}%;--y:${r.y}%;--s:${r.s}%`;
+      el.innerHTML = `<div class="sway" style="--sw:${rnd(4.5, 7).toFixed(1)}s;animation-delay:${-rnd(0, 5).toFixed(1)}s">${roseTop(r.pal, { leaves: i === 0 })}</div>`;
+      host.appendChild(el);
+      clusterRoses.push(el);
+    });
+  }
+  function bloomGarden() {
+    bigRoses.forEach((el, i) => bloomTop(el, i * 160));
+    clusterRoses.forEach((el, i) => bloomTop(el, 500 + i * 110));
+  }
+
+  /* ================= petals on canvas ================= */
+  const PETAL_COLORS = [["#8a0f2e", "#ff6f8f"], ["#c8183f", "#ff9fb6"], ["#e0457a", "#ffd0dc"], ["#f28fab", "#fff1f4"], ["#a3123a", "#ff8fb0"]];
+  const petalSprites = PETAL_COLORS.map(([deep, light]) => {
+    const c = document.createElement("canvas");
+    c.width = c.height = 64;
+    const g = c.getContext("2d");
+    g.translate(32, 33);
+    const gr = g.createLinearGradient(0, -27, 0, 27);
+    gr.addColorStop(0, light); gr.addColorStop(1, deep);
+    g.fillStyle = gr;
+    g.beginPath(); g.moveTo(0, 27);
+    g.bezierCurveTo(-24, 14, -26, -12, -11, -25);
+    g.bezierCurveTo(-4, -30, 4, -30, 11, -25);
+    g.bezierCurveTo(26, -12, 24, 14, 0, 27);
+    g.fill();
+    g.strokeStyle = "rgba(255,255,255,.35)"; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(0, 22); g.quadraticCurveTo(2, 0, 0, -20); g.stroke();
+    return c;
+  });
+  function petalLayer(cv) {
+    const ctx = cv.getContext("2d");
+    const L = { cv, ctx, W: 0, H: 0, parts: [] };
+    L.size = () => { const dpr = Math.min(2, window.devicePixelRatio || 1); L.W = vw(); L.H = vh(); cv.width = Math.round(L.W * dpr); cv.height = Math.round(L.H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    L.size();
+    return L;
+  }
+  const BACK = petalLayer($("#petals-back")), FRONT = petalLayer($("#petals-front")), STORM = petalLayer($("#storm"));
+  const newPetal = (L, top) => ({ k: "petal", x: rnd(-.05, 1.05) * L.W, y: top ? rnd(-L.H, -20) : rnd(0, L.H), vx: rnd(-.3, .5), vy: rnd(.5, 1.4), rot: rnd(0, 6.28), vr: rnd(-.03, .03), ph: rnd(0, 6.28), vph: rnd(.03, .07), s: rnd(12, 24), spr: pick(petalSprites), a: rnd(.75, 1) });
+  let wind = 0;
+  function ensurePetals(L, n) { L.target = n; let c = L.parts.reduce((a, p) => a + (p.k === "petal"), 0); while (c < n) { L.parts.push(newPetal(L, false)); c++; } }
+  function drawLayer(L, t) {
+    const { ctx, W, H } = L;
+    ctx.clearRect(0, 0, W, H);
+    const out = [];
+    let count = L.parts.reduce((a, p) => a + (p.k === "petal"), 0);
+    for (const p of L.parts) {
+      if (p.k === "petal") {
+        p.vx += (wind - p.vx * .02) * .02;
+        p.x += p.vx + Math.sin(t / 1300 + p.ph) * .35; p.y += p.vy; p.rot += p.vr; p.ph += p.vph;
+        if (p.y > H + 30 || p.x > W + 60 || p.x < -60) {
+          // keep the petal coming back from the top only while this layer still wants that many
+          if (L.recycle && count <= (L.target || 0)) Object.assign(p, newPetal(L, true));
+          else { count--; continue; }
+        }
+      } else {
+        p.life++; p.vx *= p.drag; p.vy = p.vy * p.drag + p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.ph += p.vph;
+        if (p.life >= p.max || p.x > W + 80) continue;
+      }
+      out.push(p);
+      const flip = .3 + .7 * Math.abs(Math.sin(p.ph));
+      ctx.globalAlpha = p.k === "petal" ? p.a : Math.max(0, 1 - Math.pow(p.life / p.max, 3));
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, flip);
+      ctx.drawImage(p.spr, -p.s / 2, -p.s / 2, p.s, p.s);
+      ctx.restore();
+    }
+    L.parts = out;
+    ctx.globalAlpha = 1;
+  }
+  BACK.recycle = true;
+  FRONT.recycle = true;
+  function burstPetals(L, x, y, n = 40, power = 1) {
+    if (reduced) n = Math.min(n, 10);
+    for (let i = 0; i < n; i++) {
+      const a = rnd(0, Math.PI * 2), sp = rnd(2, 9) * power;
+      L.parts.push({ k: "burst", x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, drag: .955, g: .09, rot: rnd(0, 6.28), vr: rnd(-.15, .15), ph: rnd(0, 6.28), vph: rnd(.08, .16), s: rnd(12, 26), spr: pick(petalSprites), life: 0, max: rnd(60, 110) });
+    }
+  }
+  let petalsBack = 0, petalsFront = 0;
+  function loop(t) {
+    wind = Math.sin(t / 5000) * .6 + .2;
+    ensurePetals(BACK, petalsBack);
+    ensurePetals(FRONT, petalsFront);
+    drawLayer(BACK, t);
+    drawLayer(FRONT, t);
+    if (STORM.parts.length) drawLayer(STORM, t); else if (STORM.dirty) { STORM.ctx.clearRect(0, 0, STORM.W, STORM.H); STORM.dirty = false; }
+    requestAnimationFrame(loop);
+  }
+  if (!reduced) requestAnimationFrame(loop);
+  // A storm of petals blows across the screen; the scene changes behind it.
+  function petalStorm(mid) {
+    if (reduced) { mid(); return Promise.resolve(); }
+    const W = STORM.W, H = STORM.H, n = small() ? 170 : 300;
+    for (let i = 0; i < n; i++) STORM.parts.push({ k: "burst", x: rnd(-W * .5, -20), y: rnd(-40, H + 40), vx: rnd(22, 36), vy: rnd(-3, 3), drag: 1, g: 0, rot: rnd(0, 6.28), vr: rnd(-.2, .2), ph: rnd(0, 6.28), vph: rnd(.1, .2), s: rnd(22, 52), spr: pick(petalSprites), life: 0, max: 400 });
+    STORM.dirty = true;
+    return new Promise((r) => setTimeout(() => { mid(); setTimeout(r, 900); }, 650));
+  }
+
+  /* emoji confetti for big moments */
+  function burst(x, y, n = 16, set = ["🌹", "💖", "🌸", "💕", "✨", "🥀", "💐"]) {
+    if (reduced) n = Math.min(n, 6);
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement("span");
+      p.className = "bit"; p.textContent = pick(set);
+      p.style.left = x + "px"; p.style.top = y + "px"; p.style.fontSize = rnd(14, 28) + "px";
+      fx.appendChild(p);
+      const a = rnd(0, Math.PI * 2), d = rnd(70, 240), dx = Math.cos(a) * d, dy = Math.sin(a) * d - rnd(30, 110), rot = rnd(-160, 160);
+      p.animate([{ transform: "translate(0px, 0px) scale(.2) rotate(0deg)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) scale(1) rotate(${rot}deg)`, opacity: 1, offset: .55 }, { transform: `translate(${dx * 1.15}px, ${dy + 150}px) scale(.85) rotate(${rot * 1.4}deg)`, opacity: 0 }], { duration: rnd(1300, 2100), easing: "cubic-bezier(.2,.7,.3,1)" }).onfinish = () => p.remove();
+    }
+  }
+  const centerOf = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+
+  /* ================= liquid glass ================= */
+  if (fineHover && !reduced) {
+    let raf = 0, last = null;
+    const apply = () => {
+      raf = 0;
+      const r = card.getBoundingClientRect();
+      const x = (last.clientX - r.left) / r.width, y = (last.clientY - r.top) / r.height;
+      const cx = Math.max(-1, Math.min(1, x * 2 - 1)), cy = Math.max(-1, Math.min(1, y * 2 - 1));
+      card.style.setProperty("--ry", (cx * 5).toFixed(2) + "deg");
+      card.style.setProperty("--rx", (-cy * 4).toFixed(2) + "deg");
+      glare.style.transform = `translate(${((x - .5) * r.width * .8).toFixed(1)}px, ${((y - .25) * r.height * .7).toFixed(1)}px)`;
+    };
+    window.addEventListener("pointermove", (e) => { if (body.classList.contains("is-film")) return; last = e; if (!raf) raf = requestAnimationFrame(apply); }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", () => { card.style.setProperty("--ry", "0deg"); card.style.setProperty("--rx", "0deg"); glare.style.transform = ""; });
+  } else if (!reduced) glare.classList.add("drift");
+  const canRefract = (() => {
+    const ua = navigator.userAgent;
+    const brands = (navigator.userAgentData && navigator.userAgentData.brands) || [];
+    const chromium = brands.some((b) => /Chromium/i.test(b.brand)) || (/\bChrome\/\d+/.test(ua) && !/CriOS|FxiOS|EdgiOS|Firefox/.test(ua));
+    return chromium && (navigator.hardwareConcurrency || 4) >= 4;
+  })();
+  const filt = $("#lg-refract"), feMap = $("#lg-map");
+  function buildMap() {
+    const w = Math.round(card.offsetWidth), h = Math.round(card.offsetHeight);
+    if (w < 40 || h < 40) return;
+    const R = Math.min(parseFloat(getComputedStyle(card).borderTopLeftRadius) || 40, w / 2, h / 2);
+    const band = Math.min(34, Math.min(w, h) / 5);
+    const cv = document.createElement("canvas");
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+    const img = ctx.createImageData(w, h), d = img.data;
+    const hw = w / 2, hh = h / 2, bx = hw - R, by = hh - R;
+    for (let y = 0; y < h; y++) {
+      const py = y + .5 - hh, sy = py < 0 ? -1 : 1, qy = Math.abs(py) - by;
+      for (let x = 0; x < w; x++) {
+        const px = x + .5 - hw, sx = px < 0 ? -1 : 1, qx = Math.abs(px) - bx;
+        let sdf, nx, ny;
+        if (qx > 0 && qy > 0) { const Lh = Math.hypot(qx, qy); sdf = Lh - R; nx = (qx / Lh) * sx; ny = (qy / Lh) * sy; }
+        else if (qx > qy) { sdf = qx - R; nx = sx; ny = 0; }
+        else { sdf = qy - R; nx = 0; ny = sy; }
+        const dist = -sdf;
+        let m = 0;
+        if (dist < band) { const t = 1 - Math.max(0, dist) / band; m = t * t; }
+        const i = (y * w + x) * 4;
+        d[i] = 128 - nx * m * 127; d[i + 1] = 128 - ny * m * 127; d[i + 2] = 128; d[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    for (const el of [filt, feMap]) { el.setAttribute("width", w); el.setAttribute("height", h); }
+    feMap.setAttribute("href", cv.toDataURL("image/png"));
+    card.classList.add("refract");
+  }
+  if (canRefract) {
+    let t = 0, lw = 0, lh = 0;
+    new ResizeObserver(() => { const w = card.offsetWidth, h = card.offsetHeight; if (Math.abs(w - lw) < 2 && Math.abs(h - lh) < 2) return; lw = w; lh = h; clearTimeout(t); t = setTimeout(buildMap, 140); }).observe(card);
+  }
+
+  /* ================= the film ================= */
+  const film = $("#film"), filmRose = $("#film-rose"), caption = $("#caption"), tapEl = $("#tap"), cta = $("#film-cta"), wreath = $("#wreath"), halo = $("#halo"), bouquet = $("#bouquet");
+  let filmRun = 0, mode = "intro";
+  const guard = (run) => { if (run !== filmRun) throw new Error("cut"); };
+  function setCaption(html) {
+    if (reduced) { caption.innerHTML = html; return; }
+    caption.animate([{ opacity: 1 }, { opacity: 0, filter: "blur(6px)" }], { duration: 250, fill: "forwards" }).onfinish = () => {
+      caption.innerHTML = html;
+      caption.animate([{ opacity: 0, transform: "translateX(-50%) translateY(14px)", filter: "blur(8px)" }, { opacity: 1, transform: "translateX(-50%)", filter: "blur(0)" }], { duration: 800, easing: "cubic-bezier(.22,1,.36,1)", fill: "forwards" });
+    };
+  }
+  function showCTA(items) {
+    cta.textContent = "";
+    items.forEach((it) => { const b = document.createElement("button"); b.type = "button"; b.className = it.primary ? "btn btn-yes" : "film-link"; b.innerHTML = it.label; b.addEventListener("click", it.act); cta.appendChild(b); });
+    cta.style.top = Math.round(caption.getBoundingClientRect().bottom + 14) + "px";
+    $("#film-skip").hidden = true;
+    cta.hidden = false;
+    if (!reduced) cta.animate([{ opacity: 0, transform: "translateX(-50%) translateY(14px)" }, { opacity: 1, transform: "translateX(-50%)" }], { duration: 600, easing: "cubic-bezier(.22,1,.36,1)" });
+    cta.querySelector("button")?.focus({ preventScroll: true });
+  }
+  function growWreath() {
+    wreath.textContent = "";
+    const W = vw(), H = vh(), n = small() ? 9 : 14, pals = ["red", "pink", "crimson", "blush", "peach", "white"];
+    for (let i = 0; i < n; i++) {
+      const t = i / n, side = i % 4;
+      let x, y;
+      if (side === 0) { x = rnd(0, W); y = rnd(-.02, .1) * H; } else if (side === 1) { x = rnd(.9, 1.02) * W; y = rnd(0, H); } else if (side === 2) { x = rnd(0, W); y = rnd(.9, 1.02) * H; } else { x = rnd(-.02, .1) * W; y = rnd(0, H); }
+      const s = rnd(70, 150) * (small() ? .75 : 1);
+      const el = document.createElement("div");
+      el.className = "rtop closed";
+      el.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${s}px`;
+      el.innerHTML = `<div class="spin" style="--sp:${rnd(60, 110).toFixed(0)}s">${roseTop(pick(pals))}</div>`;
+      wreath.appendChild(el);
+      bloomTop(el, t * 900);
+    }
+  }
+
+  async function playIntro() {
+    const run = ++filmRun;
+    mode = "intro";
+    body.classList.add("is-film");
+    film.hidden = false;
+    $("#film-skip").hidden = false;
+    bouquet.hidden = true;
+    filmRose.hidden = false;
+    halo.hidden = false;
+    cta.hidden = true;
+    wreath.textContent = "";
+    caption.textContent = "";
+    filmRose.innerHTML = "";
+    const rose = mkSide("red", "seed");
+    filmRose.appendChild(rose);
+    petalsFront = 0;
+    try {
+      await wait(300); guard(run);
+      setCaption('<span class="cap-name">Роза,</span><span class="cap-line">для тебя вырос один цветок…</span>');
+      await wait(700); guard(run);
+      rose.classList.add("growing", "bud");
+      void rose.offsetWidth;
+      rose.classList.remove("seed");
+      await wait(2300); guard(run);
+      rose.classList.remove("growing");
+      tapEl.hidden = false;
+      await new Promise((resolve) => { filmRose.onclick = resolve; });
+      guard(run);
+      filmRose.onclick = null;
+      tapEl.hidden = true;
+      rose.classList.remove("bud");
+      rose.classList.add("open");
+      const r = filmRose.getBoundingClientRect();
+      burstPetals(FRONT, r.left + r.width / 2, r.top + r.height * .32, 46, 1.1);
+      setCaption('<span class="cap-name">Роза,</span><span class="cap-line">он распустился для тебя, но ты всё равно прекраснее <span aria-hidden="true">💗</span></span>');
+      await wait(900); guard(run);
+      growWreath();
+      petalsFront = small() ? 8 : 14;
+      await wait(2000); guard(run);
+      showCTA([{ label: 'Открыть приглашение <span aria-hidden="true">🌹</span>', primary: true, act: () => endIntro() }, { label: "Ещё раз", act: () => playIntro() }]);
+    } catch (_) { /* cut */ }
+  }
+  async function endIntro() {
+    filmRun++;
+    await petalStorm(() => {
+      film.hidden = true;
+      body.classList.remove("is-film");
+      body.classList.add("is-revealed");
+      stage.inert = false;
+      petalsFront = small() ? 3 : 6;
+      petalsBack = small() ? 18 : 30;
+      bloomGarden();
+    });
+    current.querySelector(".step-title")?.focus({ preventScroll: true });
+  }
+  $("#film-skip").addEventListener("click", () => { if (mode === "outro") finishOutro(); else endIntro(); });
+
+  /* outro: a bouquet is gathered and tied */
+  const BQ = [
+    { a: -28, sc: .9, pal: "pink", z: 2 }, { a: 26, sc: .9, pal: "peach", z: 2 },
+    { a: -12, sc: 1.02, pal: "crimson", z: 4 }, { a: 12, sc: 1, pal: "white", z: 4 },
+    { a: 0, sc: 1.12, pal: "red", z: 6 }, { a: -40, sc: .76, pal: "blush", z: 1 }, { a: 40, sc: .76, pal: "red", z: 1 }
+  ];
+  async function playOutro(p) {
+    const run = ++filmRun;
+    mode = "outro";
+    await petalStorm(() => {
+      body.classList.add("is-film");
+      stage.inert = true;
+      film.hidden = false;
+      filmRose.hidden = true;
+      halo.hidden = true;
+      tapEl.hidden = true;
+      cta.hidden = true;
+      wreath.textContent = "";
+      caption.textContent = "";
+      bouquet.hidden = false;
+      $("#film-skip").hidden = false;
+      bouquet.classList.add("wrap-off");
+      $("#tag").classList.remove("shown");
+    });
+    const holder = $("#bq-roses");
+    holder.textContent = "";
+    const roses = BQ.map((b) => {
+      const el = mkSide(b.pal, "seed");
+      el.classList.add("bq-rose");
+      el.style.cssText = `--a:${b.a}deg;--sc:${b.sc};--z:${b.z}`;
+      holder.appendChild(el);
+      return el;
+    });
+    try {
+      setCaption('<span class="cap-line">А это тебе, <span class="cap-name" style="display:inline;font-size:1.6em">Роза</span></span>');
+      await wait(500); guard(run);
+      const order = [4, 2, 3, 0, 1, 5, 6];
+      for (const i of order) {
+        const el = roses[i];
+        el.classList.add("growing", "bud");
+        void el.offsetWidth;
+        el.classList.remove("seed");
+        setTimeout(() => { if (run === filmRun) { el.classList.remove("bud", "growing"); el.classList.add("open"); } }, reduced ? 0 : 1700);
+        await wait(260); guard(run);
+      }
+      await wait(1900); guard(run);
+      bouquet.classList.remove("wrap-off");
+      await wait(900); guard(run);
+      const br = bouquet.getBoundingClientRect();
+      burstPetals(FRONT, br.left + br.width / 2, br.top + br.height * .3, 40, 1);
+      $("#tag").innerHTML = `<b>Для Розы</b>${p.emoji || "💗"} ${p.place}<br>${whenText(p)}`;
+      $("#tag").classList.add("shown");
+      setCaption('<span class="cap-name sm">До встречи, Роза!</span>');
+      petalsFront = small() ? 8 : 14;
+      await wait(1200); guard(run);
+      showCTA([{ label: 'Показать билет <span aria-hidden="true">🎟</span>', primary: true, act: () => finishOutro() }, { label: "Ещё раз", act: () => playOutro(p) }]);
+    } catch (_) { /* cut */ }
+  }
+  async function finishOutro() {
+    filmRun++;
+    mode = "intro";
+    await petalStorm(() => {
+      film.hidden = true;
+      body.classList.remove("is-film");
+      stage.inert = false;
+      petalsFront = small() ? 3 : 6;
+    });
+    const [x, y] = centerOf(card);
+    burstPetals(FRONT, x, y - 120, 30, .9);
+    current.querySelector(".step-title")?.focus({ preventScroll: true });
+  }
+
+  let resizeT = 0;
+  window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(() => { BACK.size(); FRONT.size(); STORM.size(); }, 150); });
+
+  /* ================= step transitions ================= */
+  function show(next, instant) {
+    if (next === current) return;
+    const prev = current;
+    current = next;
+    if (instant || reduced) { prev.hidden = true; next.hidden = false; if (!instant) next.querySelector(".step-title")?.focus({ preventScroll: true }); return; }
+    const h0 = stepsWrap.offsetHeight;
+    const out = prev.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateY(-12px) scale(.98)" }], { duration: 220, easing: "ease-in", fill: "forwards" });
+    out.onfinish = () => {
+      prev.hidden = true; out.cancel(); next.hidden = false;
+      const h1 = stepsWrap.offsetHeight;
+      stepsWrap.style.overflow = "hidden";
+      stepsWrap.animate([{ height: h0 + "px" }, { height: h1 + "px" }], { duration: 480, easing: "cubic-bezier(.22,1,.36,1)" }).onfinish = () => { stepsWrap.style.overflow = ""; };
+      [...next.children].forEach((child, i) => child.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 540, delay: 60 + i * 55, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" }));
+      next.querySelector(".step-title")?.focus({ preventScroll: true });
+    };
+  }
+  function jiggle() {
+    if (reduced) return;
+    jelly.animate([{ transform: "scale(1, 1)" }, { transform: "scale(1.035, .965)", offset: .25 }, { transform: "scale(.988, 1.016)", offset: .55 }, { transform: "scale(1.005, .997)", offset: .8 }, { transform: "scale(1, 1)" }], { duration: 760, easing: "ease-out" });
+  }
+  function celebrate(fromEl) {
+    const [x, y] = centerOf(fromEl);
+    burstPetals(FRONT, x, y, 60, 1.2);
+    burst(x, y, 14);
+    jiggle();
+    clusterRoses.forEach((el, i) => bloomTop(el, i * 70));
+  }
+
+  /* ================= step 1: the shy "no" ================= */
+  const NO_TEXTS = ["Нет", "Точно нет?", "Подумай ещё 🥺", "Ну пожалуйста!", "Розы завянут 🥀", "Лепестки облетят", "Ладно, да 💕"];
+  const HINTS = ["Подсказка: правильный ответ цвета розы 🌹", "Ой, кнопка «Нет» сегодня очень стеснительная", "Кажется, она не хочет, чтобы её нажимали 🙈", "Зато кнопка «Да» становится всё больше", "Розы уже волнуются 🌹", "Даже бутоны затаили дыхание", "Всё, кнопка «Нет» сдалась"];
+  const SURRENDER = NO_TEXTS.length - 1;
+  let dodges = 0, lastDodge = 0, movingTimer = 0;
+  function placeNo(avoidX, avoidY) {
+    const b = noBtn.getBoundingClientRect(), y0 = yesBtn.getBoundingClientRect();
+    const m = 16, W = vw(), H = vh(), pad = 28;
+    const onYes = (x, y) => x < y0.right + pad && x + b.width > y0.left - pad && y < y0.bottom + pad && y + b.height > y0.top - pad;
+    let best = null;
+    for (let k = 0; k < 40; k++) {
+      const x = rnd(m, Math.max(m, W - b.width - m)), y = rnd(m + 10, Math.max(m + 10, H - b.height - m - 40));
+      if (onYes(x, y)) continue;
+      const dist = Math.hypot(x + b.width / 2 - avoidX, y + b.height / 2 - avoidY);
+      if (!best || dist > best.dist) best = { x, y, dist };
+      if (dist > 180) break;
+    }
+    if (!best) best = { x: m, y: m + 10 };
+    noBtn.style.pointerEvents = "none";
+    clearTimeout(movingTimer);
+    movingTimer = setTimeout(() => { noBtn.style.pointerEvents = ""; }, 460);
+    noBtn.style.left = best.x + "px"; noBtn.style.top = best.y + "px";
+  }
+  function dodge(e) {
+    if (noBtn.dataset.surrender) return;
+    if (e) e.preventDefault();
+    lastDodge = performance.now();
+    dodges++;
+    const r = noBtn.getBoundingClientRect();
+    if (!noBtn.classList.contains("is-loose")) {
+      slot.style.width = r.width + "px"; slot.style.height = r.height + "px";
+      noBtn.classList.add("is-loose");
+      noBtn.style.transition = "none";
+      noBtn.style.left = r.left + "px"; noBtn.style.top = r.top + "px";
+      document.body.appendChild(noBtn);
+      void noBtn.offsetWidth;
+      noBtn.style.transition = "";
+    }
+    noBtn.textContent = NO_TEXTS[Math.min(dodges, SURRENDER)];
+    hint.textContent = HINTS[Math.min(dodges, HINTS.length - 1)];
+    if (dodges >= SURRENDER) { noBtn.dataset.surrender = "1"; noBtn.classList.add("is-surrender"); }
+    const ex = e && "clientX" in e ? e.clientX : r.left + r.width / 2, ey = e && "clientY" in e ? e.clientY : r.top + r.height / 2;
+    burstPetals(FRONT, r.left + r.width / 2, r.top + r.height / 2, 8, .5);
+    placeNo(ex, ey);
+    yesBtn.style.setProperty("--grow", (1 + Math.min(dodges, 6) * .055).toFixed(3));
+  }
+  noBtn.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") dodge(e); });
+  noBtn.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") dodge(e); });
+  noBtn.addEventListener("click", (e) => { if (noBtn.dataset.surrender) { sayYes(noBtn); return; } if (performance.now() - lastDodge < 600) return; dodge(e); });
+  window.addEventListener("resize", () => { if (noBtn.classList.contains("is-loose") && !noBtn.hidden) { const b = noBtn.getBoundingClientRect(); if (b.right > vw() || b.bottom > vh()) placeNo(vw() / 2, vh() / 2); } });
+  function sayYes(fromEl) { celebrate(fromEl); noBtn.hidden = true; show(steps.plan); }
+  yesBtn.addEventListener("click", () => sayYes(yesBtn));
+
+  /* ================= step 2: 30 ideas in 5 categories ================= */
+  const CATS = [
+    { id: "tasty", label: "🍽 Вкусно", items: [["🍜", "Рамён"], ["🍣", "Суши"], ["🍕", "Пицца"], ["🍔", "Бургеры"], ["☕", "Кофе и десерты"], ["🍝", "Уютный ужин"]] },
+    { id: "romance", label: "🌹 Романтично", items: [["🕯️", "Ужин при свечах"], ["🌅", "Закат на крыше"], ["🌷", "Ботанический сад"], ["🍓", "Пикник"], ["🌌", "Звёзды за городом"], ["💐", "Мастер-класс по букетам"]] },
+    { id: "fun", label: "🎉 Весело", items: [["🎤", "Караоке"], ["🎳", "Боулинг"], ["⛸️", "Каток"], ["🎡", "Аттракционы"], ["🗝️", "Квест-комната"], ["🏎️", "Картинг"]] },
+    { id: "culture", label: "🎭 Культура", items: [["🎬", "Кино"], ["🎭", "Театр"], ["🖼️", "Выставка"], ["🏛️", "Музей"], ["🎻", "Концерт"], ["🎨", "Мастер-класс по рисованию"]] },
+    { id: "nature", label: "🌿 На природе", items: [["🐎", "Конная прогулка"], ["🚣", "Катание на лодке"], ["🚲", "Велопрогулка"], ["🐠", "Океанариум"], ["🦒", "Зоопарк"], ["🏔️", "Поездка в горы"]] }
+  ];
+  const tabsEl = $("#tabs"), panelsEl = $("#panels");
+  CATS.forEach((c, ci) => {
+    const t = document.createElement("button");
+    t.type = "button"; t.className = "tab"; t.setAttribute("role", "tab"); t.id = "tab-" + c.id;
+    t.setAttribute("aria-controls", "panel-" + c.id); t.setAttribute("aria-selected", ci === 0); t.tabIndex = ci === 0 ? 0 : -1;
+    t.textContent = c.label;
+    tabsEl.appendChild(t);
+    const p = document.createElement("div");
+    p.className = "chips"; p.setAttribute("role", "tabpanel"); p.id = "panel-" + c.id; p.setAttribute("aria-labelledby", t.id);
+    if (ci) p.hidden = true;
+    c.items.forEach(([emo, name], ii) => {
+      const lab = document.createElement("label");
+      lab.className = "chip";
+      lab.innerHTML = `<input type="radio" name="place" id="place-${c.id}-${ii}" data-emoji="${emo}"><span class="chip-face"><span class="chip-emoji" aria-hidden="true">${emo}</span></span>`;
+      const inp = lab.querySelector("input");
+      inp.value = name;
+      lab.querySelector(".chip-face").append(document.createTextNode(name));
+      p.appendChild(lab);
+    });
+    panelsEl.appendChild(p);
+  });
+  const form = $("#plan-form"), dateIn = $("#date"), timeIn = $("#time"), planHint = $("#plan-hint"), picked = $("#picked"), fateBtn = $("#fate");
+  const tabs = [...tabsEl.querySelectorAll(".tab")];
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+  const allInputs = [...form.querySelectorAll('input[name="place"]')];
+  function selectTab(i, focus) { tabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; }); if (focus) tabs[i].focus(); }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(i));
+    t.addEventListener("keydown", (e) => { if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); selectTab((i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length, true); } });
+  });
+  const panelOf = (input) => panels.findIndex((p) => p.contains(input));
+  function updatePicked() {
+    const c = form.querySelector('input[name="place"]:checked');
+    picked.textContent = "";
+    if (!c) { picked.textContent = "Выбери что-нибудь или доверься судьбе"; return; }
+    const b = document.createElement("b"); b.textContent = `${c.dataset.emoji} ${c.value}`;
+    picked.append("Выбрано: ", b);
+  }
+  allInputs.forEach((inp) => inp.addEventListener("change", () => { updatePicked(); const r = inp.nextElementSibling.getBoundingClientRect(); burstPetals(FRONT, r.left + r.width / 2, r.top + r.height / 2, 10, .5); }));
+  fateBtn.addEventListener("click", () => {
+    if (fateBtn.disabled) return;
+    const n = allInputs.length, target = Math.floor(Math.random() * n);
+    if (reduced) { allInputs[target].checked = true; selectTab(panelOf(allInputs[target])); updatePicked(); return; }
+    fateBtn.disabled = true;
+    const total = 26;
+    let i = (target - (total - 1) + n * 3) % n, k = 0;
+    const spin = () => {
+      allInputs.forEach((x) => x.nextElementSibling.classList.remove("roll"));
+      const inp = allInputs[i];
+      selectTab(panelOf(inp));
+      inp.nextElementSibling.classList.add("roll");
+      k++;
+      if (k >= total) {
+        inp.nextElementSibling.classList.remove("roll");
+        inp.checked = true; updatePicked();
+        const r = inp.nextElementSibling.getBoundingClientRect();
+        burstPetals(FRONT, r.left + r.width / 2, r.top + r.height / 2, 30, .9);
+        burst(r.left + r.width / 2, r.top + r.height / 2, 6, ["🎲", "✨", "🌹"]);
+        fateBtn.disabled = false;
+        return;
+      }
+      i = (i + 1) % n;
+      setTimeout(spin, 45 + Math.pow(k / total, 3) * 330);
+    };
+    spin();
+  });
+  const pad = (n) => String(n).padStart(2, "0");
+  const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  (() => { const now = new Date(), d = new Date(now); let add = (6 - now.getDay() + 7) % 7; if (add === 0 && now.getHours() >= 18) add = 7; d.setDate(now.getDate() + add); dateIn.min = isoDay(now); dateIn.value = isoDay(d); })();
+  const toDate = (day, time) => { const [y, m, dd] = day.split("-").map(Number); const [hh, mm] = (time || "19:00").split(":").map(Number); return new Date(y, m - 1, dd, hh || 0, mm || 0); };
+  const dayFmt = new Intl.DateTimeFormat("ru-RU", { weekday: "long", day: "numeric", month: "long" });
+  const whenText = (p) => `${dayFmt.format(toDate(p.day, p.time))}, в ${p.time}`;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const place = form.querySelector('input[name="place"]:checked');
+    if (!place) {
+      planHint.textContent = "Выбери, куда пойдём, или нажми «Пусть решит судьба» 🎲";
+      panels.find((p) => !p.hidden).animate([{ transform: "translateX(0)" }, { transform: "translateX(-8px)" }, { transform: "translateX(7px)" }, { transform: "translateX(-4px)" }, { transform: "translateX(0)" }], { duration: 380 });
+      return;
+    }
+    if (!dateIn.value) { planHint.textContent = "Выбери день для встречи"; dateIn.focus(); return; }
+    if (toDate(dateIn.value, timeIn.value) < new Date(Date.now() - 60000)) { planHint.textContent = "Это время уже прошло, выбери другое"; dateIn.focus(); return; }
+    planHint.textContent = "";
+    const p = { place: place.value, emoji: place.dataset.emoji, day: dateIn.value, time: timeIn.value || "19:00" };
+    save(p);
+    renderTicket(p);
+    celebrate($("#plan-submit"));
+    show(steps.done);
+    setTimeout(() => playOutro(p), reduced ? 0 : 1300);
+  });
+
+  /* ================= step 3: the ticket ================= */
+  $("#stamp").innerHTML = roseTop("red", { leaves: false });
+  const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) return one; if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few; return many; };
+  let countTimer = 0, plan = null;
+  function renderCount() {
+    if (!plan) return;
+    const diff = toDate(plan.day, plan.time) - new Date(), out = $("#t-count");
+    if (diff <= 0) { out.textContent = "Время пришло!"; return; }
+    const mins = Math.floor(diff / 60000), days = Math.floor(mins / 1440), hours = Math.floor((mins % 1440) / 60), m = mins % 60;
+    let s;
+    if (days > 0) s = `${days} ${plural(days, "день", "дня", "дней")}` + (hours ? ` ${hours} ${plural(hours, "час", "часа", "часов")}` : "");
+    else if (hours > 0) s = `${hours} ${plural(hours, "час", "часа", "часов")}` + (m ? ` ${m} мин` : "");
+    else s = `${Math.max(1, m)} ${plural(Math.max(1, m), "минута", "минуты", "минут")}`;
+    out.textContent = "До встречи " + s;
+  }
+  function renderTicket(p) {
+    plan = p;
+    $("#t-place").textContent = `${p.emoji || "💗"} ${p.place}`;
+    $("#t-when").textContent = whenText(p);
+    renderCount();
+    clearInterval(countTimer);
+    countTimer = setInterval(renderCount, 30000);
+  }
+  $("#replay-bouquet").addEventListener("click", () => { if (plan) playOutro(plan); });
+  $("#edit").addEventListener("click", () => {
+    if (plan) { const input = allInputs.find((x) => x.value === plan.place); if (input) { input.checked = true; selectTab(panelOf(input)); } dateIn.value = plan.day; timeIn.value = plan.time; updatePicked(); }
+    show(steps.plan);
+  });
+  $("#restart").addEventListener("click", () => {
+    clear(); plan = null; clearInterval(countTimer); dodges = 0;
+    delete noBtn.dataset.surrender;
+    noBtn.className = "btn btn-no"; noBtn.textContent = NO_TEXTS[0];
+    noBtn.style.left = noBtn.style.top = noBtn.style.pointerEvents = "";
+    noBtn.hidden = false; slot.appendChild(noBtn); slot.style.width = slot.style.height = "";
+    yesBtn.style.removeProperty("--grow"); hint.textContent = HINTS[0];
+    form.reset(); timeIn.value = "19:00"; selectTab(0); updatePicked();
+    show(steps.ask);
+  });
+
+  /* ================= remember the answer on this device ================= */
+  const KEY = "roza-date-v1";
+  function save(p) { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (_) {} }
+  function clear() { try { localStorage.removeItem(KEY); } catch (_) {} }
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (_) {}
+  if (saved && saved.place && saved.day) {
+    noBtn.hidden = true;
+    renderTicket(saved);
+    show(steps.done, true);
+    film.hidden = true;
+    body.classList.remove("is-film");
+    body.classList.add("is-revealed");
+    stage.inert = false;
+    petalsBack = small() ? 18 : 30;
+    petalsFront = small() ? 3 : 6;
+    bloomGarden();
+  } else {
+    playIntro();
+  }
+})();
+</script>
+</body>
+</html>
