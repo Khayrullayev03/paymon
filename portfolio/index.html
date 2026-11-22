@@ -64,6 +64,7 @@
             >
           </a>
           <nav class="nav" aria-label="Menu">
+            <a href="#office" data-i18n="nav.office">офис</a>
             <a href="#skills" data-i18n="nav.skills">навыки</a>
             <a href="#experience" data-i18n="nav.experience">опыт</a>
             <a href="#projects" data-i18n="nav.projects">проекты</a>
@@ -127,11 +128,48 @@
           </div>
         </section>
 
-        <!-- 01. Навыки: веб (HTML, JS, CSS, SQL, …) и администрирование, у каждого — живая ASCII-анимация -->
+        <!-- 01. Инфраструктура: 3D-схема офиса, изображение с камеры, рисунки камер -->
+        <section class="section" id="office" aria-labelledby="office-title" data-office>
+          <div class="container">
+            <h2 class="section-title" id="office-title" data-title>
+              <span class="num">01.</span><span class="title-text" data-i18n="office.title">Инфраструктура</span>
+            </h2>
+            <p class="section-lead" data-reveal data-i18n="office.lead"></p>
+
+            <div class="term office-map" data-reveal>
+              <div class="term-bar">
+                <span>~/office/map.3d</span>
+                <button class="anim-toggle" type="button" data-office-toggle></button>
+              </div>
+              <div class="office-screen">
+                <pre class="asc office-pre" data-office-map aria-hidden="true"></pre>
+              </div>
+              <p class="office-legend" data-i18n="office.legend"></p>
+            </div>
+
+            <div class="office-grid">
+              <div class="term cam-feed" data-reveal>
+                <div class="term-bar"><span data-feed-title>cam · live</span><span class="live">● REC</span></div>
+                <div class="cam-buttons" role="group" data-i18n-aria="office.feed" data-cam-buttons></div>
+                <div class="office-screen">
+                  <pre class="asc office-pre" data-cam-feed aria-hidden="true"></pre>
+                </div>
+              </div>
+              <div class="term cam-models" data-reveal>
+                <div class="term-bar"><span>~/cameras</span><span data-i18n="office.models">модели камер</span></div>
+                <div class="office-screen">
+                  <pre class="asc office-pre" data-cam-models aria-hidden="true"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02. Навыки: веб (HTML, JS, CSS, SQL, …) и администрирование, у каждого — живая ASCII-анимация -->
         <section class="section" id="skills" aria-labelledby="skills-title">
           <div class="container">
             <h2 class="section-title" id="skills-title" data-title>
-              <span class="num">01.</span><span class="title-text" data-i18n="skills.title">Навыки</span>
+              <span class="num">02.</span><span class="title-text" data-i18n="skills.title">Навыки</span>
             </h2>
             <p class="section-lead" data-reveal data-i18n="skills.lead"></p>
             <div class="tabs" role="tablist" data-tabs data-reveal></div>
@@ -143,7 +181,7 @@
         <section class="section" id="experience" aria-labelledby="experience-title">
           <div class="container">
             <h2 class="section-title" id="experience-title" data-title>
-              <span class="num">02.</span><span class="title-text" data-i18n="exp.title">Опыт</span>
+              <span class="num">03.</span><span class="title-text" data-i18n="exp.title">Опыт</span>
             </h2>
             <p class="section-lead" data-reveal data-i18n="exp.lead"></p>
             <div class="exp-grid">
@@ -165,7 +203,7 @@
         <section class="section" id="projects" aria-labelledby="projects-title">
           <div class="container">
             <h2 class="section-title" id="projects-title" data-title>
-              <span class="num">03.</span><span class="title-text" data-i18n="projects.title">Проекты</span>
+              <span class="num">04.</span><span class="title-text" data-i18n="projects.title">Проекты</span>
             </h2>
             <div class="filters" role="group" data-filters data-reveal></div>
             <div class="grid" data-projects></div>
@@ -177,7 +215,7 @@
         <section class="section" id="terminal" aria-labelledby="terminal-title">
           <div class="container">
             <h2 class="section-title" id="terminal-title" data-title>
-              <span class="num">04.</span><span class="title-text" data-i18n="terminal.title">Терминал</span>
+              <span class="num">05.</span><span class="title-text" data-i18n="terminal.title">Терминал</span>
             </h2>
             <p class="section-lead" data-reveal data-i18n="terminal.lead"></p>
             <div class="term console" data-console data-reveal>
@@ -210,7 +248,7 @@
         <section class="section" id="contact" aria-labelledby="contact-title">
           <div class="container">
             <h2 class="section-title" id="contact-title" data-title>
-              <span class="num">05.</span><span class="title-text" data-i18n="contact.title">Контакты</span>
+              <span class="num">06.</span><span class="title-text" data-i18n="contact.title">Контакты</span>
             </h2>
             <p class="section-lead" data-reveal data-i18n="contact.lead"></p>
             <ul class="contacts" data-contacts data-reveal></ul>
@@ -236,6 +274,7 @@
     <script src="js/background.js"></script>
     <script src="js/scenes.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/office.js"></script>
     <script src="js/terminal.js"></script>
     <script src="js/intro.js"></script>
   </body>

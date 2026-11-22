@@ -1049,11 +1049,6 @@ button {
   background: var(--code-bg);
 }
 
-.scene .live {
-  color: var(--accent);
-  animation: blink 1.6s steps(1) infinite;
-}
-
 .scene-screen {
   container-type: inline-size;
   padding: 12px 14px 14px;
@@ -1068,23 +1063,134 @@ button {
   user-select: none;
 }
 
-.scene-pre .c1 {
+/* Цвета символов в ASCII-рисунках (сцены навыков, схема офиса, камеры) */
+.asc .c1 {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
 
-.scene-pre .c2 {
+.asc .c2 {
   color: var(--muted);
 }
 
-.scene-pre .c3 {
+.asc .c3 {
   color: var(--bright);
   font-weight: 700;
 }
 
-.scene-pre .c4 {
-  background: var(--text);
-  color: var(--code-bg);
+.asc .c4 {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+.asc .c5 {
+  color: var(--accent);
+  opacity: 0.55;
+}
+
+/* Кнопка «пауза / смотреть» в заголовке окна с анимацией */
+.anim-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.anim-toggle:hover {
+  color: var(--bright);
+}
+
+/* ==========================================================================
+   ИНФРАСТРУКТУРА: 3D-схема офиса, изображение камеры, рисунки камер
+   ========================================================================== */
+.office-map {
+  margin-top: 28px;
+  box-shadow: 0 30px 60px -40px var(--panel-shadow);
+}
+
+.office-screen {
+  container-type: inline-size;
+  padding: 14px 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--code-bg);
+}
+
+.office-pre {
+  width: max-content;
+  margin: 0 auto;
+  /* не мельче 8.5px: на телефоне схема шире окна и листается пальцем */
+  font: 500 max(8.5px, min(14px, calc(100cqw / (var(--cols, 96) * 0.6)))) / 1.18 var(--mono);
+  letter-spacing: 0;
+  white-space: pre;
+  color: var(--text);
+  user-select: none;
+}
+
+[data-office-map] {
+  cursor: pointer;
+}
+
+.office-legend {
+  padding: 8px 16px 12px;
+  border-top: 1px dashed var(--line);
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.office-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.office-grid > * {
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .office-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.cam-feed .live {
+  color: var(--accent);
+  animation: blink 1.6s steps(1) infinite;
+}
+
+.cam-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px 0;
+  background: var(--code-bg);
+}
+
+.cam-btn {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cam-btn:hover {
+  border-color: var(--muted);
+  color: var(--bright);
+}
+
+.cam-btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
 }
 
 .panel h4 {

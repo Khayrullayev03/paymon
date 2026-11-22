@@ -152,7 +152,21 @@
     const count = projects.filter((p) => p.tech.includes(skill.id)).length;
     const score = LEVELS[skill.level] || 5;
     const lines = skill.snippet ? skill.snippet.split("\n").length : 1;
-    const scenePre = el("pre", { class: "scene-pre" });
+    const scenePre = el("pre", { class: "scene-pre asc" });
+    const player = window.SCENES ? window.SCENES.createPlayer(scenePre, skill.id) : null;
+    const toggle = el("button", { class: "anim-toggle", type: "button" });
+    const syncToggle = () => {
+      if (!player) return;
+      toggle.textContent = `[ ${t(player.paused ? "anim.play" : "anim.pause")} ]`;
+      toggle.setAttribute("aria-pressed", String(!player.paused));
+    };
+    toggle.addEventListener("click", () => {
+      if (!player) return;
+      player.setPaused(!player.paused);
+      syncToggle();
+      syncScenes();
+    });
+    syncToggle();
 
     const panel = el(
       "div",
@@ -201,9 +215,9 @@
           ),
           el(
             "div",
-            { class: "scene term", "aria-hidden": "true" },
-            el("div", { class: "term-bar" }, el("span", { text: `$ ./demo --${skill.id}` }), el("span", { class: "live", text: "● " + t("skills.live") })),
-            el("div", { class: "scene-screen" }, scenePre)
+            { class: "scene term" },
+            el("div", { class: "term-bar" }, el("span", { text: `$ ./demo --${skill.id}` }), player && toggle),
+            el("div", { class: "scene-screen", "aria-hidden": "true" }, scenePre)
           ),
           skill.snippet &&
             el(
@@ -222,7 +236,7 @@
           })
       )
     );
-    if (window.SCENES) players.set(skill.id, window.SCENES.createPlayer(scenePre, skill.id));
+    if (player) players.set(skill.id, player);
     return panel;
   }
 

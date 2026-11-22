@@ -1,6 +1,6 @@
 /* Живые ASCII-анимации для разделов навыков: камера, серверная стойка, сеть, htop и т.д.
  * Каждая сцена — функция (g, t): рисует кадр в сетке 46×14 символов, t — секунды с начала.
- * Цвета: 0 — обычный, 1 — красный акцент, 2 — тусклый, 3 — яркий, 4 — инверсия. */
+ * Цвета: 0 — обычный, 1 — красный акцент, 2 — тусклый, 3 — яркий, 4 — инверсия, 5 — бледно-красный. */
 (function () {
   "use strict";
 
@@ -21,7 +21,9 @@
     return [s / 3600, (s / 60) % 60, s % 60].map((v) => String(Math.floor(v)).padStart(2, "0")).join(":");
   };
 
-  function makeGrid() {
+  function makeGrid(GW = W, GH = H) {
+    const W = GW;
+    const H = GH;
     const chars = new Array(W * H).fill(" ");
     const colors = new Uint8Array(W * H);
     const esc = (ch) => (ch === "&" ? "&amp;" : ch === "<" ? "&lt;" : ch === ">" ? "&gt;" : ch);
@@ -44,7 +46,7 @@
         }
       },
       get(x, y) {
-        return chars[y * W + x];
+        return x < 0 || y < 0 || x >= W || y >= H ? "" : chars[y * W + x];
       },
       hline(x, y, len, c = 2, ch = "─") {
         if (len > 0) g.put(x, y, ch.repeat(len), c);
@@ -485,8 +487,8 @@
 
     /* Видеонаблюдение: камера поворачивается, замечает человека и пишет тревогу */
     cctv(g, t) {
-      const lx = 6;
-      const ly = 2;
+      const lx = 9;
+      const ly = 4;
       const theta = 0.75 + 0.42 * Math.sin(t * 0.7);
       const half = 0.3;
       const walk = (t / 12) % 1;
@@ -494,7 +496,7 @@
       const personAngle = Math.atan2((10 - ly) * 1.25, (px - lx) * 0.6);
       const detected = Math.abs(personAngle - theta) < half;
 
-      for (let y = 3; y <= 11; y++) {
+      for (let y = 5; y <= 11; y++) {
         for (let x = 1; x < W; x++) {
           const vx = (x - lx) * 0.6;
           const vy = (y - ly) * 1.25;
@@ -503,9 +505,15 @@
         }
       }
       g.hline(0, 0, W, 2, "═");
-      g.put(3, 1, "║", 2);
-      g.put(1, 2, "[■■]", 3);
-      g.put(5, 2, theta < 0.6 ? "=" : theta < 0.95 ? "\\" : "|", 1);
+      g.put(2, 1, "║", 2);
+      g.put(0, 2, "╭─┴────╮", 3);
+      g.put(0, 3, "│", 3);
+      g.put(1, 3, blink(t, 1) ? "●" : "○", 1);
+      g.put(3, 3, "CAM├─╮", 3);
+      g.put(0, 4, "╰──────┤", 3);
+      g.put(8, 4, ["O", "0", "o"][Math.floor(t * 2) % 3], 1);
+      g.put(9, 4, "│", 3);
+      g.put(7, 5, "╰─╯", 3);
       g.hline(0, 12, W, 2, "─");
 
       const step = Math.floor(t * 4) % 2;
@@ -600,6 +608,7 @@
     let raf = 0;
     let started = 0;
     let last = 0;
+    let paused = reduceMotion; // при «уменьшении движения» — только по кнопке
     pre.style.setProperty("--cols", W);
 
     function draw(t) {
@@ -616,8 +625,15 @@
     draw(STILL[id] != null ? STILL[id] : 1);
 
     return {
+      get paused() {
+        return paused;
+      },
+      setPaused(value) {
+        paused = value;
+        if (paused) this.stop();
+      },
       start() {
-        if (raf || reduceMotion) return;
+        if (raf || paused) return;
         started = performance.now();
         last = 0;
         raf = requestAnimationFrame(loop);
@@ -629,5 +645,5 @@
     };
   }
 
-  window.SCENES = { W, H, createPlayer };
+  window.SCENES = { W, H, createPlayer, makeGrid, path, hash, blink, clamp, lerp, ease, clock };
 })();

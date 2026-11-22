@@ -6,6 +6,7 @@
   const DICT = {
     ru: {
       "skip": "К содержимому",
+      "nav.office": "офис",
       "nav.skills": "навыки",
       "nav.experience": "опыт",
       "nav.projects": "проекты",
@@ -21,6 +22,14 @@
       "hero.terminal": "открыть терминал",
       "hero.artHint": "наведите — повернётся",
 
+      "office.title": "Инфраструктура",
+      "office.lead": "Демо-схема офиса в 3D: роутер, коммутатор, сервер, рабочие места и камеры с живыми зонами обзора. Нажмите на камеру на схеме или на кнопку ниже, чтобы открыть её изображение.",
+      "office.legend": ":·: зона обзора камеры   ■ видео на сервер   ● данные   o сотрудник (! — замечен камерой)",
+      "office.feed": "Камеры",
+      "office.models": "модели камер",
+      "anim.pause": "пауза",
+      "anim.play": "▶ смотреть",
+      "term.cmd.cam": "камеры офиса: cam 2 — открыть CAM-02",
       "skills.title": "Навыки",
       "skills.lead": "Каждая технология — отдельный раздел: что умею, живая демонстрация и пример кода.",
       "skills.web": "// веб-разработка",
@@ -119,6 +128,7 @@
 
     uz: {
       "skip": "Asosiy qismga o‘tish",
+      "nav.office": "ofis",
       "nav.skills": "ko‘nikmalar",
       "nav.experience": "tajriba",
       "nav.projects": "loyihalar",
@@ -134,6 +144,14 @@
       "hero.terminal": "terminalni ochish",
       "hero.artHint": "kursorni olib keling — aylanadi",
 
+      "office.title": "Infratuzilma",
+      "office.lead": "Ofisning 3D demo-sxemasi: router, kommutator, server, ish joylari va jonli ko‘rish zonalari bilan kameralar. Kamera tasvirini ochish uchun sxemadagi kamerani yoki quyidagi tugmani bosing.",
+      "office.legend": ":·: kamera ko‘rish zonasi   ■ serverga video   ● ma’lumotlar   o xodim (! — kamera payqadi)",
+      "office.feed": "Kameralar",
+      "office.models": "kamera modellari",
+      "anim.pause": "pauza",
+      "anim.play": "▶ ko‘rish",
+      "term.cmd.cam": "ofis kameralari: cam 2 — CAM-02 ni ochish",
       "skills.title": "Ko‘nikmalar",
       "skills.lead": "Har bir texnologiya — alohida bo‘lim: nimalarni bilaman, jonli namoyish va kod namunasi.",
       "skills.web": "// veb-dasturlash",
@@ -232,6 +250,7 @@
 
     en: {
       "skip": "Skip to content",
+      "nav.office": "office",
       "nav.skills": "skills",
       "nav.experience": "experience",
       "nav.projects": "projects",
@@ -247,6 +266,14 @@
       "hero.terminal": "open terminal",
       "hero.artHint": "hover — it spins",
 
+      "office.title": "Infrastructure",
+      "office.lead": "A 3D demo map of an office: router, switch, server, workstations and cameras with live fields of view. Click a camera on the map or a button below to open its feed.",
+      "office.legend": ":·: camera field of view   ■ video to server   ● data   o person (! — seen by a camera)",
+      "office.feed": "Cameras",
+      "office.models": "camera models",
+      "anim.pause": "pause",
+      "anim.play": "▶ play",
+      "term.cmd.cam": "office cameras: cam 2 opens CAM-02",
       "skills.title": "Skills",
       "skills.lead": "Each technology has its own section: what I can do, a live demo and a code sample.",
       "skills.web": "// web development",

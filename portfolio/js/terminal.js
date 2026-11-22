@@ -21,7 +21,7 @@
   let historyIndex = 0;
 
   const LEVELS = { basic: 3, intermediate: 6, confident: 8, advanced: 9, expert: 10 };
-  const SECTIONS = { skills: "skills", experience: "experience", exp: "experience", projects: "projects", terminal: "terminal", contact: "contact", contacts: "contact", "~": "top", home: "top", "/": "top" };
+  const SECTIONS = { office: "office", cams: "office", skills: "skills", experience: "experience", exp: "experience", projects: "projects", terminal: "terminal", contact: "contact", contacts: "contact", "~": "top", home: "top", "/": "top" };
 
   /* ---------- вывод ---------- */
   function parts(list) {
@@ -69,6 +69,7 @@
     ["help", "term.cmd.help"],
     ["whoami", "term.cmd.whoami"],
     ["neofetch", "term.cmd.neofetch"],
+    ["cam [1-4]", "term.cmd.cam"],
     ["skills [id]", "term.cmd.skills"],
     ["projects", "term.cmd.projects"],
     ["experience", "term.cmd.experience"],
@@ -175,6 +176,27 @@
         items.forEach((s) => print([[s.id.padEnd(12), "bright"], ...levelBar(s.level)]));
       });
       print([["skills <id>", "ps1"], ["  →  " + t("term.cmd.skills").split(";")[0], "dim"]]);
+    },
+
+    cam(args) {
+      const office = window.OFFICE;
+      if (!office) return;
+      const n = parseInt(args[0], 10);
+      if (!(n >= 1 && n <= office.cameras.length)) {
+        print(t("term.usage", { usage: "cam [1-" + office.cameras.length + "]" }), "err");
+        office.cameras.forEach((id, i) => print([["  " + (i + 1) + "  ", "ps1"], id]));
+        return;
+      }
+      office.select(n - 1);
+      print(t("term.opening", { name: office.cameras[n - 1] }), "ps1");
+      APP.goTo("office");
+    },
+    cams() {
+      COMMANDS.cam([]);
+    },
+    office() {
+      print(t("term.opening", { name: "office" }), "ps1");
+      APP.goTo("office");
     },
 
     projects() {
@@ -362,7 +384,7 @@
   // Быстрые команды — удобно на телефоне
   const quick = document.querySelector("[data-console-quick]");
   if (quick) {
-    ["help", "whoami", "neofetch", "skills", "ls", "matrix", "reboot"].forEach((cmd) => {
+    ["help", "neofetch", "cam 1", "skills", "ls", "matrix", "reboot"].forEach((cmd) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "quick-btn";
