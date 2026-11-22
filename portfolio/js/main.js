@@ -484,7 +484,7 @@
     reveal(h2, () => scramble(text, text.textContent, 650));
   });
   cards.forEach((card, i) => {
-    card.style.transitionDelay = `${(i % 3) * 90}ms`;
+    card.style.setProperty("--delay", `${(i % 3) * 90}ms`);
     reveal(card);
   });
   revealHooks.set(panelsRoot, () => {
