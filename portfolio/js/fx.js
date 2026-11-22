@@ -359,7 +359,46 @@
     return api;
   }
 
+  // Логотип строками заданного размера (для neofetch в терминале): { silver: [...], red: [...] }.
+  function logoLines(art, cols, rows) {
+    const ALPHA = "0123456789abcdefghijklmnopqrstuv";
+    const N = art.size;
+    const silver = [];
+    const red = [];
+    for (let y = 0; y < rows; y++) {
+      let s = "";
+      let r = "";
+      for (let x = 0; x < cols; x++) {
+        let sum = 0;
+        let redCount = 0;
+        for (const oy of [0.25, 0.75]) {
+          for (const ox of [0.25, 0.75]) {
+            const u = (x + ox) / cols;
+            const v = (y + oy) / rows;
+            const k = Math.max(0, ALPHA.indexOf(art.data[(v * N) | 0][(u * N) | 0]));
+            sum += (k & 15) / 15;
+            redCount += k >> 4;
+          }
+        }
+        const value = sum / 4;
+        let ch = value > 0.06 ? RAMP[Math.min(9, (Math.pow(value, 0.8) * 10) | 0)] : " ";
+        if (redCount >= 2) {
+          if (ch === " ") ch = RAMP[2];
+          s += " ";
+          r += ch;
+        } else {
+          s += ch;
+          r += " ";
+        }
+      }
+      silver.push(s);
+      red.push(r);
+    }
+    return { silver, red };
+  }
+
   window.FX = {
+    logoLines,
     reduceMotion,
     GLYPHS,
     randomFrom,
