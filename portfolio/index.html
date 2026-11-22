@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Портфолио</title>
+    <meta
+      name="description"
+      content="Портфолио веб-разработчика: HTML, JavaScript, CSS, SQL и другие технологии."
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      // Применяем сохранённую тему до отрисовки, чтобы не было мигания.
+      try {
+        var savedTheme = localStorage.getItem("theme");
+        if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">К содержимому</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="#top" aria-label="В начало" data-initials></a>
+        <nav class="nav" aria-label="Разделы">
+          <a href="#skills">Навыки</a>
+          <a href="#projects">Проекты</a>
+          <a href="#contact">Контакты</a>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Сменить тему">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" />
+            <path
+              d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 1. Обо мне -->
+      <section class="hero" id="top">
+        <div class="container">
+          <p class="eyebrow" data-role></p>
+          <h1 data-name></h1>
+          <p class="lead" data-about></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Смотреть проекты</a>
+            <a class="btn" href="#contact">Связаться</a>
+          </div>
+          <ul class="stack" aria-label="Технологии" data-stack></ul>
+        </div>
+      </section>
+
+      <!-- 2. Навыки: отдельный раздел на каждую технологию (HTML, JS, CSS, SQL, ...) -->
+      <section class="section" id="skills" aria-labelledby="skills-title">
+        <div class="container">
+          <h2 id="skills-title">Навыки</h2>
+          <p class="section-lead">
+            Каждая технология — отдельный раздел: что умею и небольшой пример кода.
+          </p>
+          <div class="tabs" role="tablist" aria-label="Технологии" data-tabs></div>
+          <div data-panels></div>
+        </div>
+      </section>
+
+      <!-- 3. Проекты с фильтром по технологии -->
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="container">
+          <h2 id="projects-title">Проекты</h2>
+          <div class="filters" role="group" aria-label="Фильтр по технологии" data-filters></div>
+          <div class="grid" data-projects></div>
+          <p class="empty" data-empty hidden>Пока нет проектов с этой технологией.</p>
+        </div>
+      </section>
+
+      <!-- 4. Контакты -->
+      <section class="section" id="contact" aria-labelledby="contact-title">
+        <div class="container">
+          <h2 id="contact-title">Контакты</h2>
+          <p class="section-lead">Открыт к предложениям — пишите в любой удобный канал.</p>
+          <ul class="contacts" data-contacts></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container" data-footer></div>
+    </footer>
+
+    <noscript>
+      <p class="container">Для отображения портфолио включите JavaScript.</p>
+    </noscript>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
