@@ -8,23 +8,25 @@
  */
 window.PORTFOLIO = {
   profile: {
-    name: "Имя Фамилия",
-    role: "Веб-разработчик",
+    name: "Хайруллаев Анваржон",
+    handle: "anvarjon", // ник в шапке: anvarjon@portfolio:~$
+    role: "IT-администратор",
     about:
-      "Пара предложений о себе: чем занимаетесь, что умеете и какую работу ищете. Замените этот текст в js/data.js.",
+      "Слежу, чтобы серверы, сеть и рабочие места работали без сбоев. Параллельно развиваюсь в веб-разработке: HTML, JavaScript, CSS, SQL.",
   },
 
   contacts: [
-    { label: "GitHub", value: "github.com/username", href: "https://github.com/username" },
-    { label: "Telegram", value: "@username", href: "https://t.me/username" },
-    { label: "Email", value: "name@example.com", href: "mailto:name@example.com" },
+    { label: "github", value: "github.com/Khayrullayev03", href: "https://github.com/Khayrullayev03" },
+    { label: "telegram", value: "@username", href: "https://t.me/username" },
+    { label: "email", value: "name@example.com", href: "mailto:name@example.com" },
   ],
 
+  // level: Базовый · Средний · Уверенный · Продвинутый · Эксперт (влияет на шкалу [████░░])
   skills: [
     {
       id: "html",
       title: "HTML",
-      color: "#e34f26",
+      file: "index.html",
       level: "Уверенный",
       summary: "Семантическая и доступная разметка, понятная браузерам и поисковикам.",
       points: [
@@ -44,7 +46,7 @@ window.PORTFOLIO = {
     {
       id: "js",
       title: "JavaScript",
-      color: "#f7df1e",
+      file: "app.js",
       level: "Уверенный",
       summary: "Интерактивность на странице и работа с данными с сервера.",
       points: [
@@ -65,13 +67,13 @@ window.PORTFOLIO = {
     {
       id: "css",
       title: "CSS",
-      color: "#2965f1",
+      file: "style.css",
       level: "Уверенный",
       summary: "Адаптивные интерфейсы, которые хорошо выглядят на любом экране.",
       points: [
         "Flexbox и Grid",
         "Адаптивная вёрстка: mobile-first, media queries",
-        "CSS-переменные, светлая и тёмная темы",
+        "CSS-переменные и темы оформления",
         "Переходы и анимации",
       ],
       snippet: [
@@ -85,7 +87,7 @@ window.PORTFOLIO = {
     {
       id: "sql",
       title: "SQL",
-      color: "#336791",
+      file: "query.sql",
       level: "Средний",
       summary: "Проектирование таблиц и запросы к реляционным базам данных.",
       points: [
@@ -105,7 +107,7 @@ window.PORTFOLIO = {
     {
       id: "node",
       title: "Node.js",
-      color: "#3c873a",
+      file: "server.js",
       level: "Средний",
       summary: "Серверная часть: REST API, работа с базой и переменными окружения.",
       points: [
@@ -130,7 +132,7 @@ window.PORTFOLIO = {
     {
       id: "git",
       title: "Git",
-      color: "#f05032",
+      file: "terminal.sh",
       level: "Средний",
       summary: "Контроль версий и командная работа через GitHub.",
       points: [
