@@ -20,132 +20,136 @@
     </script>
   </head>
   <body>
-    <!-- ========== ИНТРО ========== -->
+    <!-- ========== ASCII-ИНТРО ========== -->
     <div class="intro" data-intro>
-      <div class="intro-screen">
-        <div class="intro-boot" data-boot aria-hidden="true"></div>
-
-        <div class="intro-stage" data-stage>
-          <div class="intro-logo">
-            <div class="ascii" data-intro-ascii aria-hidden="true">
-              <pre class="ascii-silver"></pre>
-              <pre class="ascii-red"></pre>
-            </div>
-            <img class="intro-img" src="img/logo.png" alt="Логотип" />
-            <span class="glint" aria-hidden="true"></span>
-          </div>
-
-          <div class="intro-text">
-            <p class="intro-line" data-line></p>
-            <p class="intro-line intro-name" data-line></p>
-            <p class="intro-line" data-line></p>
-          </div>
-
-          <p class="intro-enter" data-enter>
-            нажмите <span class="key">[enter]</span> или кликните, чтобы войти
-          </p>
-        </div>
+      <div class="intro-boot" data-boot aria-hidden="true">
+        <div data-boot-lines></div>
+        <p class="intro-progress" data-progress></p>
       </div>
+
+      <div class="intro-stage" data-stage>
+        <div class="ascii intro-logo" data-intro-ascii aria-hidden="true">
+          <pre class="ascii-silver"></pre>
+          <pre class="ascii-red"></pre>
+        </div>
+
+        <div class="intro-text">
+          <p class="intro-line" data-line></p>
+          <p class="intro-line" data-line></p>
+          <div class="banner" role="img" data-banner><pre></pre></div>
+          <p class="intro-line" data-line></p>
+        </div>
+
+        <p class="intro-enter" data-enter>
+          нажмите <span class="key">[enter]</span> или кликните, чтобы войти
+        </p>
+      </div>
+
       <button class="intro-skip" type="button">[esc] пропустить</button>
     </div>
 
-    <a class="skip-link" href="#main">К содержимому</a>
+    <!-- ========== САЙТ ========== -->
+    <div class="site" data-site>
+      <a class="skip-link" href="#main">К содержимому</a>
 
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="#top" aria-label="В начало">
-          <img src="img/logo.png" alt="" width="30" height="30" />
-          <span class="brand-text"
-            ><span class="brand-user" data-handle></span>@portfolio:<span class="brand-path">~</span>$</span
-          >
-        </a>
-        <nav class="nav" aria-label="Разделы">
-          <a href="#skills">навыки</a>
-          <a href="#projects">проекты</a>
-          <a href="#contact">контакты</a>
-        </nav>
-      </div>
-    </header>
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="brand" href="#top" aria-label="В начало">
+            <img src="img/logo.png" alt="" width="30" height="30" />
+            <span class="brand-text"
+              ><span class="brand-user" data-handle></span>@portfolio:<span class="brand-path">~</span>$</span
+            >
+          </a>
+          <nav class="nav" aria-label="Разделы">
+            <a href="#skills">навыки</a>
+            <a href="#projects">проекты</a>
+            <a href="#contact">контакты</a>
+          </nav>
+        </div>
+      </header>
 
-    <main id="main">
-      <!-- 1. Обо мне -->
-      <section class="hero" id="top">
-        <div class="container hero-grid">
-          <div class="hero-text">
-            <p class="prompt" data-hero><span class="ps1">$</span> whoami</p>
-            <h1 class="hero-name" data-hero data-name></h1>
-            <p class="hero-role" data-hero>
-              <span class="ps1">&gt;</span> <span data-role></span
-              ><span class="cursor" aria-hidden="true">▋</span>
+      <main id="main">
+        <!-- 1. Обо мне -->
+        <section class="hero" id="top">
+          <div class="container hero-grid">
+            <div class="hero-text">
+              <p class="prompt" data-hero><span class="ps1">$</span> whoami</p>
+              <h1 class="hero-name" data-hero data-name></h1>
+              <p class="hero-role" data-hero>
+                <span class="ps1">&gt;</span> <span data-role></span
+                ><span class="cursor" aria-hidden="true">▋</span>
+              </p>
+              <p class="lead" data-hero data-about></p>
+              <div class="hero-actions" data-hero>
+                <a class="btn btn-primary" href="#projects">смотреть проекты</a>
+                <a class="btn" href="#contact">связаться</a>
+              </div>
+              <div class="ls" data-hero>
+                <p class="prompt"><span class="ps1">$</span> ls ~/skills</p>
+                <ul class="stack" aria-label="Технологии" data-stack></ul>
+              </div>
+            </div>
+
+            <div class="term hero-art" data-hero aria-hidden="true">
+              <div class="term-bar"><span>~/logo.txt</span><span>наведите — повернётся</span></div>
+              <div class="ascii" data-hero-ascii>
+                <pre class="ascii-silver"></pre>
+                <pre class="ascii-red"></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Навыки: отдельный раздел на каждую технологию (HTML, JS, CSS, SQL, ...) -->
+        <section class="section" id="skills" aria-labelledby="skills-title">
+          <div class="container">
+            <h2 class="section-title" id="skills-title" data-title>
+              <span class="num">01.</span><span class="title-text">Навыки</span>
+            </h2>
+            <p class="section-lead" data-reveal>
+              Каждая технология — отдельный раздел: что умею и пример кода.
             </p>
-            <p class="lead" data-hero data-about></p>
-            <div class="hero-actions" data-hero>
-              <a class="btn btn-primary" href="#projects">смотреть проекты</a>
-              <a class="btn" href="#contact">связаться</a>
-            </div>
-            <div class="ls" data-hero>
-              <p class="prompt"><span class="ps1">$</span> ls ~/skills</p>
-              <ul class="stack" aria-label="Технологии" data-stack></ul>
-            </div>
+            <div class="tabs" role="tablist" aria-label="Технологии" data-tabs data-reveal></div>
+            <div class="panels" data-panels data-reveal></div>
           </div>
+        </section>
 
-          <div class="term hero-art" data-hero aria-hidden="true">
-            <div class="term-bar"><span>~/logo.txt</span><span>─ □ ×</span></div>
-            <div class="ascii" data-hero-ascii>
-              <pre class="ascii-silver"></pre>
-              <pre class="ascii-red"></pre>
-            </div>
+        <!-- 3. Проекты с фильтром по технологии -->
+        <section class="section" id="projects" aria-labelledby="projects-title">
+          <div class="container">
+            <h2 class="section-title" id="projects-title" data-title>
+              <span class="num">02.</span><span class="title-text">Проекты</span>
+            </h2>
+            <div class="filters" role="group" aria-label="Фильтр по технологии" data-filters data-reveal></div>
+            <div class="grid" data-projects></div>
+            <p class="empty" data-empty hidden>// пока нет проектов с этой технологией</p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- 2. Навыки: отдельный раздел на каждую технологию (HTML, JS, CSS, SQL, ...) -->
-      <section class="section" id="skills" aria-labelledby="skills-title">
-        <div class="container">
-          <h2 class="section-title" id="skills-title" data-title>
-            <span class="num">01.</span><span class="title-text">Навыки</span>
-          </h2>
-          <p class="section-lead" data-reveal>
-            Каждая технология — отдельный раздел: что умею и пример кода.
-          </p>
-          <div class="tabs" role="tablist" aria-label="Технологии" data-tabs data-reveal></div>
-          <div class="panels" data-panels data-reveal></div>
-        </div>
-      </section>
+        <!-- 4. Контакты -->
+        <section class="section" id="contact" aria-labelledby="contact-title">
+          <div class="container">
+            <h2 class="section-title" id="contact-title" data-title>
+              <span class="num">03.</span><span class="title-text">Контакты</span>
+            </h2>
+            <p class="section-lead" data-reveal>Открыт к предложениям — пишите в любой удобный канал.</p>
+            <ul class="contacts" data-contacts data-reveal></ul>
+          </div>
+        </section>
+      </main>
 
-      <!-- 3. Проекты с фильтром по технологии -->
-      <section class="section" id="projects" aria-labelledby="projects-title">
-        <div class="container">
-          <h2 class="section-title" id="projects-title" data-title>
-            <span class="num">02.</span><span class="title-text">Проекты</span>
-          </h2>
-          <div class="filters" role="group" aria-label="Фильтр по технологии" data-filters data-reveal></div>
-          <div class="grid" data-projects></div>
-          <p class="empty" data-empty hidden>// пока нет проектов с этой технологией</p>
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <span data-footer></span>
+          <span class="eof">── EOF ──</span>
         </div>
-      </section>
-
-      <!-- 4. Контакты -->
-      <section class="section" id="contact" aria-labelledby="contact-title">
-        <div class="container">
-          <h2 class="section-title" id="contact-title" data-title>
-            <span class="num">03.</span><span class="title-text">Контакты</span>
-          </h2>
-          <p class="section-lead" data-reveal>Открыт к предложениям — пишите в любой удобный канал.</p>
-          <ul class="contacts" data-contacts data-reveal></ul>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <span data-footer></span>
-        <span class="eof">── EOF ──</span>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script src="js/data.js"></script>
     <script src="js/ascii-logo.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/background.js"></script>
     <script src="js/main.js"></script>
     <script src="js/intro.js"></script>
   </body>

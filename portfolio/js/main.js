@@ -3,7 +3,7 @@
   "use strict";
 
   const data = window.PORTFOLIO;
-  if (!data) return;
+  if (!data || !window.FX) return;
 
   const { profile, contacts = [], skills = [], projects = [] } = data;
   const root = document.documentElement;
@@ -30,147 +30,8 @@
     return node;
   }
 
-  /* =====================================================================
-     ЭФФЕКТЫ (используются и здесь, и в intro.js через window.FX)
-     ===================================================================== */
-  const GLYPHS = "!<>-_\\/[]{}=+*^?#%@$&01";
-  const randomGlyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
-
-  // «Расшифровка» текста: случайные символы постепенно превращаются в нужные.
-  function scramble(node, text, duration = 700) {
-    if (reduceMotion) {
-      node.textContent = text;
-      return Promise.resolve();
-    }
-    const chars = [...text];
-    const last = Math.max(1, chars.length - 1);
-    const ends = chars.map((_, i) => duration * (0.3 + 0.7 * (i / last)) * (0.85 + Math.random() * 0.3));
-
-    return new Promise((resolve) => {
-      const start = performance.now();
-      let glyphs = chars.map(randomGlyph);
-      let lastSwap = start;
-      (function frame(now) {
-        const t = now - start;
-        if (now - lastSwap > 55) {
-          glyphs = chars.map(randomGlyph);
-          lastSwap = now;
-        }
-        let out = "";
-        let pending = false;
-        chars.forEach((ch, i) => {
-          if (ch === " " || t >= ends[i]) out += ch;
-          else {
-            out += glyphs[i];
-            pending = true;
-          }
-        });
-        node.textContent = out;
-        if (pending) requestAnimationFrame(frame);
-        else resolve();
-      })(start);
-    });
-  }
-
-  // ASCII-логотип: два слоя <pre> (серебро и красные камни) поверх друг друга.
-  function createAsciiArt(container, art) {
-    const silverPre = $(".ascii-silver", container);
-    const redPre = $(".ascii-red", container);
-    const { cols, rows } = art;
-    container.style.setProperty("--cols", cols);
-    container.style.setProperty("--rows", rows);
-
-    const cx = (cols - 1) / 2;
-    const cy = (rows - 1) / 2;
-    const maxDist = Math.hypot(cx * 0.6, cy);
-    const cells = [];
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < cols; x++) {
-        const s = (art.silver[y] || "")[x] || " ";
-        const r = (art.red[y] || "")[x] || " ";
-        const ch = r !== " " ? r : s;
-        cells.push(
-          ch === " "
-            ? null
-            : { ch, red: r !== " ", y, dist: Math.hypot((x - cx) * 0.6, y - cy) / maxDist }
-        );
-      }
-    }
-
-    function render(pickChar) {
-      let silver = "";
-      let red = "";
-      for (let i = 0; i < cells.length; i++) {
-        const cell = cells[i];
-        if (!cell) {
-          silver += " ";
-          red += " ";
-        } else {
-          const ch = pickChar(cell);
-          silver += cell.red ? " " : ch;
-          red += cell.red ? ch : " ";
-        }
-        if ((i + 1) % cols === 0) {
-          silver += "\n";
-          red += "\n";
-        }
-      }
-      silverPre.textContent = silver;
-      redPre.textContent = red;
-    }
-
-    let busy = false;
-    const api = {
-      show: () => render((c) => c.ch),
-      clear: () => render(() => " "),
-      // Логотип «собирается» из центра наружу.
-      decode(duration = 1200) {
-        if (reduceMotion) {
-          api.show();
-          return Promise.resolve();
-        }
-        busy = true;
-        cells.forEach((c) => c && (c.at = c.dist * duration * 0.75 + Math.random() * duration * 0.25));
-        return new Promise((resolve) => {
-          const start = performance.now();
-          (function frame(now) {
-            const t = now - start;
-            render((c) => (t >= c.at ? c.ch : t >= c.at - 280 ? randomGlyph() : " "));
-            if (t < duration) requestAnimationFrame(frame);
-            else {
-              api.show();
-              busy = false;
-              resolve();
-            }
-          })(start);
-        });
-      },
-      // Короткий сбой «сигнала» в нескольких строках.
-      glitch() {
-        if (reduceMotion || busy) return;
-        busy = true;
-        const from = (Math.random() * (rows - 6)) | 0;
-        const to = from + 2 + ((Math.random() * 4) | 0);
-        let frames = 0;
-        container.classList.add("is-glitching");
-        (function step() {
-          render((c) => (c.y >= from && c.y < to && Math.random() < 0.55 ? randomGlyph() : c.ch));
-          if (++frames < 4) setTimeout(step, 45);
-          else {
-            api.show();
-            container.classList.remove("is-glitching");
-            busy = false;
-          }
-        })();
-      },
-      get busy() {
-        return busy;
-      },
-    };
-    return api;
-  }
-
-  window.FX = { scramble, createAsciiArt, reduceMotion };
+  // ASCII-эффекты из js/fx.js
+  const { scramble, createAsciiArt } = window.FX;
 
   /* =====================================================================
      ОБО МНЕ
@@ -525,8 +386,9 @@
         schedule();
       }, 3000 + Math.random() * 3500);
     })();
+    // Наведение или касание — логотип делает оборот
     $(".hero-art").addEventListener("pointerenter", () => {
-      if (!heroArt.busy) heroArt.decode(700);
+      if (!heroArt.busy) heroArt.spin(1, 1800);
     });
   }
 
