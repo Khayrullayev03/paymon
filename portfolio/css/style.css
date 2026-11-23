@@ -1334,8 +1334,115 @@ main {
   margin-top: 0;
 }
 
-.panels + .sub-title {
+.panels + .sub-title,
+.levels + .sub-title {
   margin-top: 44px;
+}
+
+/* Навыки из резюме по уровням: «чипы» вида [ + Active Directory ] */
+.levels-body {
+  display: grid;
+  gap: 26px;
+  padding: 20px clamp(14px, 2.4vw, 26px) 24px;
+}
+
+.level-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 1.2ch;
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line-strong);
+}
+
+.level-name {
+  color: var(--bright);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.level-name::before {
+  content: "## ";
+  color: var(--accent);
+}
+
+.level-head .meter-bar {
+  font-size: 12px;
+}
+
+.level-count {
+  margin-left: auto;
+  padding: 0 0.8ch;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-chip {
+  position: relative;
+  padding: 5px 11px 5px 9px;
+  border: 1px solid var(--line-strong);
+  background: var(--code-bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s var(--ease-out);
+}
+
+.skill-chip::before {
+  content: "+ ";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.skill-chip:hover {
+  border-color: var(--accent);
+  color: var(--bright);
+  box-shadow:
+    0 0 0 1px var(--accent-glow),
+    0 0 18px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* чипы появляются по очереди, когда открывается страница */
+.js .levels.in .skill-chip {
+  animation: chip-in 0.45s var(--ease-out) both;
+  animation-delay: calc(var(--delay, 0ms) + 160ms + var(--i, 0) * 28ms);
+}
+
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .levels.in .skill-chip {
+    animation: none;
+  }
 }
 
 /* Навыки — плитки с анимированными значками */

@@ -220,15 +220,13 @@
     },
 
     neofetch() {
-      const skills = data.skills || [];
-      const web = skills.filter((s) => (s.group || "web") === "web").length;
       const info = [
         [[`${user}@portfolio`, "bright"]],
         [["─".repeat(user.length + 10), "dim"]],
         [["OS: ", "ps1"], "anvar-os 1.0 (ASCII)"],
         [[t("nf.name") + ": ", "ps1"], L(data.profile.name)],
         [[t("nf.role") + ": ", "ps1"], L(data.profile.role)],
-        [[t("nf.skills") + ": ", "ps1"], `${skills.length} (web ${web}, admin ${skills.length - web})`],
+        [[t("nf.skills") + ": ", "ps1"], String((data.skillLevels || []).reduce((n, g) => n + g.items.length, 0))],
         [[t("nf.services") + ": ", "ps1"], String((data.services || []).length)],
         [[t("nf.langs") + ": ", "ps1"], "ru · uz · en"],
         [[t("nf.theme") + ": ", "ps1"], APP.theme.get()],
@@ -284,12 +282,15 @@
         APP.selectSkill(skill.id);
         return;
       }
-      [["web", "skills.web"], ["admin", "skills.admin"]].forEach(([group, key]) => {
-        const items = list.filter((s) => (s.group || "web") === group);
-        if (!items.length) return;
-        print(t(key), "dim");
-        items.forEach((s) => print([[s.id.padEnd(12), "bright"], ...levelBar(s.level)]));
+      // навыки из резюме по уровням
+      (data.skillLevels || []).forEach((group) => {
+        print([[t("skills.levelTitle", { level: t("level." + group.level) }) + " ", "bright"], ...levelBar(group.level).slice(0, 4)]);
+        print("  " + group.items.map((item) => L(item)).join(" · "));
       });
+      blank();
+      // подробные карточки с анимациями
+      print(t("skills.detail") + ":", "dim");
+      print("  " + list.map((s) => s.id).join("  "), "ps1");
       print([["skills <id>", "ps1"], ["  →  " + t("term.cmd.skills").split(";")[0], "dim"]]);
     },
 

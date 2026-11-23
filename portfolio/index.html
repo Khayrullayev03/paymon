@@ -140,7 +140,14 @@
             </div>
           </div>
 
-          <h3 class="sub-title" data-reveal><span class="ps1">$</span> ls ~/skills <span class="dim">#</span> <span data-i18n="skills.title">навыки</span></h3>
+          <!-- Навыки из резюме по уровням (список — в js/data.js, skillLevels) -->
+          <h3 class="sub-title" data-reveal><span class="ps1">$</span> cat ~/skills.txt <span class="dim">#</span> <span data-i18n="skills.title">навыки</span></h3>
+          <div class="term levels" data-reveal>
+            <div class="term-bar" aria-hidden="true"><span>~/skills.txt</span><span data-skill-count></span></div>
+            <div class="levels-body" data-skill-levels></div>
+          </div>
+
+          <h3 class="sub-title" data-reveal><span class="ps1">$</span> ls ~/skills <span class="dim">#</span> <span data-i18n="skills.detail">подробно</span></h3>
           <div class="tabs" role="tablist" data-tabs data-reveal></div>
           <div class="panels" data-panels data-reveal></div>
 

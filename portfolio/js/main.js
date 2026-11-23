@@ -146,6 +146,48 @@
   }
 
   /* =====================================================================
+     НАВЫКИ ИЗ РЕЗЮМЕ: по уровням, каждый навык — «чип»; при наведении текст «расшифровывается»
+     ===================================================================== */
+  function renderSkillLevels() {
+    const root = $("[data-skill-levels]");
+    const groups = data.skillLevels || [];
+    root.textContent = "";
+    let total = 0;
+    groups.forEach((group) => {
+      const score = LEVELS[group.level] || 5;
+      const names = group.items.map((item) => L(item));
+      total += names.length;
+      const chips = names.map((name, i) => {
+        const chip = el("li", { class: "skill-chip", vars: { "--i": i } }, name);
+        chip.addEventListener("pointerenter", () => scramble(chip, name, 380));
+        return chip;
+      });
+      root.append(
+        el(
+          "div",
+          { class: "level-group" },
+          el(
+            "p",
+            { class: "level-head" },
+            el("span", { class: "level-name", text: t("skills.levelTitle", { level: t("level." + group.level) }) }),
+            el(
+              "span",
+              { class: "meter-bar", "aria-hidden": "true" },
+              "[",
+              el("span", { class: "meter-fill", text: "█".repeat(score) }),
+              el("span", { class: "meter-empty", text: "░".repeat(10 - score) }),
+              "]"
+            ),
+            el("span", { class: "level-count", text: String(names.length) })
+          ),
+          el("ul", { class: "skill-chips" }, chips)
+        )
+      );
+    });
+    $("[data-skill-count]").textContent = `${total} ${t("skills.total")}`;
+  }
+
+  /* =====================================================================
      УСЛУГИ: большие блоки с анимированными картинками, по очереди слева и справа
      ===================================================================== */
   const servicesRoot = $("[data-services]");
@@ -612,6 +654,7 @@
      ===================================================================== */
   function renderAll() {
     renderProfile();
+    renderSkillLevels();
     renderSkills();
     renderExperience();
     renderServices();

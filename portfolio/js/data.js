@@ -33,6 +33,46 @@ window.PORTFOLIO = {
     { label: "email", value: "name@example.com", href: "mailto:name@example.com" },
   ],
 
+  // Навыки из резюме — по уровням. Показываются на странице «О себе» (блок «Навыки») и в терминале (skills).
+  // Уровень: basic · intermediate · confident · advanced · expert.
+  skillLevels: [
+    {
+      level: "advanced",
+      items: [
+        { ru: "Администрирование", uz: "Ma’muriyat", en: "Administration" },
+        { ru: "Администрирование сетевого оборудования", uz: "Tarmoq uskunalarini boshqarish", en: "Network equipment administration" },
+        "Active Directory",
+        { ru: "Деловое общение", uz: "Ishbilarmonlik muloqoti", en: "Business communication" },
+        "Helpdesk",
+        "DHCP",
+        { ru: "Безопасность", uz: "Xavfsizlik", en: "Security" },
+        { ru: "Настройка сетевых подключений", uz: "Tarmoq ulanishlarini sozlash", en: "Network connection setup" },
+        { ru: "Администрирование серверов Windows", uz: "Windows serverlarini boshqarish", en: "Windows server administration" },
+        "VPN",
+        { ru: "Внутренний контроль", uz: "Ichki nazorat", en: "Internal control" },
+        { ru: "Настройка ПО", uz: "Dasturiy ta’minotni sozlash", en: "Software configuration" },
+        { ru: "Настройка серверов", uz: "Serverlarni sozlash", en: "Server setup" },
+        { ru: "Административная поддержка руководителя", uz: "Rahbarga ma’muriy yordam", en: "Executive administrative support" },
+        { ru: "Настройка ПК", uz: "Kompyuterlarni sozlash", en: "PC setup" },
+        { ru: "Информационные технологии", uz: "Axborot texnologiyalari", en: "Information technology" },
+        { ru: "Офисная техника", uz: "Ofis texnikasi", en: "Office equipment" },
+        { ru: "Проектирование СКС", uz: "SKT loyihalash", en: "Structured cabling design" },
+        { ru: "Контроль доступа", uz: "Kirishni nazorat qilish", en: "Access control" },
+        "LAN",
+        { ru: "Поисковые системы", uz: "Qidiruv tizimlari", en: "Search engines" },
+        { ru: "Сетевые технологии", uz: "Tarmoq texnologiyalari", en: "Network technologies" },
+        { ru: "Инвентаризация", uz: "Inventarizatsiya", en: "Inventory management" },
+        { ru: "Системы видеонаблюдения", uz: "Videokuzatuv tizimlari", en: "CCTV systems" },
+        "IT Recruitment",
+        "Windows Server 2008 R2",
+      ],
+    },
+    {
+      level: "intermediate",
+      items: [{ ru: "Администрирование серверов", uz: "Serverlarni boshqarish", en: "Server administration" }],
+    },
+  ],
+
   // level: basic · intermediate · confident · advanced · expert (влияет на шкалу [████░░])
   // group: web — веб-разработка, admin — администрирование
   skills: [
@@ -230,7 +270,7 @@ window.PORTFOLIO = {
       group: "admin",
       title: "Windows Server",
       file: "new-user.ps1",
-      level: "confident",
+      level: "advanced",
       summary: {
         ru: "Домен и рабочие места в офисе на Windows Server.",
         uz: "Windows Server’da ofis domeni va ish joylari.",
@@ -255,7 +295,7 @@ window.PORTFOLIO = {
       group: "admin",
       title: { ru: "Сети", uz: "Tarmoqlar", en: "Networking" },
       file: "mikrotik.rsc",
-      level: "confident",
+      level: "advanced",
       summary: {
         ru: "Офисная сеть — от кабеля до VPN.",
         uz: "Kabeldan VPN’gacha ofis tarmog‘i.",
@@ -297,7 +337,7 @@ window.PORTFOLIO = {
       group: "admin",
       title: { ru: "Видеонаблюдение", uz: "Videokuzatuv", en: "CCTV" },
       file: "camera.sh",
-      level: "confident",
+      level: "advanced",
       summary: {
         ru: "IP-камеры, видеорегистраторы и архив записей.",
         uz: "IP-kameralar, videoregistratorlar va yozuvlar arxivi.",
