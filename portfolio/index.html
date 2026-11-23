@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Хайруллаев Анваржон — портфолио</title>
-    <meta name="description" content="Портфолио IT-администратора." />
+    <meta name="description" content="IT-администратор: серверы, сети, СКС, видеонаблюдение." />
     <meta name="theme-color" content="#050506" />
     <link rel="icon" href="img/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,11 +35,9 @@
         </a>
         <nav class="nav" aria-label="Menu">
           <a href="#home" data-i18n="nav.main">главная</a>
-          <a href="#office" data-i18n="nav.office">офис</a>
-          <a href="#skills" data-i18n="nav.skills">навыки</a>
-          <a href="#experience" data-i18n="nav.experience">опыт</a>
-          <a href="#projects" data-i18n="nav.projects">проекты</a>
-          <a href="#terminal" data-i18n="nav.terminal">терминал</a>
+          <a href="#services" data-i18n="nav.services">услуги</a>
+          <a href="#about" data-i18n="nav.about">о себе</a>
+          <a href="#info" data-i18n="nav.info">инфо</a>
           <a href="#contact" data-i18n="nav.contact">контакты</a>
         </nav>
         <div class="controls">
@@ -67,7 +65,7 @@
     </header>
 
     <main id="main" tabindex="-1">
-      <!-- Главная: только логотип на фоне алой луны -->
+      <!-- Главная: только логотип с эффектом глитча на фоне алой луны -->
       <section class="page page-home" data-page="home" data-i18n-aria="nav.home">
         <div class="ascii home-logo" data-home-logo role="img" data-i18n-aria="home.logo">
           <pre class="ascii-silver"></pre>
@@ -75,74 +73,78 @@
         </div>
       </section>
 
-      <!-- 01. Инфраструктура: 3D-схема офиса, изображение с камеры, рисунки камер -->
-      <section class="page" data-page="office" aria-labelledby="office-title" data-office hidden>
+      <!-- 01. Услуги: у каждой — анимированная картинка; монтаж СКС — 3D-схема офиса с камерами -->
+      <section class="page" data-page="services" aria-labelledby="services-title" hidden>
         <div class="container container-wide">
           <div class="page-head">
             <a class="back" href="#home" data-i18n="nav.back">← меню</a>
-            <h2 class="section-title" id="office-title" data-title>
-              <span class="num">01.</span><span class="title-text" data-i18n="office.title">Инфраструктура</span>
+            <h2 class="section-title" id="services-title" data-title>
+              <span class="num">01.</span><span class="title-text" data-i18n="services.title">Услуги</span>
             </h2>
-            <p class="section-lead" data-reveal data-i18n="office.lead"></p>
+            <p class="section-lead" data-reveal data-i18n="services.lead"></p>
           </div>
+          <div class="services" data-services></div>
 
-          <div class="term office-map" data-reveal data-office-frame>
-            <div class="term-bar">
-              <span>~/office/map.3d</span>
-              <span class="bar-actions">
-                <button class="anim-toggle" type="button" data-office-full data-i18n="office.full">во весь экран</button>
-                <button class="anim-toggle" type="button" data-office-toggle></button>
-              </span>
-            </div>
-            <div class="office-screen">
-              <pre class="asc office-pre office-pre-map" data-office-map aria-hidden="true"></pre>
-            </div>
-            <p class="office-legend" data-i18n="office.legend"></p>
-          </div>
-
-          <div class="office-grid">
-            <div class="term cam-feed" data-reveal>
-              <div class="term-bar"><span data-feed-title>cam · live</span><span class="live">● REC</span></div>
-              <div class="cam-buttons" role="group" data-i18n-aria="office.feed" data-cam-buttons></div>
-              <div class="office-screen">
-                <pre class="asc office-pre" data-cam-feed aria-hidden="true"></pre>
+          <!-- Схема офиса: скрипт переносит её внутрь услуги «Монтаж СКС и видеонаблюдения» -->
+          <div class="office-block" data-office>
+            <div class="term office-map" data-office-frame>
+              <div class="term-bar">
+                <span>~/office/map.3d</span>
+                <span class="bar-actions">
+                  <button class="anim-toggle" type="button" data-office-full data-i18n="office.full">во весь экран</button>
+                  <button class="anim-toggle" type="button" data-office-toggle></button>
+                </span>
               </div>
-            </div>
-            <div class="term cam-models" data-reveal>
-              <div class="term-bar"><span>~/cameras</span><span data-i18n="office.models">модели камер</span></div>
               <div class="office-screen">
-                <pre class="asc office-pre" data-cam-models aria-hidden="true"></pre>
+                <pre class="asc office-pre office-pre-map" data-office-map aria-hidden="true"></pre>
+              </div>
+              <p class="office-legend" data-i18n="office.legend"></p>
+            </div>
+            <div class="office-grid">
+              <div class="term cam-feed">
+                <div class="term-bar"><span data-feed-title>cam · live</span><span class="live">● REC</span></div>
+                <div class="cam-buttons" role="group" data-i18n-aria="office.feed" data-cam-buttons></div>
+                <div class="office-screen">
+                  <pre class="asc office-pre" data-cam-feed aria-hidden="true"></pre>
+                </div>
+              </div>
+              <div class="term cam-models">
+                <div class="term-bar"><span>~/cameras</span><span data-i18n="office.models">модели камер</span></div>
+                <div class="office-screen">
+                  <pre class="asc office-pre" data-cam-models aria-hidden="true"></pre>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 02. Навыки: веб (HTML, JS, CSS, SQL, …) и администрирование, у каждого — живая ASCII-анимация -->
-      <section class="page" data-page="skills" aria-labelledby="skills-title" hidden>
+      <!-- 02. О себе: кто я, навыки (плитки с анимированными значками), опыт и сертификаты -->
+      <section class="page" data-page="about" aria-labelledby="about-title" hidden>
         <div class="container">
           <div class="page-head">
             <a class="back" href="#home" data-i18n="nav.back">← меню</a>
-            <h2 class="section-title" id="skills-title" data-title>
-              <span class="num">02.</span><span class="title-text" data-i18n="skills.title">Навыки</span>
+            <h2 class="section-title" id="about-title" data-title>
+              <span class="num">02.</span><span class="title-text" data-i18n="about.title">О себе</span>
             </h2>
-            <p class="section-lead" data-reveal data-i18n="skills.lead"></p>
           </div>
+
+          <div class="term about-card" data-reveal>
+            <div class="term-bar" aria-hidden="true"><span>~/about.txt</span><span>cat</span></div>
+            <div class="about-body">
+              <img class="about-logo" src="img/logo.png" alt="" width="96" height="96" />
+              <div>
+                <p class="about-role"><span class="ps1">&gt;</span> <span data-role></span><span class="cursor" aria-hidden="true">▋</span></p>
+                <p class="about-text" data-about></p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="sub-title" data-reveal><span class="ps1">$</span> ls ~/skills <span class="dim">#</span> <span data-i18n="skills.title">навыки</span></h3>
           <div class="tabs" role="tablist" data-tabs data-reveal></div>
           <div class="panels" data-panels data-reveal></div>
-        </div>
-      </section>
 
-      <!-- 03. Опыт работы и сертификаты -->
-      <section class="page" data-page="experience" aria-labelledby="experience-title" hidden>
-        <div class="container">
-          <div class="page-head">
-            <a class="back" href="#home" data-i18n="nav.back">← меню</a>
-            <h2 class="section-title" id="experience-title" data-title>
-              <span class="num">03.</span><span class="title-text" data-i18n="exp.title">Опыт</span>
-            </h2>
-            <p class="section-lead" data-reveal data-i18n="exp.lead"></p>
-          </div>
+          <h3 class="sub-title" data-reveal><span class="ps1">$</span> tail ~/experience.log <span class="dim">#</span> <span data-i18n="exp.title">опыт</span></h3>
           <div class="exp-grid">
             <div class="term log" data-reveal>
               <div class="term-bar" aria-hidden="true"><span>~/experience.log</span><span>tail -f</span></div>
@@ -158,31 +160,31 @@
         </div>
       </section>
 
-      <!-- 04. Проекты с фильтром по технологии -->
-      <section class="page" data-page="projects" aria-labelledby="projects-title" hidden>
-        <div class="container">
+      <!-- 03. Инфо: анимированная карта мира с IP и координатами посетителя, терминал -->
+      <section class="page" data-page="info" aria-labelledby="info-title" hidden>
+        <div class="container container-wide">
           <div class="page-head">
             <a class="back" href="#home" data-i18n="nav.back">← меню</a>
-            <h2 class="section-title" id="projects-title" data-title>
-              <span class="num">04.</span><span class="title-text" data-i18n="projects.title">Проекты</span>
+            <h2 class="section-title" id="info-title" data-title>
+              <span class="num">03.</span><span class="title-text" data-i18n="info.title">Инфо</span>
             </h2>
+            <p class="section-lead" data-reveal data-i18n="info.lead"></p>
           </div>
-          <div class="filters" role="group" data-filters data-reveal></div>
-          <div class="grid" data-projects></div>
-          <p class="empty" data-empty hidden data-i18n="projects.empty"></p>
-        </div>
-      </section>
 
-      <!-- 05. Интерактивный терминал -->
-      <section class="page" data-page="terminal" aria-labelledby="terminal-title" hidden>
-        <div class="container">
-          <div class="page-head">
-            <a class="back" href="#home" data-i18n="nav.back">← меню</a>
-            <h2 class="section-title" id="terminal-title" data-title>
-              <span class="num">05.</span><span class="title-text" data-i18n="terminal.title">Терминал</span>
-            </h2>
-            <p class="section-lead" data-reveal data-i18n="terminal.lead"></p>
+          <div class="info-grid">
+            <div class="term geo-map" data-reveal>
+              <div class="term-bar"><span>~/info/worldmap</span><span class="live">● live</span></div>
+              <div class="office-screen">
+                <pre class="asc office-pre geo-pre" data-geo-map aria-hidden="true"></pre>
+              </div>
+            </div>
+            <div class="term geo-facts" data-reveal>
+              <div class="term-bar"><span>~/info/visitor</span><span data-geo-status></span></div>
+              <dl class="facts" data-geo-facts></dl>
+            </div>
           </div>
+
+          <h3 class="sub-title" data-reveal><span class="ps1">$</span> bash <span class="dim">#</span> <span data-i18n="terminal.title">терминал</span></h3>
           <div class="term console" data-console data-reveal>
             <div class="term-bar" aria-hidden="true"><span><span data-handle></span>@portfolio: ~</span><span>bash</span></div>
             <div class="console-body" data-console-body>
@@ -209,17 +211,17 @@
         </div>
       </section>
 
-      <!-- 06. Контакты -->
+      <!-- 04. Контакты -->
       <section class="page" data-page="contact" aria-labelledby="contact-title" hidden>
         <div class="container">
           <div class="page-head">
             <a class="back" href="#home" data-i18n="nav.back">← меню</a>
             <h2 class="section-title" id="contact-title" data-title>
-              <span class="num">06.</span><span class="title-text" data-i18n="contact.title">Контакты</span>
+              <span class="num">04.</span><span class="title-text" data-i18n="contact.title">Контакты</span>
             </h2>
             <p class="section-lead" data-reveal data-i18n="contact.lead"></p>
           </div>
-          <ul class="contacts" data-contacts data-reveal></ul>
+          <ul class="contacts" data-contacts></ul>
         </div>
       </section>
     </main>
@@ -245,6 +247,7 @@
     <script src="js/office.js"></script>
     <script src="js/worldmap.js"></script>
     <script src="js/geo.js"></script>
+    <script src="js/info.js"></script>
     <script src="js/terminal.js"></script>
   </body>
 </html>

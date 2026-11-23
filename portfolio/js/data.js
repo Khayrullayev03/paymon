@@ -343,62 +343,128 @@ window.PORTFOLIO = {
     },
   ],
 
-  // ПРИМЕРЫ — замените своими проектами.
-  // tech — id навыков из списка выше; demo и code — необязательные ссылки.
-  projects: [
+  // Услуги — порядок в массиве = порядок на странице «Услуги».
+  // scene — ASCII-анимация из js/scenes.js; feature: "office" — вместо картинки 3D-схема офиса с камерами.
+  services: [
     {
-      title: { ru: "Видеонаблюдение для офиса", uz: "Ofis uchun videokuzatuv", en: "Office CCTV" },
-      description: {
-        ru: "IP-камеры в отдельном VLAN, видеорегистратор с архивом и уведомления о движении.",
-        uz: "Alohida VLAN’dagi IP-kameralar, arxivli videoregistrator va harakat haqida bildirishnomalar.",
-        en: "IP cameras on a separate VLAN, an NVR with archive and motion alerts.",
+      id: "servers",
+      scene: "servers",
+      title: { ru: "Установка и настройка серверов", uz: "Serverlarni o‘rnatish va sozlash", en: "Server installation and setup" },
+      desc: {
+        ru: "Подберу и соберу сервер, установлю Windows Server или Linux, настрою виртуализацию и резервное копирование.",
+        uz: "Serverni tanlab yig‘aman, Windows Server yoki Linux o‘rnataman, virtualizatsiya va zaxira nusxalashni sozlayman.",
+        en: "I pick and build the server, install Windows Server or Linux, and set up virtualization and backups.",
       },
-      tech: ["cctv", "network"],
+      points: {
+        ru: ["Сборка и монтаж в стойку, RAID", "Windows Server, Ubuntu, Debian", "Виртуализация: Proxmox, Hyper-V, Docker", "Удалённый доступ, обновления, бэкапы"],
+        uz: ["Yig‘ish va stoykaga o‘rnatish, RAID", "Windows Server, Ubuntu, Debian", "Virtualizatsiya: Proxmox, Hyper-V, Docker", "Masofaviy kirish, yangilanishlar, zaxira nusxalar"],
+        en: ["Assembly and rack mounting, RAID", "Windows Server, Ubuntu, Debian", "Virtualization: Proxmox, Hyper-V, Docker", "Remote access, updates, backups"],
+      },
     },
     {
-      title: { ru: "Мониторинг серверов", uz: "Serverlar monitoringi", en: "Server monitoring" },
-      description: {
-        ru: "Zabbix и Grafana для серверов и сети, оповещения в Telegram, ночные бэкапы.",
-        uz: "Serverlar va tarmoq uchun Zabbix va Grafana, Telegram’ga ogohlantirishlar, tungi zaxira nusxalar.",
-        en: "Zabbix and Grafana for servers and network, Telegram alerts, nightly backups.",
+      id: "scs",
+      feature: "office",
+      title: { ru: "Монтаж СКС и видеонаблюдения", uz: "SKT va videokuzatuvni o‘rnatish", en: "Structured cabling and CCTV" },
+      desc: {
+        ru: "Кабельная сеть офиса под ключ: витая пара, розетки, патч-панели, шкаф, Wi-Fi и IP-камеры с записью.",
+        uz: "Ofis kabel tarmog‘i to‘liq: o‘ralgan juftlik, rozetkalar, patch-panellar, shkaf, Wi-Fi va yozib oluvchi IP-kameralar.",
+        en: "Turnkey office cabling: twisted pair, wall sockets, patch panels, a rack, Wi-Fi and recording IP cameras.",
       },
-      tech: ["monitoring", "linux", "servers"],
+      points: {
+        ru: ["Прокладка кабеля, розетки, патч-панели", "Коммутационный шкаф и маркировка", "IP-камеры, видеорегистратор, архив", "Просмотр камер с телефона"],
+        uz: ["Kabel tortish, rozetkalar, patch-panellar", "Kommutatsiya shkafi va belgilash", "IP-kameralar, videoregistrator, arxiv", "Kameralarni telefondan ko‘rish"],
+        en: ["Cable runs, sockets, patch panels", "Network rack and labeling", "IP cameras, NVR, recording archive", "Viewing cameras from a phone"],
+      },
     },
     {
-      title: { ru: "Лендинг для кофейни", uz: "Qahvaxona uchun lending", en: "Coffee shop landing page" },
-      description: {
-        ru: "Адаптивная одностраничная вёрстка с меню, галереей и картой.",
-        uz: "Menyu, galereya va xaritali moslashuvchan bir sahifali sayt.",
-        en: "A responsive one-page site with a menu, gallery and map.",
+      id: "network",
+      scene: "network",
+      title: { ru: "Настройка сетей и Wi-Fi", uz: "Tarmoq va Wi-Fi sozlash", en: "Networks and Wi-Fi" },
+      desc: {
+        ru: "Настрою роутеры и коммутаторы, разделю сеть на сегменты, подключу Wi-Fi и VPN для удалённой работы.",
+        uz: "Router va kommutatorlarni sozlayman, tarmoqni segmentlarga ajrataman, Wi-Fi va masofaviy ish uchun VPN ulayman.",
+        en: "I configure routers and switches, segment the network, and set up Wi-Fi and VPN for remote work.",
       },
-      tech: ["html", "css"],
+      points: {
+        ru: ["MikroTik, Cisco, Ubiquiti", "VLAN, гостевой Wi-Fi", "VPN для удалённого доступа", "Диагностика и устранение сбоев"],
+        uz: ["MikroTik, Cisco, Ubiquiti", "VLAN, mehmon Wi-Fi", "Masofaviy kirish uchun VPN", "Diagnostika va nosozliklarni bartaraf etish"],
+        en: ["MikroTik, Cisco, Ubiquiti", "VLANs, guest Wi-Fi", "VPN for remote access", "Diagnostics and troubleshooting"],
+      },
     },
     {
-      title: { ru: "Список задач", uz: "Vazifalar ro‘yxati", en: "To-do list" },
-      description: {
-        ru: "Добавление, фильтрация и сохранение задач в localStorage.",
-        uz: "Vazifalarni qo‘shish, saralash va localStorage’da saqlash.",
-        en: "Add, filter and save tasks in localStorage.",
+      id: "windows",
+      scene: "windows",
+      title: { ru: "Windows Server и Active Directory", uz: "Windows Server va Active Directory", en: "Windows Server and Active Directory" },
+      desc: {
+        ru: "Домен для офиса: учётные записи, группы, политики, общие папки и принтеры — всё управляется из одного места.",
+        uz: "Ofis uchun domen: hisoblar, guruhlar, siyosatlar, umumiy papkalar va printerlar — hammasi bir joydan boshqariladi.",
+        en: "An office domain: accounts, groups, policies, shared folders and printers, all managed from one place.",
       },
-      tech: ["html", "css", "js"],
+      points: {
+        ru: ["Домен, пользователи, группы", "Групповые политики (GPO)", "Общие папки и права доступа", "DNS, DHCP, печать"],
+        uz: ["Domen, foydalanuvchilar, guruhlar", "Guruh siyosatlari (GPO)", "Umumiy papkalar va huquqlar", "DNS, DHCP, chop etish"],
+        en: ["Domain, users, groups", "Group Policy (GPO)", "File shares and permissions", "DNS, DHCP, printing"],
+      },
     },
     {
-      title: { ru: "REST API для блога", uz: "Blog uchun REST API", en: "Blog REST API" },
-      description: {
-        ru: "CRUD статей и комментариев, пагинация и поиск по заголовку.",
-        uz: "Maqola va izohlar uchun CRUD, sahifalash va sarlavha bo‘yicha qidiruv.",
-        en: "CRUD for posts and comments, pagination and title search.",
+      id: "linux",
+      scene: "linux",
+      title: { ru: "Linux-серверы и автоматизация", uz: "Linux serverlar va avtomatlashtirish", en: "Linux servers and automation" },
+      desc: {
+        ru: "Подниму веб-сервер, базу данных или файловое хранилище на Linux и автоматизирую рутину скриптами.",
+        uz: "Linux’da veb-server, ma’lumotlar bazasi yoki fayl ombori ko‘taraman va muntazam ishlarni skriptlar bilan avtomatlashtiraman.",
+        en: "I set up a web server, database or file storage on Linux and automate routine work with scripts.",
       },
-      tech: ["node", "sql"],
+      points: {
+        ru: ["nginx, базы данных, файловые серверы", "Bash-скрипты и cron", "SSH по ключам, права, защита", "Логи и диагностика"],
+        uz: ["nginx, ma’lumotlar bazalari, fayl serverlari", "Bash-skriptlar va cron", "Kalit bilan SSH, huquqlar, himoya", "Loglar va diagnostika"],
+        en: ["nginx, databases, file servers", "Bash scripts and cron", "Key-based SSH, permissions, hardening", "Logs and diagnostics"],
+      },
     },
     {
-      title: { ru: "Онлайн-чат", uz: "Onlayn chat", en: "Online chat" },
-      description: {
-        ru: "Комнаты и сообщения в реальном времени на WebSocket.",
-        uz: "WebSocket’da xonalar va real vaqtdagi xabarlar.",
-        en: "Rooms and real-time messages over WebSocket.",
+      id: "monitoring",
+      scene: "monitoring",
+      title: { ru: "Мониторинг и резервное копирование", uz: "Monitoring va zaxira nusxalash", en: "Monitoring and backups" },
+      desc: {
+        ru: "Слежу за серверами и сетью круглосуточно, присылаю тревоги в Telegram и каждую ночь делаю бэкапы.",
+        uz: "Serverlar va tarmoqni kecha-kunduz kuzataman, ogohlantirishlarni Telegram’ga yuboraman va har kecha zaxira nusxa olaman.",
+        en: "I watch servers and the network around the clock, send alerts to Telegram and make backups every night.",
       },
-      tech: ["js", "node", "git"],
+      points: {
+        ru: ["Zabbix, Grafana", "Оповещения о сбоях в Telegram", "Бэкапы по расписанию", "Проверка восстановления"],
+        uz: ["Zabbix, Grafana", "Nosozliklar haqida Telegram’ga xabar", "Jadval bo‘yicha zaxira nusxalar", "Tiklashni tekshirish"],
+        en: ["Zabbix, Grafana", "Failure alerts to Telegram", "Scheduled backups", "Restore testing"],
+      },
+    },
+    {
+      id: "pc",
+      scene: "pc",
+      title: { ru: "Обслуживание компьютеров и оргтехники", uz: "Kompyuter va orgtexnikaga xizmat ko‘rsatish", en: "PC and office equipment maintenance" },
+      desc: {
+        ru: "Почищу и настрою рабочие места, установлю систему и программы, подключу принтеры и МФУ.",
+        uz: "Ish joylarini tozalab sozlayman, tizim va dasturlarni o‘rnataman, printer va MFU ulayman.",
+        en: "I clean and tune workstations, install the OS and software, and connect printers and MFPs.",
+      },
+      points: {
+        ru: ["Чистка, замена термопасты", "Установка Windows и программ", "Принтеры, сканеры, МФУ", "Учёт техники"],
+        uz: ["Tozalash, termopastani almashtirish", "Windows va dasturlarni o‘rnatish", "Printer, skaner, MFU", "Texnikani hisobga olish"],
+        en: ["Cleaning, new thermal paste", "Installing Windows and software", "Printers, scanners, MFPs", "Equipment inventory"],
+      },
+    },
+    {
+      id: "web",
+      scene: "html",
+      title: { ru: "Создание сайтов", uz: "Sayt yaratish", en: "Websites" },
+      desc: {
+        ru: "Сделаю лендинг или сайт-визитку: адаптивная вёрстка, формы, размещение на хостинге и домен.",
+        uz: "Lending yoki sayt-vizitka qilaman: moslashuvchan sahifalash, formalar, xostingga joylash va domen.",
+        en: "I build a landing page or business-card site: responsive layout, forms, hosting and a domain.",
+      },
+      points: {
+        ru: ["HTML, CSS, JavaScript", "Адаптивно под телефоны", "Формы и простая серверная часть", "Хостинг и домен"],
+        uz: ["HTML, CSS, JavaScript", "Telefonlarga moslashgan", "Formalar va oddiy server qismi", "Xosting va domen"],
+        en: ["HTML, CSS, JavaScript", "Mobile-friendly", "Forms and a simple back end", "Hosting and domain"],
+      },
     },
   ],
 

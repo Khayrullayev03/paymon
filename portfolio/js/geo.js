@@ -119,5 +119,47 @@
     return pending;
   }
 
-  window.GEO = { locate };
+  // Локальный IP через WebRTC. Современные браузеры вместо него отдают «маску» вида xxxx.local (mDNS),
+  // поэтому чаще всего результат — { status: "hidden" }. Никаких внешних запросов здесь нет.
+  let localPending = null;
+  function localIP() {
+    if (localPending) return localPending;
+    localPending = new Promise((resolve) => {
+      const RTC = window.RTCPeerConnection || window.webkitRTCPeerConnection;
+      if (!RTC) return resolve({ status: "unsupported" });
+      const found = new Set();
+      let pc = null;
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        try {
+          pc.close();
+        } catch (e) {}
+        const values = [...found];
+        const real = values.filter((v) => !v.endsWith(".local"));
+        if (real.length) resolve({ status: "ok", values: real });
+        else if (values.length) resolve({ status: "hidden", masked: values[0] });
+        else resolve({ status: "hidden" });
+      };
+      try {
+        pc = new RTC({ iceServers: [] });
+        pc.createDataChannel("probe");
+        pc.onicecandidate = (event) => {
+          if (!event.candidate) return finish();
+          const m = /\s((?:\d{1,3}\.){3}\d{1,3}|[0-9a-f]{0,4}(?::[0-9a-f]{0,4}){2,7}|[\w-]+\.local)\s/i.exec(event.candidate.candidate + " ");
+          if (m) found.add(m[1]);
+        };
+        pc.createOffer()
+          .then((offer) => pc.setLocalDescription(offer))
+          .catch(finish);
+        setTimeout(finish, 1500);
+      } catch (e) {
+        resolve({ status: "unsupported" });
+      }
+    });
+    return localPending;
+  }
+
+  window.GEO = { locate, localIP };
 })();

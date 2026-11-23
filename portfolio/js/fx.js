@@ -70,12 +70,10 @@
     const chars = new Array(total).fill(" ");
     const reds = new Uint8Array(total);
     const dist = new Float32Array(total);
-    const rowOf = new Uint16Array(total);
     const maxDist = Math.hypot((cols / 2) * 0.6, rows / 2);
     for (let i = 0; i < total; i++) {
       const x = i % cols;
       const y = (i / cols) | 0;
-      rowOf[i] = y;
       dist[i] = Math.hypot((x - cols / 2) * 0.6, y - rows / 2) / maxDist;
     }
 
@@ -128,6 +126,31 @@
           silver += "\n";
           redText += "\n";
         }
+      }
+      silverPre.textContent = silver;
+      redPre.textContent = redText;
+    }
+
+    // Кадр глитча: строки из shiftOf сдвинуты вбок, в них часть символов «бьётся» (noise — доля).
+    function renderShifted(shiftOf, noise) {
+      let silver = "";
+      let redText = "";
+      for (let y = 0; y < rows; y++) {
+        const shift = shiftOf[y] || 0;
+        for (let x = 0; x < cols; x++) {
+          const sx = x - shift;
+          let ch = " ";
+          let isRed = 0;
+          if (sx >= 0 && sx < cols) {
+            ch = chars[y * cols + sx];
+            isRed = reds[y * cols + sx];
+          }
+          if (ch !== " " && noise[y] && Math.random() < noise[y]) ch = randomGlyph();
+          silver += isRed ? " " : ch;
+          redText += isRed ? ch : " ";
+        }
+        silver += "\n";
+        redText += "\n";
       }
       silverPre.textContent = silver;
       redPre.textContent = redText;
@@ -216,18 +239,36 @@
           }
         });
       },
-      // Короткий сбой «сигнала» в нескольких строках.
-      glitch() {
-        if (reduceMotion || busy || !visible) return;
-        const from = (Math.random() * (rows - 6)) | 0;
-        const to = from + 2 + ((Math.random() * 4) | 0);
-        container.classList.add("is-glitching");
-        run(180, () => render((i) => (rowOf[i] >= from && rowOf[i] < to && Math.random() < 0.55 ? randomGlyph() : chars[i]))).then(
-          () => {
-            container.classList.remove("is-glitching");
-            render();
+      // Глитч: полосы строк дёргаются вбок, символы «бьются», цвета расслаиваются.
+      // strength 1 — лёгкий сбой, 2 и больше — сильный.
+      glitch(strength = 1) {
+        if (reduceMotion || busy || !visible) return Promise.resolve();
+        const hard = strength > 1.4;
+        container.classList.add(hard ? "is-glitching-hard" : "is-glitching");
+        let lastSwap = -1000;
+        let shiftOf = [];
+        let noise = [];
+        return run(140 + 240 * strength, (t) => {
+          if (t - lastSwap > 45) {
+            lastSwap = t;
+            shiftOf = [];
+            noise = [];
+            const bands = 1 + Math.floor(Math.random() * (2 + strength * 2));
+            for (let b = 0; b < bands; b++) {
+              const from = Math.floor(Math.random() * rows);
+              const height = 1 + Math.floor(Math.random() * (2 + strength * 4));
+              const shift = Math.round((Math.random() * 2 - 1) * (3 + strength * 6));
+              for (let y = from; y < Math.min(rows, from + height); y++) {
+                shiftOf[y] = shift;
+                noise[y] = 0.1 + 0.25 * strength * Math.random();
+              }
+            }
           }
-        );
+          renderShifted(shiftOf, noise);
+        }).then(() => {
+          container.classList.remove("is-glitching", "is-glitching-hard");
+          render();
+        });
       },
     };
     return api;

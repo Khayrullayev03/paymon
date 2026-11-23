@@ -587,6 +587,38 @@
       }
       g.put(0, 13, "next run 02:00 · keep 14 days", 2);
     },
+
+    /* Обслуживание ПК: системный блок с вентиляторами и чек-лист на мониторе, температура падает */
+    pc(g, t) {
+      const p = t % 10;
+      // системный блок
+      g.box(0, 1, 12, 12, 2, "PC-07", 3);
+      const fans = "|/-\\";
+      for (let k = 0; k < 2; k++) {
+        const y = 4 + k * 3;
+        g.put(3, y, "(" + fans[(Math.floor(t * (p > 2 ? 10 : 4)) + k) % 4] + ")", 0);
+        g.put(7, y, "▒▒", 2);
+      }
+      g.put(2, 10, "●", blink(t, 0.6) ? 1 : 2);
+      g.put(4, 10, "■■■", hash(Math.floor(t * 6)) > 0.5 ? 0 : 2);
+      // монитор с чек-листом
+      g.box(14, 1, 32, 10, 2, "service · PC-07", 3);
+      const tasks = ["dust cleaning", "thermal paste", "drivers update", "windows updates", "printer setup"];
+      tasks.forEach((task, i) => {
+        const doneAt = 1.2 + i * 1.4;
+        const done = p >= doneAt;
+        const active = !done && p >= doneAt - 1.4;
+        g.put(16, 2 + i, done ? "[x]" : active ? "[" + "|/-\\"[Math.floor(t * 8) % 4] + "]" : "[ ]", done ? 1 : active ? 3 : 2);
+        g.put(20, 2 + i, task, done ? 0 : active ? 3 : 2);
+      });
+      const temp = Math.round(82 - 30 * clamp((p - 1) / 6));
+      g.put(16, 8, "CPU temp:", 2);
+      g.put(26, 8, String(temp) + "°C", temp > 70 ? 1 : 3);
+      g.bar(32, 8, 12, temp / 100, temp > 70 ? 1 : 0);
+      g.put(26, 11, "┴───┴", 2);
+      if (p > 8.4) g.put(16, 13, "status: OK · ready for work", 1);
+      else g.put(16, 13, "status: servicing…", 2);
+    },
   };
 
   // Для навыков без своей сцены — универсальная «загрузка».
@@ -600,7 +632,7 @@
   }
 
   // Кадр для режима без анимации — момент, где видно суть.
-  const STILL = { html: 6.5, js: 2.6, css: 1.4, sql: 5.6, node: 1.0, git: 6.2, linux: 1, windows: 6, network: 2.2, servers: 7, cctv: 4.4, monitoring: 3.2 };
+  const STILL = { html: 6.5, js: 2.6, css: 1.4, sql: 5.6, node: 1.0, git: 6.2, linux: 1, windows: 6, network: 2.2, servers: 7, cctv: 4.4, monitoring: 3.2, pc: 5 };
 
   function createPlayer(pre, id) {
     const scene = SCENES[id] || fallback(id);

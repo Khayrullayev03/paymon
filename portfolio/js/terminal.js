@@ -1,4 +1,4 @@
-/* Интерактивный терминал: help, whoami, neofetch, skills, projects, experience, certs, contact,
+/* Интерактивный терминал: help, whereami, whoami, neofetch, services, skills, experience, certs, contact,
  * ls/cat/cd, theme, lang, sound, matrix, reboot, clear, history, date, echo, sudo, exit. */
 (function () {
   "use strict";
@@ -21,7 +21,7 @@
   let historyIndex = 0;
 
   const LEVELS = { basic: 3, intermediate: 6, confident: 8, advanced: 9, expert: 10 };
-  const SECTIONS = { office: "office", cams: "office", skills: "skills", experience: "experience", exp: "experience", projects: "projects", terminal: "terminal", contact: "contact", contacts: "contact", "~": "top", home: "top", "/": "top" };
+  const SECTIONS = { services: "services", office: "services", cams: "services", about: "about", skills: "about", experience: "about", exp: "about", info: "info", terminal: "info", contact: "contact", contacts: "contact", "~": "home", home: "home", "/": "home" };
 
   /* ---------- вывод ---------- */
   function parts(list) {
@@ -72,7 +72,7 @@
     ["neofetch", "term.cmd.neofetch"],
     ["cam [1-4]", "term.cmd.cam"],
     ["skills [id]", "term.cmd.skills"],
-    ["projects", "term.cmd.projects"],
+    ["services", "term.cmd.services"],
     ["experience", "term.cmd.experience"],
     ["certs", "term.cmd.certs"],
     ["contact", "term.cmd.contact"],
@@ -229,7 +229,7 @@
         [[t("nf.name") + ": ", "ps1"], L(data.profile.name)],
         [[t("nf.role") + ": ", "ps1"], L(data.profile.role)],
         [[t("nf.skills") + ": ", "ps1"], `${skills.length} (web ${web}, admin ${skills.length - web})`],
-        [[t("nf.projects") + ": ", "ps1"], String((data.projects || []).length)],
+        [[t("nf.services") + ": ", "ps1"], String((data.services || []).length)],
         [[t("nf.langs") + ": ", "ps1"], "ru · uz · en"],
         [[t("nf.theme") + ": ", "ps1"], APP.theme.get()],
         [[t("nf.uptime") + ": ", "ps1"], `${uptime()} (${t("nf.since")})`],
@@ -314,11 +314,12 @@
       APP.goTo("office");
     },
 
-    projects() {
-      (data.projects || []).forEach((p) => {
-        print([["> ", "ps1"], [L(p.title), "bright"], ["  " + p.tech.map((id) => "#" + id).join(" "), "dim"]]);
-        print("  " + L(p.description));
+    services() {
+      (data.services || []).forEach((sv, i) => {
+        print([[String(i + 1).padStart(2, "0") + " ", "ps1"], [L(sv.title), "bright"]]);
+        print("   " + L(sv.desc));
       });
+      print([["→ ", "ps1"], ["cd services", "dim"]]);
     },
 
     experience() {
@@ -352,7 +353,7 @@
     },
 
     ls() {
-      print([["about.txt  contacts.txt  experience.log  "], ["certs/  projects/  skills/", "ps1"]]);
+      print([["about.txt  contacts.txt  experience.log  "], ["certs/  services/  skills/", "ps1"]]);
     },
 
     cat(args) {
@@ -365,7 +366,7 @@
     cd(args) {
       const target = SECTIONS[(args[0] || "~").replace(/\/$/, "").toLowerCase()];
       if (!target) return print(t("term.noSection", { dir: args[0] }), "err");
-      print(t("term.opening", { name: target === "top" ? "~" : target }), "ps1");
+      print(t("term.opening", { name: target === "home" ? "~" : target }), "ps1");
       APP.goTo(target);
     },
 
@@ -517,13 +518,4 @@
   print(t("term.welcome"), "ps1");
   blank();
 
-  // Карта мира с точкой посетителя — при первом открытии терминала (тогда же уходит запрос IP)
-  let greeted = false;
-  function greet(page) {
-    if (greeted || page !== "terminal") return;
-    greeted = true;
-    run("whereami");
-  }
-  document.addEventListener("pagechange", (event) => greet(event.detail));
-  if (location.hash === "#terminal") setTimeout(() => greet("terminal"), 0);
 })();

@@ -1,13 +1,13 @@
-/* Портфолио: главная — только логотип на фоне луны; разделы открываются отдельными страницами
- * (#office, #skills, #experience, #projects, #terminal, #contact) с переходом «печати».
- * Здесь же: вкладки навыков с ASCII-сценами, фильтр проектов, опыт, контакты, язык, тема, звук, пасхалка. */
+/* Портфолио: главная — только логотип с глитчем на фоне луны; разделы открываются отдельными страницами
+ * (#services, #about, #info, #contact) с переходом «печати».
+ * Здесь же: услуги с анимациями, навыки-плитки с ASCII-сценами, опыт, контакты, язык, тема, звук, пасхалка. */
 (function () {
   "use strict";
 
   const data = window.PORTFOLIO;
   if (!data || !window.FX || !window.I18N) return;
 
-  const { profile, contacts = [], skills = [], projects = [], experience = [], certs = [] } = data;
+  const { profile, contacts = [], skills = [], experience = [], certs = [] } = data;
   const { scramble, createAsciiArt, animate, easeInOut, randomFrom, GLYPHS } = window.FX;
   const I18N = window.I18N;
   const { t, pick: L } = I18N;
@@ -16,11 +16,14 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const skillById = new Map(skills.map((s) => [s.id, s]));
   const LEVELS = { basic: 3, intermediate: 6, confident: 8, advanced: 9, expert: 10 };
-  const PAGES = ["home", "office", "skills", "experience", "projects", "terminal", "contact"];
+  const PAGES = ["home", "services", "about", "info", "contact"];
+  // Старые адреса разделов ведут на новые страницы
+  const ALIASES = { office: "services", skills: "about", experience: "about", projects: "about", terminal: "info" };
+  const resolvePage = (id) => (PAGES.includes(id) ? id : ALIASES[id] || null);
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  const state = { skill: skills.length ? skills[0].id : null, filter: "all", page: null };
+  const state = { skill: skills.length ? skills[0].id : null, page: null };
 
   function el(tag, props, ...children) {
     const node = document.createElement(tag);
@@ -121,36 +124,108 @@
   const logo = window.ASCII_LOGO ? createAsciiArt(logoBox, window.ASCII_LOGO) : null;
   if (logo) logo.show();
 
-  // Логотип медленно вращается; наведение, касание или клик — быстрый оборот
-  const spinLogo = () => logo && !logo.busy && logo.spin(1, 1800);
-  logoBox.addEventListener("pointerenter", spinLogo);
-  logoBox.addEventListener("click", spinLogo);
-
-  if (logo && !reduceMotion) {
-    let lastFrame = 0;
-    (function rotate(now) {
-      requestAnimationFrame(rotate);
-      if (now - lastFrame < 50) return;
-      const dt = lastFrame ? (now - lastFrame) / 1000 : 0;
-      lastFrame = now;
-      if (document.hidden || state.page !== "home" || logo.busy) return;
-      logo.setAngle((logo.angle + dt * 0.35) % (Math.PI * 2)); // оборот примерно за 18 секунд
-    })(0);
-  }
+  // Логотип не вращается — по нему постоянно проходят глитч-сбои; наведение или клик — сильный сбой
+  const hardGlitch = () => logo && logo.glitch(2.4);
+  logoBox.addEventListener("pointerenter", hardGlitch);
+  logoBox.addEventListener("click", hardGlitch);
 
   if (logo && !reduceMotion) {
     (function schedule() {
       setTimeout(() => {
-        if (!document.hidden && state.page === "home") logo.glitch();
+        if (!document.hidden && state.page === "home") logo.glitch(Math.random() < 0.25 ? 2 : 0.7 + Math.random() * 0.6);
         schedule();
-      }, 2800 + Math.random() * 3000);
+      }, 700 + Math.random() * 1500);
     })();
   }
 
   function renderProfile() {
     $$("[data-handle]").forEach((n) => (n.textContent = profile.handle || "user"));
     $("[data-footer]").textContent = `© ${new Date().getFullYear()} · ${profile.handle || ""}`;
+    $("[data-role]").textContent = L(profile.role);
+    $("[data-about]").textContent = L(profile.about);
   }
+
+  /* =====================================================================
+     УСЛУГИ: большие блоки с анимированными картинками, по очереди слева и справа
+     ===================================================================== */
+  const servicesRoot = $("[data-services]");
+  const officeBlock = $("[data-office]");
+  const servicePlayers = new Map();
+
+  function renderServices() {
+    servicePlayers.forEach((p) => p.stop());
+    servicePlayers.clear();
+    if (officeBlock) officeBlock.remove(); // схему офиса переносим, а не пересоздаём
+    servicesRoot.textContent = "";
+    (data.services || []).forEach((service, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      const text = el(
+        "div",
+        { class: "service-text" },
+        el("span", { class: "service-num", text: num }),
+        el("h3", { text: L(service.title) }),
+        el("p", { class: "service-desc", text: L(service.desc) }),
+        el("ul", { class: "points" }, (L(service.points) || []).map((p) => el("li", { text: p })))
+      );
+      let art = null;
+      if (service.scene && window.SCENES) {
+        const pre = el("pre", { class: "scene-pre asc" });
+        const player = window.SCENES.createPlayer(pre, service.scene);
+        servicePlayers.set(service.id, player);
+        const toggle = el("button", { class: "anim-toggle", type: "button" });
+        const syncToggle = () => {
+          toggle.textContent = `[ ${t(player.paused ? "anim.play" : "anim.pause")} ]`;
+          toggle.setAttribute("aria-pressed", String(!player.paused));
+        };
+        toggle.addEventListener("click", () => {
+          player.setPaused(!player.paused);
+          syncToggle();
+          syncServiceScenes();
+        });
+        syncToggle();
+        art = el(
+          "div",
+          { class: "service-art" },
+          el("div", { class: "term-bar" }, el("span", { text: `$ ./${service.id}.sh` }), toggle),
+          el("div", { class: "scene-screen", "aria-hidden": "true" }, pre)
+        );
+      }
+      const row = el(
+        "article",
+        { class: `service term${service.feature ? " service-feature" : ""}${i % 2 ? " is-flipped" : ""}`, "data-reveal": true, "data-service": service.id },
+        el("div", { class: "term-bar", "aria-hidden": "true" }, el("span", { text: `~/services/${num}-${service.id}` }), el("span", { class: "live", text: "●" })),
+        el("div", { class: "service-body" }, art, text)
+      );
+      if (service.feature === "office" && officeBlock) row.append(officeBlock);
+      servicesRoot.append(row);
+    });
+    observeServices();
+  }
+
+  // Играют только сцены услуг, которые сейчас видно на экране
+  const visibleServices = new Set();
+  let servicesObserver = null;
+  function observeServices() {
+    if (!("IntersectionObserver" in window)) return;
+    if (servicesObserver) servicesObserver.disconnect();
+    visibleServices.clear();
+    servicesObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.dataset.service;
+        if (entry.isIntersecting) visibleServices.add(id);
+        else visibleServices.delete(id);
+      });
+      syncServiceScenes();
+    });
+    $$("[data-service]", servicesRoot).forEach((node) => servicesObserver.observe(node));
+  }
+  function syncServiceScenes() {
+    servicePlayers.forEach((player, id) => {
+      if (visibleServices.has(id) && !document.hidden && state.page === "services") player.start();
+      else player.stop();
+    });
+  }
+  document.addEventListener("visibilitychange", syncServiceScenes);
 
   /* =====================================================================
      НАВЫКИ: вкладки по группам, у каждой — ASCII-сцена
@@ -164,13 +239,9 @@
 
   function buildPanel(skill) {
     const title = L(skill.title);
-    const count = projects.filter((p) => p.tech.includes(skill.id)).length;
     const score = LEVELS[skill.level] || 5;
     const lines = skill.snippet ? skill.snippet.split("\n").length : 1;
     const scenePre = el("pre", { class: "scene-pre asc" });
-    // Анимированная картинка навыка рядом с заголовком
-    const iconPre = window.ICONS && window.ICONS.has("skill", skill.id) ? el("pre", { class: "asc skill-icon", "aria-hidden": "true" }) : null;
-    if (iconPre) window.ICONS.skill(iconPre, skill.id);
     const player = window.SCENES ? window.SCENES.createPlayer(scenePre, skill.id) : null;
     const toggle = el("button", { class: "anim-toggle", type: "button" });
     const syncToggle = () => {
@@ -205,7 +276,6 @@
         el(
           "div",
           { class: "panel-head" },
-          iconPre,
           el(
             "div",
             { class: "panel-title" },
@@ -249,14 +319,7 @@
               el("h4", { text: `$ cat ${skill.file || "example.txt"}` }),
               el("pre", null, el("code", { text: skill.snippet }))
             )
-        ),
-        count > 0 &&
-          el("a", {
-            class: "panel-link",
-            href: "#projects",
-            text: t("skills.projectsWith", { skill: title, n: count }),
-            onclick: () => setFilter(skill.id),
-          })
+        )
       )
     );
     if (player) players.set(skill.id, player);
@@ -275,21 +338,30 @@
       if (!items.length) return;
       const row = el("div", { class: "tab-group", role: "presentation" }, el("span", { class: "tab-group-label", text: t(key), "aria-hidden": "true" }));
       items.forEach((skill) => {
-        const tab = el("button", {
-          class: "tab",
-          type: "button",
-          role: "tab",
-          id: `tab-${skill.id}`,
-          "aria-controls": `panel-${skill.id}`,
-          "aria-selected": "false",
-          tabindex: "-1",
-          "data-skill": skill.id,
-          text: L(skill.title),
-          onclick: () => {
-            SOUND.tick();
-            selectSkill(skill.id, { animate: true });
+        // Плитка навыка: анимированный значок, название и шкала уровня
+        const score = LEVELS[skill.level] || 5;
+        const icon = window.ICONS && window.ICONS.has("skill", skill.id) ? el("pre", { class: "asc skill-icon", "aria-hidden": "true" }) : null;
+        const tab = el(
+          "button",
+          {
+            class: "tab skill-tile",
+            type: "button",
+            role: "tab",
+            id: `tab-${skill.id}`,
+            "aria-controls": `panel-${skill.id}`,
+            "aria-selected": "false",
+            tabindex: "-1",
+            "data-skill": skill.id,
+            onclick: () => {
+              SOUND.tick();
+              selectSkill(skill.id, { animate: true });
+            },
           },
-        });
+          icon,
+          el("span", { class: "tile-title", text: L(skill.title) }),
+          el("span", { class: "tile-meter", "aria-hidden": "true" }, el("span", { class: "meter-fill", text: "█".repeat(score) }), el("span", { class: "meter-empty", text: "░".repeat(10 - score) }))
+        );
+        if (icon) window.ICONS.skill(icon, skill.id);
         tabs.push(tab);
         row.append(tab);
       });
@@ -414,81 +486,6 @@
   }
 
   /* =====================================================================
-     ПРОЕКТЫ с фильтром
-     ===================================================================== */
-  const grid = $("[data-projects]");
-  const emptyEl = $("[data-empty]");
-  const filtersRoot = $("[data-filters]");
-  let filterButtons = [];
-  let cards = [];
-
-  const corners = () => ["tl", "tr", "bl", "br"].map((pos) => el("span", { class: `corner ${pos}`, "aria-hidden": "true", text: "+" }));
-
-  function renderProjects() {
-    filtersRoot.textContent = "";
-    grid.textContent = "";
-    filtersRoot.setAttribute("aria-label", t("projects.title"));
-    const usedSkills = skills.filter((s) => projects.some((p) => p.tech.includes(s.id)));
-    filterButtons = [{ id: "all", label: t("projects.all") }, ...usedSkills.map((s) => ({ id: s.id, label: s.id }))].map((f) =>
-      el(
-        "button",
-        {
-          class: "chip",
-          type: "button",
-          "aria-pressed": "false",
-          "data-filter": f.id,
-          onclick: () => {
-            SOUND.tick();
-            setFilter(f.id);
-          },
-        },
-        el("span", { class: "box", "aria-hidden": "true" }),
-        f.label
-      )
-    );
-    filtersRoot.append(...filterButtons);
-
-    cards = projects.map((project, i) => {
-      const links = [
-        project.demo && el("a", { href: project.demo, target: "_blank", rel: "noopener", text: `[${t("projects.demo")} ↗]` }),
-        project.code && el("a", { href: project.code, target: "_blank", rel: "noopener", text: `[${t("projects.code")} ↗]` }),
-      ].filter(Boolean);
-      return el(
-        "article",
-        { class: "card", "data-tech": project.tech.join(" "), "data-reveal": true },
-        corners(),
-        el("span", { class: "card-index", "aria-hidden": "true", text: String(i + 1).padStart(3, "0") }),
-        el("h3", null, el("span", { class: "caret", "aria-hidden": "true", text: ">" }), L(project.title)),
-        el("p", { text: L(project.description) }),
-        el("ul", { class: "tags", "aria-label": "tags" }, project.tech.map((id) => el("li", { text: `#${id}` }))),
-        links.length > 0 && el("div", { class: "card-links" }, links)
-      );
-    });
-    grid.append(...cards);
-    if (state.filter !== "all" && !usedSkills.some((s) => s.id === state.filter)) state.filter = "all";
-    setFilter(state.filter, { quiet: true });
-  }
-
-  function setFilter(id, { quiet = false } = {}) {
-    state.filter = id;
-    filterButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === id)));
-    let visible = 0;
-    cards.forEach((card) => {
-      const show = id === "all" || card.dataset.tech.split(" ").includes(id);
-      card.hidden = !show;
-      if (!show) return;
-      if (!quiet && !reduceMotion) {
-        card.classList.remove("is-popping");
-        void card.offsetWidth;
-        card.style.animationDelay = `${visible * 70}ms`;
-        card.classList.add("is-popping");
-      }
-      visible++;
-    });
-    emptyEl.hidden = visible > 0;
-  }
-
-  /* =====================================================================
      КОНТАКТЫ
      ===================================================================== */
   function renderContacts() {
@@ -554,11 +551,11 @@
     });
     const title = $(".title-text", page);
     if (title) scramble(title, title.textContent, 600);
-    if (page.dataset.page === "skills") animatePanel(panels.find((p) => !p.hidden));
+    if (page.dataset.page === "about") animatePanel(panels.find((p) => !p.hidden));
   }
 
   function showPage(id, { animate: withAnimation = true } = {}) {
-    if (!PAGES.includes(id)) id = "home";
+    id = resolvePage(id) || "home";
     if (id === state.page) return;
     const next = $(`[data-page="${id}"]`);
     $$("main [data-page]").forEach((page) => (page.hidden = page !== next));
@@ -579,22 +576,19 @@
       enterAnimations(next);
       scanReveal(next);
     }
-    if (id === "terminal" && window.matchMedia("(pointer: fine)").matches) {
-      const input = $("#console-input");
-      if (input) setTimeout(() => input.focus({ preventScroll: true }), 50);
-    }
+    syncServiceScenes();
     document.dispatchEvent(new CustomEvent("pagechange", { detail: id }));
   }
 
   function goTo(id) {
-    const target = id === "top" ? "home" : id;
+    const target = id === "top" ? "home" : resolvePage(id) || "home";
     if (`#${target}` === location.hash) showPage(target);
     else location.hash = target;
   }
 
   window.addEventListener("hashchange", () => {
     const id = location.hash.slice(1);
-    if (PAGES.includes(id) || id === "") showPage(id || "home");
+    if (id === "" || resolvePage(id)) showPage(id || "home");
   });
 
   /* =====================================================================
@@ -620,7 +614,7 @@
     renderProfile();
     renderSkills();
     renderExperience();
-    renderProjects();
+    renderServices();
     renderContacts();
     syncControls();
   }
@@ -634,7 +628,7 @@
   // Для терминала и других модулей
   window.APP = {
     selectSkill(id) {
-      goTo("skills");
+      goTo("about");
       selectSkill(id, { animate: true });
     },
     goTo,
@@ -649,7 +643,7 @@
   };
 
   const startId = location.hash.slice(1);
-  showPage(PAGES.includes(startId) ? startId : "home", { animate: false });
+  showPage(resolvePage(startId) || "home", { animate: false });
   if (state.page === "home" && logo && !reduceMotion) {
     logo.clear();
     setTimeout(() => logo.decode(1600), 200);
