@@ -67,7 +67,10 @@
 
   const OBJECTS = [
     { kind: "router", fx: 34, fz: 12, w: 6, d: 1, h: 2, label: "router" },
+    { kind: "nvr", fx: 44, fz: 11, w: 5, d: 1, h: 2, label: "nvr" },
     { kind: "switch", fx: 50, fz: 11, w: 5, d: 2, h: 2, label: "switch" },
+    { kind: "printer", fx: 2, fz: 9, w: 5, d: 2, h: 2 },
+    { kind: "sofa", fx: 50, fz: 1, w: 11, d: 2, h: 1 },
     { kind: "rack", fx: 58, fz: 11, w: 7, d: 2, h: 8, label: "server" },
     { kind: "desk", fx: 8, fz: 6, w: 11, d: 3, h: 1 },
     { kind: "desk", fx: 26, fz: 6, w: 11, d: 3, h: 1 },
@@ -103,7 +106,7 @@
   const CABLES = [
     { pts: [[57, 12], [64, 12]], kind: "data", speed: 0.9 },
     { pts: [[64, 13], [33, 13], [29, 17]], kind: "data", speed: 0.35 },
-    { pts: [[21, 4], [21, 9], [64, 9]], kind: "video", speed: 0.28 },
+    { pts: [[21, 4], [21, 9], [58, 9]], kind: "video", speed: 0.28 },
     { pts: [[84, 4], [84, 9], [82, 9]], kind: "video", speed: 0.6 },
     { pts: [[7, 16], [7, 21], [60, 21], [66, 15]], kind: "video", speed: 0.22 },
     { pts: [[74, 17], [74, 22], [68, 16]], kind: "video", speed: 0.45 },
@@ -175,7 +178,7 @@
       g.put(c - 1, r - 1, "(_)", 2);
       return;
     }
-    const [c0, r0] = box3d(g, o.fx, o.fz, o.w, o.d, o.h, o.kind === "desk" ? 2 : 0);
+    const [c0, r0] = box3d(g, o.fx, o.fz, o.w, o.d, o.h, o.kind === "desk" || o.kind === "sofa" || o.kind === "printer" ? 2 : 0);
     const tick = Math.floor(t * 6);
     if (o.kind === "rack") {
       for (let r = r0 - o.h + 1; r < r0; r++) {
@@ -187,6 +190,14 @@
           g.put(c0 + 1, r, "─────", 2);
         }
       }
+    } else if (o.kind === "nvr") {
+      g.put(c0 + 1, r0 - 1, blink(t, 1) ? "●" : "○", 1);
+      g.put(c0 + 2, r0 - 1, hash(tick + 3) > 0.5 ? "▓▒" : "▒▓", 5);
+    } else if (o.kind === "printer") {
+      g.put(c0 + 1, r0 - 1, "▄▄▄", 2);
+      g.put(c0 + 4, r0 - 1, blink(t + 0.5, 2) ? "●" : "○", 3);
+    } else if (o.kind === "sofa") {
+      g.put(c0 + 1, r0 - o.h - 1, "▄▄▄▄ ▄▄▄▄", 2);
     } else if (o.kind === "switch") {
       for (let k = 0; k < 4; k++) g.put(c0 + 1 + k, r0 - 1, "■", hash(tick + k * 11) > 0.4 ? 1 : 2);
     } else if (o.kind === "router") {
@@ -574,6 +585,16 @@
     const key = paused ? "anim.play" : "anim.pause";
     toggleBtn.textContent = `[ ${I18N ? I18N.t(key) : key} ]`;
     toggleBtn.setAttribute("aria-pressed", String(!paused));
+  }
+
+  const fullBtn = section.querySelector("[data-office-full]");
+  const mapFrame = section.querySelector("[data-office-frame]");
+  if (fullBtn && mapFrame) {
+    if (!document.fullscreenEnabled || !mapFrame.requestFullscreen) fullBtn.hidden = true;
+    fullBtn.addEventListener("click", () => {
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      else mapFrame.requestFullscreen().catch(() => (fullBtn.hidden = true));
+    });
   }
 
   toggleBtn.addEventListener("click", () => {

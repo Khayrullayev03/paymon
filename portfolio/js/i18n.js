@@ -6,6 +6,10 @@
   const DICT = {
     ru: {
       "skip": "К содержимому",
+      "nav.home": "Главная",
+      "nav.back": "← меню",
+      "home.logo": "Логотип",
+      "office.full": "во весь экран",
       "nav.office": "офис",
       "nav.skills": "навыки",
       "nav.experience": "опыт",
@@ -69,15 +73,6 @@
       "toast.soundOn": "звук: вкл",
       "toast.soundOff": "звук: выкл",
 
-      "intro.boot1": "Загрузка ядра anvar-os",
-      "intro.boot2": "Поднятие сетевых интерфейсов",
-      "intro.boot3": "Монтирование /home/portfolio",
-      "intro.boot4": "Запуск служб",
-      "intro.welcome": "Добро пожаловать в моё портфолио",
-      "intro.nameIs": "Меня зовут",
-      "intro.iam": "Я {role}",
-      "intro.enter": "или клик — войти",
-      "intro.skip": "[esc] пропустить",
 
       "term.welcome": "anvar-os 1.0 · введите help, чтобы увидеть команды",
       "term.helpTitle": "доступные команды:",
@@ -95,7 +90,7 @@
       "term.cmd.lang": "язык",
       "term.cmd.sound": "звук",
       "term.cmd.matrix": "режим матрицы",
-      "term.cmd.reboot": "заново показать интро",
+      "term.cmd.reboot": "перезапуск: вернуться на главную",
       "term.cmd.clear": "очистить экран",
       "term.cmd.misc": "история, дата, вывод текста",
       "term.notFound": "команда не найдена: {cmd}. Введите help",
@@ -128,6 +123,10 @@
 
     uz: {
       "skip": "Asosiy qismga o‘tish",
+      "nav.home": "Bosh sahifa",
+      "nav.back": "← menyu",
+      "home.logo": "Logotip",
+      "office.full": "to‘liq ekran",
       "nav.office": "ofis",
       "nav.skills": "ko‘nikmalar",
       "nav.experience": "tajriba",
@@ -191,15 +190,6 @@
       "toast.soundOn": "ovoz: yoqildi",
       "toast.soundOff": "ovoz: o‘chirildi",
 
-      "intro.boot1": "anvar-os yadrosi yuklanmoqda",
-      "intro.boot2": "Tarmoq interfeyslari ishga tushirilmoqda",
-      "intro.boot3": "/home/portfolio ulanmoqda",
-      "intro.boot4": "Xizmatlar ishga tushirilmoqda",
-      "intro.welcome": "Portfoliomga xush kelibsiz",
-      "intro.nameIs": "Mening ismim",
-      "intro.iam": "Men — {role}",
-      "intro.enter": "yoki bosing — kirish",
-      "intro.skip": "[esc] o‘tkazib yuborish",
 
       "term.welcome": "anvar-os 1.0 · buyruqlarni ko‘rish uchun help ni kiriting",
       "term.helpTitle": "mavjud buyruqlar:",
@@ -217,7 +207,7 @@
       "term.cmd.lang": "til",
       "term.cmd.sound": "ovoz",
       "term.cmd.matrix": "matritsa rejimi",
-      "term.cmd.reboot": "introni qayta ko‘rsatish",
+      "term.cmd.reboot": "qayta ishga tushirish: bosh sahifaga qaytish",
       "term.cmd.clear": "ekranni tozalash",
       "term.cmd.misc": "tarix, sana, matn chiqarish",
       "term.notFound": "buyruq topilmadi: {cmd}. help ni kiriting",
@@ -250,6 +240,10 @@
 
     en: {
       "skip": "Skip to content",
+      "nav.home": "Home",
+      "nav.back": "← menu",
+      "home.logo": "Logo",
+      "office.full": "fullscreen",
       "nav.office": "office",
       "nav.skills": "skills",
       "nav.experience": "experience",
@@ -313,15 +307,6 @@
       "toast.soundOn": "sound: on",
       "toast.soundOff": "sound: off",
 
-      "intro.boot1": "Loading anvar-os kernel",
-      "intro.boot2": "Bringing up network interfaces",
-      "intro.boot3": "Mounting /home/portfolio",
-      "intro.boot4": "Starting services",
-      "intro.welcome": "Welcome to my portfolio",
-      "intro.nameIs": "My name is",
-      "intro.iam": "I'm an {role}",
-      "intro.enter": "or click to enter",
-      "intro.skip": "[esc] skip",
 
       "term.welcome": "anvar-os 1.0 · type help to see the commands",
       "term.helpTitle": "available commands:",
@@ -339,7 +324,7 @@
       "term.cmd.lang": "language",
       "term.cmd.sound": "sound",
       "term.cmd.matrix": "matrix mode",
-      "term.cmd.reboot": "replay the intro",
+      "term.cmd.reboot": "restart: back to the home page",
       "term.cmd.clear": "clear the screen",
       "term.cmd.misc": "history, date, print text",
       "term.notFound": "command not found: {cmd}. Type help",

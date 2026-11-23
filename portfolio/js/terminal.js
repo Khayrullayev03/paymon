@@ -166,7 +166,7 @@
         const skill = list.find((s) => s.id === q || L(s.title).toLowerCase() === q);
         if (!skill) return print(t("term.unknownSkill", { id: q, list: list.map((s) => s.id).join(", ") }), "err");
         print(t("term.opening", { name: L(skill.title) }), "ps1");
-        APP.selectSkill(skill.id, { scroll: true });
+        APP.selectSkill(skill.id);
         return;
       }
       [["web", "skills.web"], ["admin", "skills.admin"]].forEach(([group, key]) => {
@@ -281,7 +281,7 @@
 
     reboot() {
       print(t("term.reboot"), "ps1");
-      if (window.INTRO) setTimeout(() => window.INTRO.play(), 500);
+      setTimeout(() => APP.home(), 500);
     },
 
     clear() {

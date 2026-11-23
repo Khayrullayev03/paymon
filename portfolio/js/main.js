@@ -1,5 +1,6 @@
-/* Отрисовка портфолио из window.PORTFOLIO (js/data.js): разделы, вкладки навыков с ASCII-сценами,
- * фильтр проектов, опыт, контакты. Плюс язык, тема, звук, всплывающие подсказки и пасхалка. */
+/* Портфолио: главная — только логотип на фоне луны; разделы открываются отдельными страницами
+ * (#office, #skills, #experience, #projects, #terminal, #contact) с переходом «печати».
+ * Здесь же: вкладки навыков с ASCII-сценами, фильтр проектов, опыт, контакты, язык, тема, звук, пасхалка. */
 (function () {
   "use strict";
 
@@ -7,7 +8,7 @@
   if (!data || !window.FX || !window.I18N) return;
 
   const { profile, contacts = [], skills = [], projects = [], experience = [], certs = [] } = data;
-  const { scramble, createAsciiArt } = window.FX;
+  const { scramble, createAsciiArt, animate, easeInOut, randomFrom, GLYPHS } = window.FX;
   const I18N = window.I18N;
   const { t, pick: L } = I18N;
   const SOUND = window.SOUND || { enabled: false, set() {}, key() {}, tick() {}, beep() {} };
@@ -15,10 +16,11 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const skillById = new Map(skills.map((s) => [s.id, s]));
   const LEVELS = { basic: 3, intermediate: 6, confident: 8, advanced: 9, expert: 10 };
+  const PAGES = ["home", "office", "skills", "experience", "projects", "terminal", "contact"];
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  const state = { skill: skills.length ? skills[0].id : null, filter: "all", started: false };
+  const state = { skill: skills.length ? skills[0].id : null, filter: "all", page: null };
 
   function el(tag, props, ...children) {
     const node = document.createElement(tag);
@@ -38,7 +40,7 @@
   }
 
   /* =====================================================================
-     ВСПЛЫВАЮЩИЕ ПОДСКАЗКИ, ТЕМА, ГЛИТЧ
+     ПОДСКАЗКИ, ТЕМА, ГЛИТЧ, МАТРИЦА
      ===================================================================== */
   const toastEl = $("[data-toast]");
   let toastTimer = 0;
@@ -113,28 +115,29 @@
   document.addEventListener("soundchange", syncControls);
 
   /* =====================================================================
-     ОБО МНЕ
+     ГЛАВНАЯ: только логотип
      ===================================================================== */
-  const nameEl = $("[data-name]");
-  const heroArt = window.ASCII_LOGO ? createAsciiArt($("[data-hero-ascii]"), window.ASCII_LOGO) : null;
-  if (heroArt) heroArt.show();
+  const logoBox = $("[data-home-logo]");
+  const logo = window.ASCII_LOGO ? createAsciiArt(logoBox, window.ASCII_LOGO) : null;
+  if (logo) logo.show();
+
+  // Наведение, касание или клик — логотип делает оборот
+  const spinLogo = () => logo && !logo.busy && logo.spin(1, 1800);
+  logoBox.addEventListener("pointerenter", spinLogo);
+  logoBox.addEventListener("click", spinLogo);
+
+  if (logo && !reduceMotion) {
+    (function schedule() {
+      setTimeout(() => {
+        if (!document.hidden && state.page === "home") logo.glitch();
+        schedule();
+      }, 2800 + Math.random() * 3000);
+    })();
+  }
 
   function renderProfile() {
-    const name = L(profile.name);
-    nameEl.textContent = name;
-    nameEl.setAttribute("aria-label", name);
-    $(".brand").setAttribute("aria-label", name);
-    $("[data-role]").textContent = L(profile.role);
-    $("[data-about]").textContent = L(profile.about);
     $$("[data-handle]").forEach((n) => (n.textContent = profile.handle || "user"));
-    $("[data-footer]").textContent = `© ${new Date().getFullYear()} ${name}`;
-    const stack = $("[data-stack]");
-    stack.textContent = "";
-    stack.append(
-      ...skills.map((skill) =>
-        el("li", null, el("a", { href: "#skills", text: `${skill.id}/`, onclick: () => selectSkill(skill.id, { animate: true }) }))
-      )
-    );
+    $("[data-footer]").textContent = `© ${new Date().getFullYear()} · ${profile.handle || ""}`;
   }
 
   /* =====================================================================
@@ -291,7 +294,7 @@
   }
 
   function animatePanel(panel) {
-    if (reduceMotion) return;
+    if (reduceMotion || !panel) return;
     panel.classList.remove("is-drawing");
     void panel.offsetWidth; // перезапуск CSS-анимации
     panel.classList.add("is-drawing");
@@ -308,7 +311,7 @@
     });
   }
 
-  function selectSkill(id, { focus = false, animate = false, scroll = false } = {}) {
+  function selectSkill(id, { focus = false, animate = false } = {}) {
     if (!skillById.has(id)) return;
     state.skill = id;
     tabs.forEach((tab, i) => {
@@ -321,7 +324,6 @@
       if (active && animate && !wasActive) animatePanel(panels[i]);
     });
     syncScenes();
-    if (scroll) $("#skills").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   }
 
   // Стрелки, Home и End переключают вкладки.
@@ -431,9 +433,9 @@
         project.demo && el("a", { href: project.demo, target: "_blank", rel: "noopener", text: `[${t("projects.demo")} ↗]` }),
         project.code && el("a", { href: project.code, target: "_blank", rel: "noopener", text: `[${t("projects.code")} ↗]` }),
       ].filter(Boolean);
-      const card = el(
+      return el(
         "article",
-        { class: "card", "data-tech": project.tech.join(" "), vars: { "--delay": `${(i % 3) * 90}ms` } },
+        { class: "card", "data-tech": project.tech.join(" "), "data-reveal": true },
         corners(),
         el("span", { class: "card-index", "aria-hidden": "true", text: String(i + 1).padStart(3, "0") }),
         el("h3", null, el("span", { class: "caret", "aria-hidden": "true", text: ">" }), L(project.title)),
@@ -441,9 +443,6 @@
         el("ul", { class: "tags", "aria-label": "tags" }, project.tech.map((id) => el("li", { text: `#${id}` }))),
         links.length > 0 && el("div", { class: "card-links" }, links)
       );
-      if (state.started) card.classList.add("in");
-      else reveal(card);
-      return card;
     });
     grid.append(...cards);
     if (state.filter !== "all" && !usedSkills.some((s) => s.id === state.filter)) state.filter = "all";
@@ -458,7 +457,7 @@
       const show = id === "all" || card.dataset.tech.split(" ").includes(id);
       card.hidden = !show;
       if (!show) return;
-      if (!quiet && !reduceMotion && card.classList.contains("in")) {
+      if (!quiet && !reduceMotion) {
         card.classList.remove("is-popping");
         void card.offsetWidth;
         card.style.animationDelay = `${visible * 70}ms`;
@@ -494,18 +493,101 @@
   }
 
   /* =====================================================================
-     ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ (блоки видны всегда, анимация — только «подъём»)
+     СТРАНИЦЫ: показ по адресу #раздел, переход «печати»
      ===================================================================== */
-  const revealHooks = new Map();
-  const revealTargets = [];
-  let revealObserver = null;
+  const navLinks = $$(".nav a");
+  const brandPath = $("[data-brand-path]");
 
-  function reveal(node, hook) {
-    node.setAttribute("data-reveal", "");
-    if (hook) revealHooks.set(node, hook);
-    if (revealObserver) revealObserver.observe(node);
-    else revealTargets.push(node);
+  // Полоса из символов проходит сверху вниз и «печатает» страницу.
+  function scanReveal(page) {
+    const band = el("div", { class: "scan-band", "aria-hidden": "true" });
+    const bandRows = [0, 1, 2].map(() => band.appendChild(document.createElement("div")));
+    document.body.append(band);
+    const top = page.getBoundingClientRect().top;
+    const viewport = window.innerHeight;
+    const width = Math.ceil(window.innerWidth / 6) + 4;
+    const row = (set) => Array.from({ length: width }, () => randomFrom(set)).join("");
+    page.style.clipPath = "inset(0 0 100% 0)";
+    return animate(620, (time, p) => {
+      const y = easeInOut(p) * (viewport + 40 - top) + top;
+      page.style.clipPath = `inset(0 0 ${Math.max(0, page.offsetHeight - (y - top))}px 0)`;
+      band.style.transform = `translateY(${y - band.offsetHeight / 2}px)`;
+      bandRows[0].textContent = row(" ░░▒");
+      bandRows[1].textContent = row(GLYPHS);
+      bandRows[2].textContent = row("▒▓▓█");
+    }).then(() => {
+      page.style.clipPath = "";
+      band.remove();
+    });
   }
+
+  function enterAnimations(page) {
+    $$("[data-reveal]", page).forEach((node, i) => {
+      node.classList.remove("in");
+      void node.offsetWidth;
+      node.style.setProperty("--delay", `${Math.min(i, 10) * 60}ms`);
+      node.classList.add("in");
+    });
+    const title = $(".title-text", page);
+    if (title) scramble(title, title.textContent, 600);
+    if (page.dataset.page === "skills") animatePanel(panels.find((p) => !p.hidden));
+  }
+
+  function showPage(id, { animate: withAnimation = true } = {}) {
+    if (!PAGES.includes(id)) id = "home";
+    if (id === state.page) return;
+    const next = $(`[data-page="${id}"]`);
+    $$("main [data-page]").forEach((page) => (page.hidden = page !== next));
+    state.page = id;
+    root.dataset.view = id;
+    window.scrollTo({ top: 0, behavior: "instant" });
+    navLinks.forEach((a) => {
+      if (a.getAttribute("href") === `#${id}`) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    if (brandPath) brandPath.textContent = id === "home" ? "~" : `~/${id}`;
+    if (window.BG) window.BG.setScene(id === "home" ? "home" : "page");
+
+    if (id === "home") {
+      if (logo && withAnimation) logo.decode(1000);
+    } else if (withAnimation && !reduceMotion) {
+      SOUND.tick();
+      enterAnimations(next);
+      scanReveal(next);
+    }
+    if (id === "terminal" && window.matchMedia("(pointer: fine)").matches) {
+      const input = $("#console-input");
+      if (input) setTimeout(() => input.focus({ preventScroll: true }), 50);
+    }
+    document.dispatchEvent(new CustomEvent("pagechange", { detail: id }));
+  }
+
+  function goTo(id) {
+    const target = id === "top" ? "home" : id;
+    if (`#${target}` === location.hash) showPage(target);
+    else location.hash = target;
+  }
+
+  window.addEventListener("hashchange", () => {
+    const id = location.hash.slice(1);
+    if (PAGES.includes(id) || id === "") showPage(id || "home");
+  });
+
+  /* =====================================================================
+     ПАСХАЛКА: ↑↑↓↓←→←→ B A — режим матрицы
+     ===================================================================== */
+  const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  let konami = 0;
+  document.addEventListener("keydown", (event) => {
+    if (event.target.closest && event.target.closest("input, textarea")) return;
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    konami = key === KONAMI[konami] ? konami + 1 : key === KONAMI[0] ? 1 : 0;
+    if (konami === KONAMI.length) {
+      konami = 0;
+      glitch();
+      toggleMatrix();
+    }
+  });
 
   /* =====================================================================
      ОТРИСОВКА ВСЕГО И СМЕНА ЯЗЫКА
@@ -524,119 +606,27 @@
     toast(I18N.lang.toUpperCase());
   });
 
-  $$("[data-reveal]").forEach((node) => {
-    if (!revealTargets.includes(node)) reveal(node);
-  });
-  $$("[data-title]").forEach((h2) => {
-    const text = $(".title-text", h2);
-    reveal(h2, () => scramble(text, text.textContent, 650));
-  });
-  revealHooks.set(panelsRoot, () => {
-    const active = panels.find((p) => !p.hidden);
-    if (active) animatePanel(active);
-  });
-
-  function startReveal() {
-    if (!("IntersectionObserver" in window) || reduceMotion) {
-      revealTargets.forEach((node) => node.classList.add("in"));
-      return;
-    }
-    revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("in");
-          revealObserver.unobserve(entry.target);
-          const hook = revealHooks.get(entry.target);
-          if (hook) hook();
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
-    );
-    revealTargets.forEach((node) => revealObserver.observe(node));
-  }
-
-  /* =====================================================================
-     НАВИГАЦИЯ: подсветка текущего раздела
-     ===================================================================== */
-  const navLinks = $$(".nav a");
-  if ("IntersectionObserver" in window) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          navLinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === `#${entry.target.id}`));
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    $$("main section[id]").forEach((s) => sectionObserver.observe(s));
-  }
-
-  /* =====================================================================
-     ПАСХАЛКА: ↑↑↓↓←→←→ B A — режим матрицы
-     ===================================================================== */
-  const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
-  let konami = 0;
-  document.addEventListener("keydown", (event) => {
-    if (event.target.closest && event.target.closest("input, textarea")) return;
-    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-    konami = key === KONAMI[konami] ? konami + 1 : key === KONAMI[0] ? 1 : 0;
-    if (konami === KONAMI.length) {
-      konami = 0;
-      glitch();
-      toggleMatrix();
-    }
-  });
-
   // Для терминала и других модулей
   window.APP = {
-    selectSkill: (id, opts) => selectSkill(id, { animate: true, ...opts }),
-    goTo(id) {
-      const target = id === "top" ? $("#top") : document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    selectSkill(id) {
+      goTo("skills");
+      selectSkill(id, { animate: true });
     },
+    goTo,
     theme: THEME,
     toast,
     glitch,
     toggleMatrix,
+    home() {
+      goTo("home");
+      if (logo && state.page === "home") logo.decode(1200);
+    },
   };
 
-  /* =====================================================================
-     ВХОД НА СТРАНИЦУ (после интро)
-     ===================================================================== */
-  $$("[data-hero]").forEach((node, i) => node.style.setProperty("--i", i));
-
-  function startGlitchLoop() {
-    if (!heroArt || reduceMotion) return;
-    (function schedule() {
-      setTimeout(() => {
-        if (!document.hidden) heroArt.glitch();
-        schedule();
-      }, 3000 + Math.random() * 3500);
-    })();
-    // Наведение или касание — логотип делает оборот
-    $(".hero-art").addEventListener("pointerenter", () => {
-      if (!heroArt.busy) heroArt.spin(1, 1800);
-    });
-  }
-
-  function startPage() {
-    if (state.started) return;
-    state.started = true;
-    root.classList.add("page-ready");
-    scramble(nameEl, L(profile.name), 900);
-    if (heroArt) {
-      heroArt.clear();
-      setTimeout(() => heroArt.decode(1400).then(startGlitchLoop), 250);
-    }
-    startReveal();
-  }
-
-  if (root.classList.contains("intro-active")) {
-    document.addEventListener("intro:done", startPage, { once: true });
-    setTimeout(startPage, 16000); // страховка, если интро не запустилось
-  } else {
-    startPage();
+  const startId = location.hash.slice(1);
+  showPage(PAGES.includes(startId) ? startId : "home", { animate: false });
+  if (state.page === "home" && logo && !reduceMotion) {
+    logo.clear();
+    setTimeout(() => logo.decode(1600), 200);
   }
 })();

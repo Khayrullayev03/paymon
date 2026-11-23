@@ -1,11 +1,10 @@
-/* Общие ASCII-эффекты: расшифровка текста, вращающийся ASCII-логотип, ASCII-баннер из любого текста. */
+/* Общие ASCII-эффекты: расшифровка текста и вращающийся ASCII-логотип. */
 (function () {
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const GLYPHS = "!<>-_\\/[]{}=+*^?#%@$&01";
   const RAMP = " .:-=+*#%@"; // от тёмного к светлому
-  const BLOCKS = " ░▒▓█";
   const randomGlyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
   const randomFrom = (set) => set[(Math.random() * set.length) | 0];
   const easeOutCubic = (p) => 1 - Math.pow(1 - p, 3);
@@ -43,23 +42,6 @@
       node.textContent = chars.map((ch, i) => (ch === " " || t >= ends[i] ? ch : glyphs[i])).join("");
     }).then(() => {
       node.textContent = text;
-    });
-  }
-
-  // Текст рассыпается в символы и исчезает.
-  function scrambleOut(node, duration = 400) {
-    const chars = [...node.textContent];
-    if (reduceMotion || !chars.length) {
-      node.textContent = "";
-      return Promise.resolve();
-    }
-    const ats = chars.map(() => duration * (0.25 + 0.75 * Math.random()));
-    return animate(duration, (t) => {
-      node.textContent = chars
-        .map((ch, i) => (ch === " " || t >= ats[i] ? " " : t >= ats[i] - 160 ? randomGlyph() : ch))
-        .join("");
-    }).then(() => {
-      node.textContent = "";
     });
   }
 
@@ -238,127 +220,6 @@
     return api;
   }
 
-  /* ---------------------------------------------------------------------
-     ASCII-баннер: текст рисуется на холсте и переводится в блоки █▓▒░.
-     Работает с любым алфавитом, включая кириллицу.
-     --------------------------------------------------------------------- */
-  function textToAscii(textLines, rowsPerLine = 7) {
-    const SIZE = 120;
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    const font = `800 ${SIZE}px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace`;
-
-    const rendered = textLines.map((text) => {
-      ctx.font = font;
-      const m = ctx.measureText(text);
-      const ascent = Math.ceil(m.actualBoundingBoxAscent || SIZE * 0.8);
-      const descent = Math.ceil(m.actualBoundingBoxDescent || 0);
-      const width = Math.ceil(m.width) + 4;
-      const height = ascent + descent + 4;
-      canvas.width = width;
-      canvas.height = height;
-      ctx.font = font;
-      ctx.fillStyle = "#fff";
-      ctx.fillText(text, 2, ascent + 2);
-      const pixels = ctx.getImageData(0, 0, width, height).data;
-
-      const cellH = height / rowsPerLine;
-      const cellW = cellH * 0.6;
-      const cols = Math.ceil(width / cellW);
-      const out = [];
-      for (let r = 0; r < rowsPerLine; r++) {
-        let line = "";
-        for (let c = 0; c < cols; c++) {
-          let sum = 0;
-          let n = 0;
-          for (let sy = 0.2; sy < 1; sy += 0.3) {
-            for (let sx = 0.2; sx < 1; sx += 0.3) {
-              const px = Math.min(width - 1, ((c + sx) * cellW) | 0);
-              const py = Math.min(height - 1, ((r + sy) * cellH) | 0);
-              sum += pixels[(py * width + px) * 4 + 3] / 255;
-              n++;
-            }
-          }
-          const cover = sum / n;
-          line += cover < 0.12 ? " " : BLOCKS[Math.min(4, 1 + ((cover * 4) | 0))];
-        }
-        out.push(line);
-      }
-      return out;
-    });
-
-    const cols = Math.max(...rendered.map((lines) => lines[0].length));
-    const result = [];
-    rendered.forEach((lines, i) => {
-      if (i > 0) result.push("");
-      lines.forEach((line) => {
-        const pad = Math.floor((cols - line.length) / 2);
-        result.push(" ".repeat(pad) + line);
-      });
-    });
-    return result.map((line) => line.padEnd(cols));
-  }
-
-  function createBanner(container, lines) {
-    const pre = container.querySelector("pre");
-    const cols = lines[0].length;
-    const text = lines.join("\n");
-    const chars = [...text];
-    const colOf = chars.map((_, i) => i % (cols + 1));
-    container.style.setProperty("--cols", cols);
-
-    let job = 0;
-    let visible = false;
-    function run(duration, frame) {
-      const id = ++job;
-      return animate(duration, (t, p) => (id !== job ? false : frame(t, p)));
-    }
-
-    const api = {
-      show() {
-        job++;
-        visible = true;
-        pre.textContent = text;
-      },
-      clear() {
-        job++;
-        visible = false;
-        pre.textContent = "";
-      },
-      // Проявляется слева направо, как при сканировании.
-      decode(duration = 1000) {
-        if (reduceMotion) {
-          api.show();
-          return Promise.resolve();
-        }
-        visible = true;
-        const at = colOf.map((c) => (c / cols) * duration * 0.7 + Math.random() * duration * 0.3);
-        return run(duration, (t) => {
-          pre.textContent = chars
-            .map((ch, i) => {
-              if (ch === "\n" || t >= at[i]) return ch;
-              if (t < at[i] - 180) return " ";
-              return ch === " " ? (Math.random() < 0.12 ? "░" : " ") : randomGlyph();
-            })
-            .join("");
-        }).then((done) => done && api.show());
-      },
-      vanish(duration = 450) {
-        if (!visible || reduceMotion) {
-          api.clear();
-          return Promise.resolve();
-        }
-        const at = colOf.map(() => Math.random() * duration * 0.85);
-        return run(duration, (t) => {
-          pre.textContent = chars
-            .map((ch, i) => (ch === "\n" || ch === " " ? ch : t >= at[i] ? " " : t >= at[i] - 150 ? randomFrom(BLOCKS) : ch))
-            .join("");
-        }).then(() => api.clear());
-      },
-    };
-    return api;
-  }
-
   // Логотип строками заданного размера (для neofetch в терминале): { silver: [...], red: [...] }.
   function logoLines(art, cols, rows) {
     const ALPHA = "0123456789abcdefghijklmnopqrstuv";
@@ -405,9 +266,6 @@
     animate,
     easeInOut,
     scramble,
-    scrambleOut,
     createAsciiArt,
-    textToAscii,
-    createBanner,
   };
 })();
