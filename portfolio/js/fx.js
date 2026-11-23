@@ -148,15 +148,27 @@
 
     sample(0);
 
+    let current = 0; // текущий угол поворота логотипа
     const api = {
       get busy() {
         return busy;
+      },
+      get angle() {
+        return current;
       },
       show() {
         job++;
         busy = false;
         visible = true;
-        sample(0);
+        sample(current);
+        render();
+      },
+      // Повернуть логотип на угол (для непрерывного медленного вращения)
+      setAngle(angle) {
+        if (busy) return;
+        current = angle;
+        visible = true;
+        sample(current);
         render();
       },
       clear() {
@@ -171,7 +183,7 @@
           api.show();
           return Promise.resolve();
         }
-        sample(0);
+        sample(current);
         visible = true;
         const at = Array.from(dist, (d) => d * duration * 0.75 + Math.random() * duration * 0.25);
         return run(duration, (t) => render((i) => (t >= at[i] ? chars[i] : t >= at[i] - 280 ? randomGlyph() : " "))).then(
@@ -193,12 +205,13 @@
       spin(turns = 1, duration = 1600) {
         if (reduceMotion) return Promise.resolve();
         visible = true;
+        const from = current;
         return run(duration, (t, p) => {
-          sample(easeOutCubic(p) * turns * Math.PI * 2);
+          sample(from + easeOutCubic(p) * turns * Math.PI * 2);
           render();
         }).then((done) => {
           if (done) {
-            sample(0);
+            sample(current);
             render();
           }
         });

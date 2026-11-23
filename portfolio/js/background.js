@@ -82,6 +82,8 @@
       glow: v("--moon-glow", "rgba(200,16,40,0.28)"),
       star: v("--star", "rgba(245,220,225,0.6)"),
       cloud: v("--cloud", "rgba(90,24,34,0.5)"),
+      edge: v("--moon-edge", "rgba(40,0,8,0.6)"),
+      sea: v("--moon-sea", "rgba(20,0,4,0.55)"),
     };
   }
 
@@ -108,6 +110,18 @@
   function moonGeometry() {
     const mobile = width < 720;
     const home = scene === "home";
+    // На главной луна огромная и стоит прямо за логотипом — как эмблема на фоне луны
+    if (home) {
+      const logoEl = document.querySelector("[data-home-logo]");
+      const rect = logoEl && logoEl.getBoundingClientRect();
+      if (rect && rect.width > 0) {
+        return {
+          cx: rect.left + rect.width / 2,
+          cy: rect.top + rect.height / 2,
+          R: Math.max(rect.width * 0.64, Math.min(width, height) * (mobile ? 0.48 : 0.42)),
+        };
+      }
+    }
     let R = mobile ? width * (home ? 0.4 : 0.3) : Math.min(width, height) * (home ? 0.27 : 0.22);
     let cx = mobile ? width * 0.72 : home ? width * 0.82 : width - R * 0.45;
     let cy = mobile ? height * (home ? 0.24 : 0.16) : home ? height * 0.42 : R * 0.95 + 40;
@@ -145,13 +159,36 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // багровое свечение вокруг луны
-    ctx.globalAlpha = moonAlpha;
-    const glow = ctx.createRadialGradient(moon.cx, moon.cy, moon.R * 0.7, moon.cx, moon.cy, moon.R * 2.6);
+    // багровое свечение вокруг луны — медленно «дышит»
+    ctx.globalAlpha = moonAlpha * (0.82 + 0.18 * Math.sin(now * 0.0012));
+    const glow = ctx.createRadialGradient(moon.cx, moon.cy, moon.R * 0.6, moon.cx, moon.cy, moon.R * 2.4);
     glow.addColorStop(0, colors.glow);
     glow.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, width, height);
+    // гладкий алый диск с мягкими тёмными «морями» — луна читается целиком, даже в тени
+    const home = scene === "home";
+    ctx.globalAlpha = moonAlpha * (home ? 0.75 : 0.5);
+    const disc = ctx.createRadialGradient(moon.cx - moon.R * 0.35, moon.cy - moon.R * 0.35, moon.R * 0.05, moon.cx, moon.cy, moon.R);
+    disc.addColorStop(0, colors.moon3);
+    disc.addColorStop(0.45, colors.moon2);
+    disc.addColorStop(1, colors.edge);
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(moon.cx, moon.cy, moon.R, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.globalAlpha *= home ? 0.42 : 0.3;
+    ctx.fillStyle = disc;
+    ctx.fillRect(moon.cx - moon.R, moon.cy - moon.R, moon.R * 2, moon.R * 2);
+    [[-0.28, -0.12, 0.34], [0.22, 0.18, 0.28], [0.05, -0.42, 0.18], [-0.1, 0.45, 0.22]].forEach(([bx, by, br], i) => {
+      const ox = Math.cos(rot * 6.2832 + i) * 0.04;
+      const sea = ctx.createRadialGradient(moon.cx + moon.R * (bx + ox), moon.cy + moon.R * by, 0, moon.cx + moon.R * (bx + ox), moon.cy + moon.R * by, moon.R * br);
+      sea.addColorStop(0, colors.sea);
+      sea.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = sea;
+      ctx.fillRect(moon.cx - moon.R, moon.cy - moon.R, moon.R * 2, moon.R * 2);
+    });
+    ctx.restore();
 
     for (let y = 0; y < rows; y++) {
       const py = y * LINE_PX;
@@ -198,9 +235,25 @@
             // светлый край диска
             mc = light > 0.45 ? "@" : "%";
             ml = light > 0.45 ? 3 : 2;
+          } else if (scene === "home" && d2 < 0.5 && hash2(x, y) > (d2 - 0.3) / 0.2) {
+            // центр луны на главной — гладкий диск без символов, чтобы логотип был хорошо виден
           } else if (b > 0.04 || (x + y) % 3 === 0) {
             mc = MOON_RAMP[Math.max(1, Math.min(9, (b * 10) | 0))];
             ml = b > 0.6 ? 3 : b > 0.3 ? 2 : 1;
+          }
+        } else if (d2 < 1.14 && !isCloud) {
+          // светящийся ободок вокруг диска
+          const ang = Math.atan2(dy, dx);
+          const lit = Math.cos(ang + 2.4) * 0.5 + 0.5;
+          mc = d2 < 1.06 ? (lit > 0.5 ? "·" : ".") : "";
+          if (mc) ml = lit > 0.55 ? 3 : 2;
+          else mc = " ";
+        } else if (d2 > 1.4 && d2 < 1.52 && !isCloud) {
+          // кольцо-гало: медленно вращающиеся точки
+          const ang = Math.atan2(dy, dx) + now * 0.00008;
+          if (Math.sin(ang * 18) > 0.82) {
+            mc = "·";
+            ml = 2;
           }
         } else if (isCloud && d2 < 4) {
           cc = "~";

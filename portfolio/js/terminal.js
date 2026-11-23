@@ -67,6 +67,7 @@
   /* ---------- команды ---------- */
   const HELP = [
     ["help", "term.cmd.help"],
+    ["whereami · myip", "term.cmd.whereami"],
     ["whoami", "term.cmd.whoami"],
     ["neofetch", "term.cmd.neofetch"],
     ["cam [1-4]", "term.cmd.cam"],
@@ -92,10 +93,124 @@
     "experience.log": () => COMMANDS.experience(),
   };
 
+  /* ---------- карта мира с точкой посетителя ---------- */
+  let mapTimer = 0;
+
+  function drawWorldMap(block, loc, frame) {
+    const map = window.WORLD_MAP;
+    const W = map.cols;
+    const H = map.rows;
+    const toCell = (lat, lon) => [
+      Math.round(((lon + 180) / 360) * (W - 1)),
+      Math.round(((map.latTop - Math.max(map.latBottom, Math.min(map.latTop, lat))) / (map.latTop - map.latBottom)) * (H - 1)),
+    ];
+    const chars = map.lines.map((line) => [...line.padEnd(W)]);
+    const cls = chars.map((row) => row.map((ch) => (ch === "#" ? "wm-land" : ch === " " ? "" : "wm-coast")));
+    const put = (x, y, ch, c) => {
+      if (y < 0 || y >= H || x < 0 || x >= W) return;
+      chars[y][x] = ch;
+      cls[y][x] = c;
+    };
+
+    const [vx, vy] = toCell(loc.lat, loc.lon);
+    // «сервер» портфолио и бегущий к посетителю пакет
+    const home = data.profile.location;
+    if (home && Number.isFinite(home.lat)) {
+      const [sx, sy] = toCell(home.lat, home.lon);
+      const steps = Math.max(Math.abs(vx - sx), Math.abs(vy - sy));
+      for (let i = 1; i < steps; i++) {
+        const x = Math.round(sx + ((vx - sx) * i) / steps);
+        const y = Math.round(sy + ((vy - sy) * i) / steps);
+        if (i % 2 === 0) put(x, y, "·", "wm-path");
+      }
+      if (steps > 2) {
+        const k = (frame % 12) / 12;
+        put(Math.round(sx + (vx - sx) * k), Math.round(sy + (vy - sy) * k), "■", "wm-dot");
+      }
+      put(sx, sy, "+", "wm-srv");
+    }
+    // точка посетителя с расходящимся «пингом»
+    const r = frame % 4;
+    if (r > 0) {
+      put(vx - r * 2, vy, "(", "wm-ring");
+      put(vx + r * 2, vy, ")", "wm-ring");
+    }
+    put(vx, vy, frame % 2 ? "●" : "•", "wm-dot");
+    const label = `← ${t("geo.you")}`;
+    if (vx + 3 + label.length < W) [...label].forEach((ch, i) => put(vx + 3 + i, vy - 1, ch, "wm-label"));
+    else [...(t("geo.you") + " →")].forEach((ch, i, arr) => put(vx - 3 - arr.length + i, vy - 1, ch, "wm-label"));
+
+    block.textContent = "";
+    chars.forEach((row, y) => {
+      const line = document.createElement("div");
+      let run = "";
+      let runCls = null;
+      const flush = () => {
+        if (!run) return;
+        if (runCls) {
+          const span = document.createElement("span");
+          span.className = runCls;
+          span.textContent = run;
+          line.append(span);
+        } else line.append(run);
+        run = "";
+      };
+      row.forEach((ch, x) => {
+        if (cls[y][x] !== runCls) {
+          flush();
+          runCls = cls[y][x];
+        }
+        run += ch;
+      });
+      flush();
+      block.append(line);
+    });
+  }
+
+  async function whereami() {
+    if (!window.WORLD_MAP || !window.GEO) return;
+    const status = print(t("geo.locating"), "dim");
+    const loc = await window.GEO.locate();
+    status.remove();
+    clearInterval(mapTimer);
+    const block = document.createElement("div");
+    block.className = "out-block world-map";
+    block.setAttribute("aria-hidden", "true");
+    print(block);
+    let frame = 0;
+    drawWorldMap(block, loc, frame);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      mapTimer = setInterval(() => {
+        if (!block.isConnected) return clearInterval(mapTimer);
+        if (document.hidden || block.closest("[hidden]")) return;
+        drawWorldMap(block, loc, ++frame);
+      }, 260);
+    }
+    const row = (key, value, cls) => print([[(t(key) + ":").padEnd(16), "ps1"], [value, cls || ""]]);
+    const place = [loc.city, loc.region, loc.country].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(", ");
+    if (loc.source === "ip") {
+      row("geo.ip", loc.ip, "bright");
+      if (place) row("geo.place", place);
+      if (loc.isp) row("geo.isp", loc.isp);
+    } else {
+      row("geo.ip", t("geo.noIp"), "dim");
+      row("geo.place", `≈ ${place} (${loc.tz})`);
+    }
+    row("geo.local", t("geo.localHidden"), "dim");
+    body.scrollTop = body.scrollHeight;
+  }
+
   const COMMANDS = {
     help() {
       print(t("term.helpTitle"), "dim");
       HELP.forEach(([usage, key]) => print([[usage.padEnd(22), "ps1"], t(key)]));
+    },
+
+    whereami() {
+      return whereami();
+    },
+    myip() {
+      return whereami();
     },
 
     whoami() {
@@ -384,7 +499,7 @@
   // Быстрые команды — удобно на телефоне
   const quick = document.querySelector("[data-console-quick]");
   if (quick) {
-    ["help", "neofetch", "cam 1", "skills", "ls", "matrix", "reboot"].forEach((cmd) => {
+    ["help", "whereami", "neofetch", "cam 1", "skills", "matrix", "reboot"].forEach((cmd) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "quick-btn";
@@ -401,5 +516,14 @@
   print([["Last login: ", "dim"], [new Date().toLocaleString(I18N.locale), "dim"], [" from 127.0.0.1", "dim"]]);
   print(t("term.welcome"), "ps1");
   blank();
-  run("neofetch");
+
+  // Карта мира с точкой посетителя — при первом открытии терминала (тогда же уходит запрос IP)
+  let greeted = false;
+  function greet(page) {
+    if (greeted || page !== "terminal") return;
+    greeted = true;
+    run("whereami");
+  }
+  document.addEventListener("pagechange", (event) => greet(event.detail));
+  if (location.hash === "#terminal") setTimeout(() => greet("terminal"), 0);
 })();

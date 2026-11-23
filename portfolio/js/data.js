@@ -16,6 +16,8 @@ window.PORTFOLIO = {
   profile: {
     name: { ru: "Хайруллаев Анваржон", uz: "Xayrullayev Anvarjon", en: "Anvarjon Khayrullayev" },
     handle: "anvarjon", // ник в шапке и терминале: anvarjon@portfolio:~$
+    // Откуда «идёт сигнал» на карте мира в терминале (команда whereami). Поставьте свой город.
+    location: { city: "Tashkent", lat: 41.3, lon: 69.3 },
     role: { ru: "IT-администратор", uz: "IT-administrator", en: "IT administrator" },
     about: {
       ru: "Слежу, чтобы серверы, сеть и рабочие места работали без сбоев. Параллельно развиваюсь в веб-разработке: HTML, JavaScript, CSS, SQL.",
@@ -27,6 +29,7 @@ window.PORTFOLIO = {
   contacts: [
     { label: "github", value: "github.com/Khayrullayev03", href: "https://github.com/Khayrullayev03" },
     { label: "telegram", value: "@username", href: "https://t.me/username" },
+    { label: "phone", value: "+998 00 000-00-00", href: "tel:+998000000000" },
     { label: "email", value: "name@example.com", href: "mailto:name@example.com" },
   ],
 

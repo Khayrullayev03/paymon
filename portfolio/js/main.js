@@ -121,10 +121,22 @@
   const logo = window.ASCII_LOGO ? createAsciiArt(logoBox, window.ASCII_LOGO) : null;
   if (logo) logo.show();
 
-  // Наведение, касание или клик — логотип делает оборот
+  // Логотип медленно вращается; наведение, касание или клик — быстрый оборот
   const spinLogo = () => logo && !logo.busy && logo.spin(1, 1800);
   logoBox.addEventListener("pointerenter", spinLogo);
   logoBox.addEventListener("click", spinLogo);
+
+  if (logo && !reduceMotion) {
+    let lastFrame = 0;
+    (function rotate(now) {
+      requestAnimationFrame(rotate);
+      if (now - lastFrame < 50) return;
+      const dt = lastFrame ? (now - lastFrame) / 1000 : 0;
+      lastFrame = now;
+      if (document.hidden || state.page !== "home" || logo.busy) return;
+      logo.setAngle((logo.angle + dt * 0.35) % (Math.PI * 2)); // оборот примерно за 18 секунд
+    })(0);
+  }
 
   if (logo && !reduceMotion) {
     (function schedule() {
@@ -156,6 +168,9 @@
     const score = LEVELS[skill.level] || 5;
     const lines = skill.snippet ? skill.snippet.split("\n").length : 1;
     const scenePre = el("pre", { class: "scene-pre asc" });
+    // Анимированная картинка навыка рядом с заголовком
+    const iconPre = window.ICONS && window.ICONS.has("skill", skill.id) ? el("pre", { class: "asc skill-icon", "aria-hidden": "true" }) : null;
+    if (iconPre) window.ICONS.skill(iconPre, skill.id);
     const player = window.SCENES ? window.SCENES.createPlayer(scenePre, skill.id) : null;
     const toggle = el("button", { class: "anim-toggle", type: "button" });
     const syncToggle = () => {
@@ -190,7 +205,13 @@
         el(
           "div",
           { class: "panel-head" },
-          el("h3", { text: title, "aria-label": title }),
+          iconPre,
+          el(
+            "div",
+            { class: "panel-title" },
+            el("h3", { text: title, "aria-label": title }),
+            skill.summary && el("p", { class: "panel-summary", text: L(skill.summary) })
+          ),
           skill.level &&
             el(
               "span",
@@ -206,7 +227,6 @@
               el("span", { class: "meter-label", text: t("level." + skill.level) })
             )
         ),
-        skill.summary && el("p", { class: "panel-summary", text: L(skill.summary) }),
         el(
           "div",
           { class: "panel-body" },
@@ -476,19 +496,23 @@
     list.textContent = "";
     contacts.forEach((c) => {
       const external = c.href.startsWith("http");
+      // Анимированная картинка: github — кот и вклады, telegram — самолётик, phone — звонок, email — конверт
+      const art = window.ICONS && window.ICONS.has("contact", c.label) ? el("pre", { class: "asc contact-icon", "aria-hidden": "true" }) : null;
       list.append(
         el(
           "li",
-          null,
+          { class: "contact-card term", "data-reveal": true },
+          el("div", { class: "term-bar", "aria-hidden": "true" }, el("span", { text: `~/contacts/${c.label}` }), el("span", { class: "live", text: "●" })),
           el(
             "a",
             { class: "contact", href: c.href, target: external ? "_blank" : null, rel: external ? "noopener" : null },
+            art && el("div", { class: "contact-art" }, art),
             el("span", { class: "contact-key", text: c.label }),
-            el("span", { class: "contact-fill", "aria-hidden": "true" }),
             el("span", { class: "contact-value", text: c.value })
           )
         )
       );
+      if (art) window.ICONS.contact(art, c.label);
     });
   }
 
@@ -603,6 +627,7 @@
   renderAll();
   document.addEventListener("langchange", () => {
     renderAll();
+    if (window.ICONS) window.ICONS.prune();
     toast(I18N.lang.toUpperCase());
   });
 
