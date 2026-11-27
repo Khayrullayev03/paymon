@@ -40,6 +40,9 @@ router.get("/feruzam", (_, res) => {
 router.get("/roza", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "roza.html"));
 });
+router.get("/dilnoz", (_, res) => {
+  res.sendFile(path.join(__dirname, "public", "dilnoz.html"));
+});
 router.get("/questions", (_, res) => {
   res.sendFile(path.join(__dirname, "public", "questionsAndEntrances.html"));
 });
