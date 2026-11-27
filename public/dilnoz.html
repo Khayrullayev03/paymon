@@ -161,6 +161,105 @@ body.sealed { overflow: hidden; }
 .scene.arrive .env:not(.opening) .seal { animation: stamp .55s cubic-bezier(.2, .9, .3, 1.25) both .95s, pulse 1.8s ease-in-out infinite 1.6s; }
 @keyframes stamp { from { transform: translate(-50%, -50%) scale(2.6); opacity: 0; } 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
 
+/* ---------- three animated plan scenes (after "yes", before the envelope) ---------- */
+.story { position: fixed; inset: 0; z-index: 6; display: grid; place-items: center; overflow-y: auto; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 56px max(16px, env(safe-area-inset-left, 0px)); }
+.story-card {
+  position: relative; isolation: isolate; width: min(100%, 520px); padding: clamp(14px, 4vw, 22px); border-radius: 34px;
+  background: linear-gradient(155deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.3) 40%, rgba(255,240,245,.22) 65%, rgba(255,255,255,.4) 100%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 22px 44px -28px rgba(255,255,255,.95), 0 40px 80px -30px rgba(125, 15, 40, .45);
+  animation: ask-in .9s var(--spring) both;
+}
+.story-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.2) 25%, rgba(244,154,182,.45) 50%, rgba(255,255,255,.15) 75%, #fff 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.story.leaving .story-card { animation: ask-out .55s cubic-bezier(.55,0,1,.45) forwards; }
+.art { position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 16 / 10; box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), 0 14px 26px -16px rgba(63, 22, 38, .5); }
+.art svg { display: block; width: 100%; height: 100%; }
+.slide-text { padding: 18px 8px 2px; text-align: center; }
+.slide-step { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose); }
+.slide-time { margin: 6px 0 0; font-family: var(--font-letter); font-style: italic; font-weight: 700; font-size: clamp(46px, 12vw, 64px); line-height: 1; color: var(--wax-deep); font-variant-numeric: tabular-nums; }
+.slide-title { margin: 8px 0 0; font-family: var(--font-letter); font-weight: 700; font-size: clamp(25px, 6.4vw, 32px); line-height: 1.15; color: var(--ink); text-wrap: balance; }
+.slide-title:focus { outline: none; }
+.slide-sub { margin: 4px 0 0; font-family: var(--font-letter); font-style: italic; font-size: clamp(17px, 4.4vw, 20px); line-height: 1.3; color: var(--ink-soft); }
+.slide.play .slide-text > * { animation: fade-up .6s var(--ease) both; }
+.slide.play .slide-text > :nth-child(1) { animation-delay: .15s; } .slide.play .slide-text > :nth-child(2) { animation-delay: .3s; }
+.slide.play .slide-text > :nth-child(3) { animation-delay: .45s; } .slide.play .slide-text > :nth-child(4) { animation-delay: .6s; }
+.story-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding: 0 6px; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 8px; height: 8px; border-radius: 4px; background: rgba(214, 51, 108, .25); transition: width .45s var(--spring), background .3s; }
+.dots i.on { width: 26px; background: var(--rose); }
+.next { padding: 15px 24px; font-size: 16px; }
+.story-skip { position: fixed; z-index: 7; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); padding: 10px 6px; border: 0; background: none; cursor: pointer; font: 700 13px var(--font-ui); color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+.story-skip:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; border-radius: 6px; }
+.art svg * { transform-box: fill-box; }
+/* scene 1: the car comes to the house */
+.s1 .car-move { transform: translateX(-140px); }
+.slide.play .s1 .car-move { animation: drive 2.4s cubic-bezier(.12, .65, .3, 1) forwards .3s; }
+@keyframes drive { to { transform: translateX(76px); } }
+.s1 .wh { transform-origin: center; }
+.slide.play .s1 .wh { animation: spin .34s linear 7 .3s; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.slide.play .s1 .car-body { animation: settle .6s ease-out 2.7s; }
+@keyframes settle { 30% { transform: translateY(1.6px); } 60% { transform: translateY(-.8px); } }
+.s1 .beam { opacity: 0; }
+.slide.play .s1 .beam { animation: on .4s ease forwards 2.6s; }
+@keyframes on { to { opacity: 1; } }
+.s1 .bubble { transform-origin: 15% 100%; transform: scale(0); }
+.slide.play .s1 .bubble { animation: pop-in .55s var(--spring) forwards 2.9s; }
+@keyframes pop-in { to { transform: scale(1); } }
+.s1 .win { animation: win 2.2s ease-in-out infinite alternate; }
+@keyframes win { from { opacity: .7; } to { opacity: 1; } }
+.s1 .ch { opacity: 0; transform-origin: center; }
+.slide.play .s1 .ch { animation: rise 3s ease-out infinite; }
+.slide.play .s1 .ch:nth-of-type(2) { animation-delay: 1s; } .slide.play .s1 .ch:nth-of-type(3) { animation-delay: 2s; }
+@keyframes rise { 0% { transform: translateY(0) scale(.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-40px) scale(1.15); opacity: 0; } }
+.s1 .twk { transform-origin: center; animation: twk 2.6s ease-in-out infinite; }
+.s1 .twk:nth-of-type(2) { animation-delay: .8s; } .s1 .twk:nth-of-type(3) { animation-delay: 1.6s; }
+@keyframes twk { 0%, 100% { opacity: .3; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
+/* scene 2: dinner at Shashleek */
+.s2 .neon-t { opacity: .2; }
+.slide.play .s2 .neon-t { animation: neon 1.3s linear forwards .3s; }
+@keyframes neon { 0% { opacity: .2; } 15% { opacity: 1; } 25% { opacity: .3; } 40% { opacity: 1; } 50% { opacity: .45; } 65%, 100% { opacity: 1; } }
+.s2 .smoke { opacity: 0; }
+.slide.play .s2 .smoke { animation: smoke 2.6s ease-out infinite; }
+.slide.play .s2 .smoke:nth-of-type(2) { animation-delay: .9s; } .slide.play .s2 .smoke:nth-of-type(3) { animation-delay: 1.8s; }
+@keyframes smoke { 0% { transform: translateY(6px); opacity: 0; } 30% { opacity: .75; } 100% { transform: translateY(-28px); opacity: 0; } }
+.s2 .gl-l, .s2 .gl-r { transform-origin: 50% 100%; }
+.slide.play .s2 .gl-l { animation: clink-l 3.4s ease-in-out infinite 1s; }
+.slide.play .s2 .gl-r { animation: clink-r 3.4s ease-in-out infinite 1s; }
+@keyframes clink-l { 0%, 22%, 100% { transform: none; } 42%, 58% { transform: translateX(28px) rotate(10deg); } 78% { transform: none; } }
+@keyframes clink-r { 0%, 22%, 100% { transform: none; } 42%, 58% { transform: translateX(-28px) rotate(-10deg); } 78% { transform: none; } }
+.s2 .spark { transform-origin: center; opacity: 0; }
+.slide.play .s2 .spark { animation: spark 3.4s ease-in-out infinite 1s; }
+@keyframes spark { 0%, 40% { opacity: 0; transform: scale(.3); } 47% { opacity: 1; transform: scale(1.3) rotate(20deg); } 60%, 100% { opacity: 0; transform: scale(.6); } }
+.s2 .flame { transform-origin: 50% 100%; animation: flame 1.1s ease-in-out infinite alternate; }
+@keyframes flame { 0% { transform: scale(1, 1); } 50% { transform: scale(.9, 1.12) skewX(-4deg); } 100% { transform: scale(1.05, .94) skewX(3deg); } }
+.s2 .bulb { animation: twk 2.2s ease-in-out infinite; transform-origin: center; }
+.s2 .bulb:nth-of-type(2n) { animation-delay: .7s; } .s2 .bulb:nth-of-type(3n) { animation-delay: 1.4s; }
+/* scene 3: the cinema */
+.s3 .ray { animation: ray 2.8s ease-in-out infinite alternate; }
+@keyframes ray { from { opacity: .55; } to { opacity: 1; } }
+.s3 .vw { transform-origin: center; }
+.slide.play .s3 .vw { animation: spin 2.6s cubic-bezier(.6, 0, .4, 1) infinite .3s; }
+.s3 .cover { transform-origin: 100% 50%; }
+.slide.play .s3 .cover { animation: uncover 1.6s steps(16) forwards .7s; }
+@keyframes uncover { to { transform: scaleX(0); } }
+.s3 .bill { opacity: 0; }
+.slide.play .s3 .bill { animation: bill 2.4s ease-out infinite; }
+.slide.play .s3 .bill:nth-of-type(2) { animation-delay: .8s; } .slide.play .s3 .bill:nth-of-type(3) { animation-delay: 1.6s; }
+@keyframes bill { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--bx), var(--by)) rotate(var(--br)); opacity: 0; } }
+.slide.play .s3 .kern { animation: corn 1.4s cubic-bezier(.3, .6, .4, 1) infinite; }
+.slide.play .s3 .kern:nth-of-type(2) { animation-delay: .35s; } .slide.play .s3 .kern:nth-of-type(3) { animation-delay: .7s; } .slide.play .s3 .kern:nth-of-type(4) { animation-delay: 1.05s; }
+@keyframes corn { 0%, 100% { transform: translate(0, 0); } 45% { transform: translate(var(--kx), -24px); } }
+.s3 .seat-heart { transform-origin: center; animation: beat 1.3s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.2); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+/* letter: plan icons pop in, the dashed line draws down */
+.reading .ev-ico { transform: scale(.3); }
+.reading.written .ev-ico { animation: icon-pop .7s var(--spring) both; animation-delay: calc(var(--i) * 140ms + .35s); }
+@keyframes icon-pop { from { transform: scale(.3) rotate(-25deg); } to { transform: none; } }
+.conn { transform-origin: 50% 0; transform: scaleY(0); }
+.reading.written .conn { transform: scaleY(1); transition: transform .55s var(--ease) var(--d, 1s), opacity .2s ease var(--d, 1s); }
+
 /* ---------- the letter ---------- */
 .reading { position: relative; z-index: 10; min-height: 100%; display: grid; place-items: center; padding: 40px max(16px, env(safe-area-inset-right, 0px)) 56px max(16px, env(safe-area-inset-left, 0px)); }
 .letter {
@@ -179,7 +278,7 @@ body.sealed { overflow: hidden; }
 .text { margin: 14px 0 0; font-family: var(--font-letter); font-size: clamp(19px, 4.6vw, 23px); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
 .plan { list-style: none; margin: 26px 0 6px; padding: 0; position: relative; display: grid; gap: 18px; }
 .conn { position: absolute; width: 0; border-left: 2px dashed rgba(214, 51, 108, .4); z-index: 0; opacity: 0; }
-.reading.written .conn { opacity: 1; transition: opacity .6s ease .9s; }
+.reading.written .conn { opacity: 1; }
 .ev { display: grid; grid-template-columns: clamp(64px, 17vw, 84px) 44px minmax(0, 1fr); align-items: center; gap: 0 12px; }
 .ev-time { font-family: var(--font-letter); font-style: italic; font-weight: 700; font-size: clamp(26px, 6.6vw, 34px); line-height: 1; color: var(--wax-deep); font-variant-numeric: tabular-nums; text-align: right; }
 .ev-ico { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; background: #fff; box-shadow: 0 0 0 2px rgba(214, 51, 108, .25), 0 6px 12px -6px rgba(125, 15, 40, .4); }
@@ -221,6 +320,108 @@ body.sealed { overflow: hidden; }
     </div>
     <p class="ask-hint" id="hint" aria-live="polite">Подсказка: правильный ответ розовый 💗</p>
   </section>
+</div>
+
+<div class="story" id="story" hidden>
+  <div class="story-card">
+    <section class="slide" aria-labelledby="sl0-t">
+      <div class="art">
+      <svg viewBox="0 0 320 200" class="s1" aria-hidden="true">
+        <defs><linearGradient id="s1sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e5c2df"/><stop offset=".7" stop-color="#fbdde4"/><stop offset="1" stop-color="#ffe8df"/></linearGradient>
+        <linearGradient id="s1beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff4b8" stop-opacity=".8"/><stop offset="1" stop-color="#fff4b8" stop-opacity="0"/></linearGradient></defs>
+        <rect width="320" height="200" fill="url(#s1sky)"/>
+        <circle cx="62" cy="52" r="22" fill="#fff5ea"/><circle cx="62" cy="52" r="32" fill="#fff5ea" opacity=".35"/>
+        <path class="twk" d="M130 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#fff"/><path class="twk" d="M172 54 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5 Z" fill="#fff"/><path class="twk" d="M104 76 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5 Z" fill="#fff"/>
+        <rect x="276" y="64" width="10" height="22" fill="#b3203f"/>
+        <path class="ch" d="M281 62 C 278 59, 277 57, 279 55.5 C 280 55, 281 55.5, 281 56.3 C 281 55.5, 282 55, 283 55.5 C 285 57, 284 59, 281 62 Z" fill="#ff7aa8"/>
+        <path class="ch" d="M281 62 C 278 59, 277 57, 279 55.5 C 280 55, 281 55.5, 281 56.3 C 281 55.5, 282 55, 283 55.5 C 285 57, 284 59, 281 62 Z" fill="#ff9fbf"/>
+        <path class="ch" d="M281 62 C 278 59, 277 57, 279 55.5 C 280 55, 281 55.5, 281 56.3 C 281 55.5, 282 55, 283 55.5 C 285 57, 284 59, 281 62 Z" fill="#e85d8a"/>
+        <rect x="208" y="96" width="84" height="66" fill="#fff4f1"/>
+        <path d="M198 100 L 250 58 L 302 100 Z" fill="#d6336c"/>
+        <rect class="win" x="216" y="108" width="18" height="16" rx="2" fill="#ffd98a"/><rect class="win" x="266" y="108" width="18" height="16" rx="2" fill="#ffd98a"/>
+        <path d="M225 108 V124 M216 116 H234 M275 108 V124 M266 116 H284" stroke="#fff4f1" stroke-width="1.5"/>
+        <rect x="240" y="128" width="22" height="34" rx="2" fill="#a8164a"/>
+        <path d="M251 145 C 246 141, 245 137, 248 135 C 250 134, 251 135, 251 136 C 251 135, 252 134, 254 135 C 257 137, 256 141, 251 145 Z" fill="#ffd6e0"/>
+        <rect y="162" width="320" height="38" fill="#9d86a8"/>
+        <path d="M0 181 H320" stroke="#fff4e0" stroke-width="3" stroke-dasharray="16 12"/>
+        <g transform="translate(0 116)"><g class="car-move"><g class="car-body">
+          <path class="beam" d="M110 28 L 168 14 L 168 44 Z" fill="url(#s1beam)"/>
+          <path d="M4 32 C 4 25, 10 21, 20 20 L 33 9 C 36 6, 40 5, 45 5 L 70 5 C 76 5, 80 7, 84 11 L 95 20 C 104 21, 110 25, 110 32 L 110 37 C 110 39, 108 40, 106 40 L 8 40 C 6 40, 4 39, 4 37 Z" fill="#ff7aa8"/>
+          <path d="M37 10 C 39 9, 42 8, 45 8 L 56 8 L 56 20 L 28 20 Z M60 8 L 70 8 C 75 8, 78 10, 81 13 L 88 20 L 60 20 Z" fill="#6f5f92"/>
+          <path d="M10 30 H104" stroke="#fff" stroke-opacity=".6" stroke-width="1.5"/>
+          <path d="M104 25 L 110 26 L 110 30 L 104 29 Z" fill="#fff3b0"/><rect x="4" y="25" width="4" height="5" fill="#ff3355"/>
+          <path d="M62 27 C 60 25, 59.5 23.5, 61 22.6 C 62 22, 62.5 22.6, 62.5 23 C 62.5 22.6, 63 22, 64 22.6 C 65.5 23.5, 65 25, 62.5 27 Z" fill="#fff"/>
+        </g>
+          <g transform="translate(28 38)"><g class="wh"><circle r="8.5" fill="#3a2a3f"/><circle r="4" fill="#f3d2dc"/><path d="M0 -4 V4 M-4 0 H4" stroke="#3a2a3f" stroke-width="1.4"/></g></g>
+          <g transform="translate(86 38)"><g class="wh"><circle r="8.5" fill="#3a2a3f"/><circle r="4" fill="#f3d2dc"/><path d="M0 -4 V4 M-4 0 H4" stroke="#3a2a3f" stroke-width="1.4"/></g></g>
+        </g></g>
+        <g class="bubble"><rect x="104" y="62" width="112" height="28" rx="14" fill="#fff"/><path d="M122 89 L 128 97 L 132 89 Z" fill="#fff"/><text x="160" y="80.5" text-anchor="middle" font-family="Manrope, sans-serif" font-size="12" font-weight="800" fill="#d6336c">Я на месте! ♥</text></g>
+      </svg>
+      </div>
+      <div class="slide-text"><p class="slide-step">1 из 3</p><p class="slide-time">18:00</p><h2 class="slide-title" id="sl0-t" tabindex="-1">Заберу тебя из дома</h2><p class="slide-sub">Будь готова, я заеду ровно в шесть</p></div>
+    </section>
+    <section class="slide" aria-labelledby="sl1-t" hidden>
+      <div class="art">
+      <svg viewBox="0 0 320 200" class="s2" aria-hidden="true">
+        <defs><linearGradient id="s2bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2d6"/><stop offset="1" stop-color="#f7c6d3"/></linearGradient>
+        <filter id="s2glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="s2candle"><stop offset="0" stop-color="#ffd98a" stop-opacity=".8"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+        <rect width="320" height="200" fill="url(#s2bg)"/>
+        <path d="M0 16 Q 80 40 160 18 Q 240 -4 320 20" stroke="#c98a9b" stroke-width="1" fill="none"/>
+        <circle class="bulb" cx="26" cy="22" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="62" cy="30" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="100" cy="30" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="136" cy="22" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="184" cy="12" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="222" cy="9" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="260" cy="12" r="3.2" fill="#ffe39a"/><circle class="bulb" cx="298" cy="18" r="3.2" fill="#ffe39a"/>
+        <rect x="92" y="34" width="136" height="36" rx="9" fill="#3d1626"/>
+        <text class="neon-t" x="160" y="58" text-anchor="middle" font-family="Marck Script, cursive" font-size="23" fill="#ff8fb8" filter="url(#s2glow)">Shashleek</text>
+        <text x="160" y="86" text-anchor="middle" font-family="Manrope, sans-serif" font-size="11" font-weight="800" letter-spacing="2" fill="#a8164a">Ц-1</text>
+        <rect y="150" width="320" height="50" fill="#fff4ef"/><path d="M0 150 H320" stroke="#e7bcc6" stroke-width="2"/>
+        <g class="gl-l"><path d="M110 106 H132 C 132 120, 127 128, 121 128 C 115 128, 110 120, 110 106 Z" fill="#ffffff" fill-opacity=".7" stroke="#e0a9b6"/><path d="M112 114 H130 C 129 122, 125 126, 121 126 C 117 126, 113 122, 112 114 Z" fill="#c2185b"/><path d="M121 128 V146 M114 147 H128" stroke="#e0a9b6" stroke-width="2" stroke-linecap="round"/></g>
+        <g class="gl-r"><path d="M188 106 H210 C 210 120, 205 128, 199 128 C 193 128, 188 120, 188 106 Z" fill="#ffffff" fill-opacity=".7" stroke="#e0a9b6"/><path d="M190 114 H208 C 207 122, 203 126, 199 126 C 195 126, 191 122, 190 114 Z" fill="#c2185b"/><path d="M199 128 V146 M192 147 H206" stroke="#e0a9b6" stroke-width="2" stroke-linecap="round"/></g>
+        <path class="spark" d="M160 98 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 Z" fill="#ffd36b"/>
+        <path class="smoke" d="M142 150 C 134 140, 150 132, 142 120" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path class="smoke" d="M160 148 C 152 138, 168 130, 160 118" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path class="smoke" d="M178 150 C 170 140, 186 132, 178 120" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <ellipse cx="160" cy="166" rx="74" ry="13" fill="#fff" stroke="#ead3d9"/><ellipse cx="160" cy="166" rx="58" ry="9" fill="#f7efea"/>
+        <path d="M100 170 L 220 158" stroke="#b58a5a" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="116" cy="168" r="7.5" fill="#9b4a2a"/><circle cx="134" cy="166" r="7.5" fill="#c0623a"/><circle cx="152" cy="164.5" r="7.5" fill="#9b4a2a"/><circle cx="170" cy="162.5" r="7.5" fill="#c0623a"/><circle cx="188" cy="161" r="7.5" fill="#9b4a2a"/><circle cx="205" cy="159.5" r="7" fill="#c0623a"/>
+        <path d="M125 162 q2 -4 5 -1 M161 159 q2 -4 5 -1 M196 155 q2 -4 5 -1" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="113" cy="165" r="2" fill="#ffcf9a" opacity=".7"/><circle cx="149" cy="161" r="2" fill="#ffcf9a" opacity=".7"/><circle cx="185" cy="158" r="2" fill="#ffcf9a" opacity=".7"/>
+        <circle cx="38" cy="124" r="18" fill="url(#s2candle)"/><rect x="33" y="126" width="10" height="24" rx="2" fill="#fff4e6"/><path class="flame" d="M38 110 C 42 116, 42 122, 38 124 C 34 122, 34 116, 38 110 Z" fill="#ffb340"/>
+        <circle cx="282" cy="124" r="18" fill="url(#s2candle)"/><rect x="277" y="126" width="10" height="24" rx="2" fill="#fff4e6"/><path class="flame" d="M282 110 C 286 116, 286 122, 282 124 C 278 122, 278 116, 282 110 Z" fill="#ffb340"/>
+      </svg>
+      </div>
+      <div class="slide-text"><p class="slide-step">2 из 3</p><p class="slide-time">18:30</p><h2 class="slide-title" id="sl1-t" tabindex="-1">Ужин в ресторане Shashleek</h2><p class="slide-sub">Ц-1</p></div>
+    </section>
+    <section class="slide" aria-labelledby="sl2-t" hidden>
+      <div class="art">
+      <svg viewBox="0 0 320 200" class="s3" aria-hidden="true">
+        <defs><linearGradient id="s3scr" x1="0" y1="18" x2="0" y2="122" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff6f8"/><stop offset="1" stop-color="#f6d4df"/></linearGradient>
+        <linearGradient id="s3ray" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity=".04"/></linearGradient></defs>
+        <rect width="320" height="200" fill="#2b1631"/>
+        <rect x="36" y="14" width="248" height="112" rx="6" fill="#ffd6e2" opacity=".18"/>
+        <rect x="40" y="18" width="240" height="104" rx="4" fill="url(#s3scr)"/>
+        <path class="ray" d="M308 196 L 40 122 L 280 18 Z" fill="url(#s3ray)"/>
+        <g class="vault"><circle cx="98" cy="70" r="34" fill="#8d92a6" stroke="#5d6275" stroke-width="4"/><circle cx="98" cy="70" r="25" fill="#adb2c3"/>
+          <circle cx="98" cy="40" r="2.4" fill="#5d6275"/><circle cx="98" cy="100" r="2.4" fill="#5d6275"/><circle cx="68" cy="70" r="2.4" fill="#5d6275"/><circle cx="128" cy="70" r="2.4" fill="#5d6275"/>
+          <g class="vw"><path d="M98 56 V84 M84 70 H112 M88 60 L108 80 M108 60 L88 80" stroke="#5d6275" stroke-width="3.2" stroke-linecap="round"/><circle cx="98" cy="70" r="6" fill="#5d6275"/><circle cx="98" cy="70" r="2.4" fill="#d3d6e0"/></g></g>
+        <g><rect class="bill" style="--bx:70px;--by:-40px;--br:200deg" x="91" y="66" width="16" height="9" rx="1.5" fill="#7cc48a" stroke="#4f9a5a"/><rect class="bill" style="--bx:90px;--by:-14px;--br:-160deg" x="91" y="66" width="16" height="9" rx="1.5" fill="#8fd39b" stroke="#4f9a5a"/><rect class="bill" style="--bx:60px;--by:20px;--br:140deg" x="91" y="66" width="16" height="9" rx="1.5" fill="#7cc48a" stroke="#4f9a5a"/></g>
+        <text x="150" y="66" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-weight="700" font-size="21" fill="#3f1626">Как ограбить</text>
+        <text x="150" y="90" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-weight="700" font-size="21" fill="#3f1626">банк</text>
+        <rect class="cover" x="146" y="46" width="132" height="52" fill="url(#s3scr)"/>
+        <rect x="16" y="160" width="36" height="40" rx="9" fill="#4a2340"/><rect x="58" y="160" width="36" height="40" rx="9" fill="#4a2340"/><rect x="100" y="160" width="36" height="40" rx="9" fill="#b3203f"/><rect x="142" y="160" width="36" height="40" rx="9" fill="#b3203f"/><rect x="184" y="160" width="36" height="40" rx="9" fill="#4a2340"/><rect x="226" y="160" width="36" height="40" rx="9" fill="#4a2340"/>
+        <path class="seat-heart" d="M139 152 C 128 144, 124 138, 127 133 C 130 129, 136 130, 139 135 C 142 130, 148 129, 151 133 C 154 138, 150 144, 139 152 Z" fill="#ff7aa8"/>
+        <circle class="kern" style="--kx:-6px" cx="280" cy="150" r="3.6" fill="#fff4d6"/><circle class="kern" style="--kx:5px" cx="286" cy="149" r="3.4" fill="#fff4d6"/><circle class="kern" style="--kx:-2px" cx="292" cy="150" r="3.6" fill="#fff4d6"/><circle class="kern" style="--kx:7px" cx="284" cy="150" r="3" fill="#fff4d6"/>
+        <circle cx="276" cy="152" r="5" fill="#fff4d6"/><circle cx="284" cy="150" r="5.5" fill="#fff4d6"/><circle cx="292" cy="152" r="5" fill="#fff4d6"/><circle cx="288" cy="148" r="4" fill="#fff4d6"/><circle cx="280" cy="148" r="4" fill="#fff4d6"/>
+        <path d="M270 154 L 298 154 L 294 196 L 274 196 Z" fill="#fff"/>
+        <path d="M276 154 L 279 196 L 283 196 L 281 154 Z M287 154 L 286 196 L 290 196 L 292 154 Z" fill="#e0304f"/>
+      </svg>
+      </div>
+      <div class="slide-text"><p class="slide-step">3 из 3</p><p class="slide-time">21:15</p><h2 class="slide-title" id="sl2-t" tabindex="-1">Кино в Tashkent City</h2><p class="slide-sub">Фильм «Как ограбить банк»</p></div>
+    </section>
+    <div class="story-foot">
+      <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      <button class="btn-yes next" id="next" type="button">Дальше <span aria-hidden="true">→</span></button>
+    </div>
+  </div>
+  <button class="story-skip" id="story-skip" type="button">Пропустить</button>
 </div>
 
 <div class="scene" id="scene" hidden>
@@ -392,7 +593,7 @@ body.sealed { overflow: hidden; }
       const x = pa.x + a.offsetWidth / 2 - 1, y1 = pa.y + a.offsetHeight / 2, y2 = pb.y + b.offsetHeight / 2;
       const c = document.createElement("span");
       c.className = "conn";
-      c.style.cssText = `left:${x}px;top:${y1}px;height:${y2 - y1}px`;
+      c.style.cssText = `left:${x}px;top:${y1}px;height:${y2 - y1}px;--d:${(1 + i * .3).toFixed(2)}s`;
       plan.prepend(c);
     }
   }
@@ -465,6 +666,44 @@ body.sealed { overflow: hidden; }
     ask.classList.add("leaving");
     await wait(560);
     ask.hidden = true;
+    story.hidden = false;
+    showSlide(0);
+  }
+  yesBtn.addEventListener("click", () => sayYes(yesBtn));
+
+  /* ---------- three animated scenes, one per part of the evening ---------- */
+  const story = $("#story"), slides = [...story.querySelectorAll(".slide")], dotEls = [...story.querySelectorAll(".dots i")], nextBtn = $("#next");
+  let si = -1, sliding = false;
+  function showSlide(i) {
+    si = i;
+    slides.forEach((sl, j) => { sl.hidden = j !== i; sl.classList.remove("play"); });
+    void slides[i].offsetWidth;
+    slides[i].classList.add("play");
+    dotEls.forEach((d, j) => d.classList.toggle("on", j === i));
+    nextBtn.innerHTML = i === slides.length - 1 ? 'Открыть письмо <span aria-hidden="true">💌</span>' : 'Дальше <span aria-hidden="true">→</span>';
+    slides[i].querySelector(".slide-title").focus({ preventScroll: true });
+  }
+  async function nextSlide() {
+    if (sliding) return;
+    sliding = true;
+    const r = nextBtn.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 22, .6);
+    if (si < slides.length - 1) {
+      if (!reduced) await slides[si].animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateX(-28px)" }], { duration: 260, easing: "ease-in" }).finished;
+      showSlide(si + 1);
+      if (!reduced) await slides[si].animate([{ opacity: 0, transform: "translateX(28px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.22,1,.36,1)" }).finished;
+    } else {
+      await goEnvelope();
+    }
+    sliding = false;
+  }
+  nextBtn.addEventListener("click", nextSlide);
+  $("#story-skip").addEventListener("click", () => { if (!sliding) { sliding = true; goEnvelope().then(() => { sliding = false; }); } });
+  async function goEnvelope() {
+    story.classList.add("leaving");
+    await wait(560);
+    story.hidden = true;
+    slides.forEach((sl) => sl.classList.remove("play"));
     const sc = $("#scene");
     sc.hidden = false;
     sc.classList.add("arrive");
@@ -473,7 +712,6 @@ body.sealed { overflow: hidden; }
     burst(er.left + er.width / 2, er.top + er.height * .59, 40, .9);
     $("#env").focus({ preventScroll: true });
   }
-  yesBtn.addEventListener("click", () => sayYes(yesBtn));
 
   /* ---------- opening the envelope ---------- */
   const env = $("#env"), scene = $("#scene"), reading = $("#reading"), letter = $("#letter"), mini = $("#mini");
