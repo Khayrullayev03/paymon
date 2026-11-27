@@ -58,80 +58,128 @@ body.sealed { overflow: hidden; }
 #hearts { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
 #fx { position: fixed; inset: 0; z-index: 30; width: 100%; height: 100%; pointer-events: none; }
 
-/* ---------- the envelope ---------- */
+/* ---------- the envelope ----------
+   One 310 × 200 grid for every part: the three pocket flaps meet exactly at C (155, 112),
+   the top flap's tip and the seal sit exactly at (155, 118). */
 .scene { position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
 .scene.gone { pointer-events: none; }
-.env-wrap { display: flex; flex-direction: column; align-items: center; gap: 22px; transition: transform 1s var(--ease), opacity .8s ease; }
-.scene.gone .env-wrap { transform: translateY(40vh) scale(.9); opacity: 0; }
-.to { margin: 0; text-align: center; font-family: var(--font-hand); font-size: clamp(28px, 7vw, 40px); color: var(--rose); line-height: 1.1; }
-.to small { display: block; font-family: var(--font-ui); font-size: 12px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.env-wrap { display: flex; flex-direction: column; align-items: center; gap: 24px; transition: transform .9s var(--ease), opacity .7s ease; }
+.scene.gone .env-wrap { transform: translateY(32vh); opacity: 0; }
+.to { margin: 0; text-align: center; font-family: var(--font-hand); font-size: clamp(30px, 7.4vw, 42px); color: var(--rose); line-height: 1.1; }
+.to small { display: block; font-family: var(--font-ui); font-size: 12px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
 .env {
-  position: relative; width: min(88vw, 520px); aspect-ratio: 1.55; padding: 0; border: 0; background: none; cursor: pointer;
-  perspective: 1400px; -webkit-tap-highlight-color: transparent;
-  animation: float 4.5s ease-in-out infinite;
-  filter: drop-shadow(0 26px 30px rgba(125, 15, 40, .22));
+  position: relative; display: block; width: min(86vw, 500px); aspect-ratio: 310 / 200; padding: 0; border: 0; background: none; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: float 4s ease-in-out infinite;
 }
 .env:focus { outline: none; }
 .env:focus-visible .seal { box-shadow: 0 0 0 4px var(--white), 0 0 0 7px var(--rose); }
 .env.opening { animation: none; cursor: default; }
-@keyframes float { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
-.env:not(.opening):hover { animation-duration: 2.2s; }
-.env-back { position: absolute; inset: 0; z-index: 1; border-radius: 10px; background: linear-gradient(180deg, var(--env-deep), var(--env-dark) 60%); }
-.mini-letter {
-  position: absolute; left: 6%; right: 6%; top: 7%; height: 86%; z-index: 2; border-radius: 6px;
-  background: repeating-linear-gradient(180deg, transparent 0 21px, var(--paper-line) 21px 22px), var(--paper);
-  box-shadow: 0 2px 6px rgba(125, 15, 40, .15);
-  padding: 7% 8%; text-align: left; overflow: hidden;
-  transition: transform 1s var(--ease);
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.env-back {
+  position: absolute; inset: 0; z-index: 1; border-radius: 3px;
+  background: linear-gradient(180deg, #c98a9b 0%, #dba3b1 55%, #e6b8c3 100%);
+  box-shadow: 0 26px 44px -20px rgba(125, 15, 40, .42), 0 8px 18px -10px rgba(63, 22, 38, .25);
 }
-.mini-letter .ml-dear { display: block; margin: 0; font-family: var(--font-hand); font-size: clamp(16px, 4.4vw, 24px); color: var(--rose); }
-.mini-letter i { display: block; height: 6px; margin-top: 12px; border-radius: 3px; background: rgba(176, 120, 132, .22); }
-.mini-letter i:nth-of-type(2) { width: 80%; } .mini-letter i:nth-of-type(3) { width: 64%; }
-.env.out .mini-letter { transform: translateY(-62%); }
-.env-front { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.env-label { position: absolute; left: 50%; bottom: 13%; z-index: 4; transform: translateX(-50%); margin: 0; font-family: var(--font-hand); font-size: clamp(18px, 4.6vw, 26px); color: var(--wax-deep); white-space: nowrap; pointer-events: none; opacity: .85; }
-.flap { position: absolute; left: 0; right: 0; top: 0; height: 62%; z-index: 5; transform-origin: 50% 0; transform-style: preserve-3d; transition: transform .85s cubic-bezier(.5, 0, .3, 1); }
-.flap svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.flap .inner { transform: rotateX(180deg); }
-.env.open-flap .flap { transform: rotateX(180deg); }
+.mini-letter {
+  position: absolute; left: 5.5%; right: 5.5%; top: 5%; height: 90%; z-index: 2; border-radius: 3px;
+  background: var(--paper);
+  box-shadow: 0 1px 3px rgba(125, 15, 40, .18);
+  padding: 7% 8%; text-align: left; overflow: hidden;
+  transition: transform .95s var(--ease);
+}
+.mini-letter .ml-dear { display: block; margin: 0; font-family: var(--font-hand); font-size: clamp(17px, 4.4vw, 25px); line-height: 1.2; color: var(--rose); }
+.mini-letter i { display: block; height: 5px; margin-top: 11px; border-radius: 3px; background: rgba(176, 120, 132, .22); }
+.mini-letter i:nth-of-type(2) { width: 82%; } .mini-letter i:nth-of-type(3) { width: 66%; }
+.env.out .mini-letter { transform: translateY(-56%); }
+.env-front, .flap svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; display: block; }
+.env-front { z-index: 3; }
+.env-label { position: absolute; left: 0; right: 0; bottom: 11%; z-index: 4; margin: 0; text-align: center; font-family: var(--font-hand); font-size: clamp(18px, 4.6vw, 26px); line-height: 1; color: var(--wax-deep); white-space: nowrap; pointer-events: none; opacity: .85; }
+.flap { position: absolute; inset: 0; z-index: 5; transform-origin: 50% 0; pointer-events: none; }
+.flap .inner { display: none; }
+.flap.inside .outer { display: none; }
+.flap.inside .inner { display: block; }
 .env.flap-behind .flap { z-index: 1; }
 .seal {
-  position: absolute; left: 50%; top: 62%; z-index: 6; width: clamp(58px, 15vw, 78px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
-  display: grid; place-items: center; transition: transform .5s var(--spring), opacity .4s;
+  position: absolute; left: 50%; top: 59%; z-index: 6; width: clamp(58px, 15vw, 76px); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  transition: transform .5s var(--spring), opacity .4s;
 }
-.seal svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 4px rgba(80, 0, 20, .35)); }
+.seal svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 3px 3px rgba(80, 0, 20, .35)); }
 .seal .half { transition: transform .7s var(--ease), opacity .6s; transform-box: fill-box; transform-origin: center; }
-.env.broken .seal .half-l { transform: translate(-46px, 30px) rotate(-50deg); opacity: 0; }
-.env.broken .seal .half-r { transform: translate(46px, 36px) rotate(48deg); opacity: 0; }
+.env.broken .seal .half-l { transform: translate(-44px, 26px) rotate(-40deg); opacity: 0; }
+.env.broken .seal .half-r { transform: translate(44px, 26px) rotate(40deg); opacity: 0; }
 .env:not(.opening) .seal { animation: pulse 1.8s ease-in-out infinite; }
-@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.07); } }
+@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.06); } }
 .tap { margin: 0; font-size: 12px; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft); animation: blink 1.8s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: .4; } }
 .env.opening ~ .tap { opacity: 0; transition: opacity .3s; animation: none; }
+
+/* ---------- the question (before the envelope) ---------- */
+.ask { position: fixed; inset: 0; z-index: 6; display: grid; place-items: center; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); }
+.ask-card {
+  position: relative; isolation: isolate; width: min(100%, 520px); padding: clamp(30px, 7vw, 48px) clamp(22px, 6vw, 44px) clamp(26px, 6vw, 40px);
+  border-radius: 36px; text-align: center;
+  background: linear-gradient(155deg, rgba(255,255,255,.64) 0%, rgba(255,255,255,.28) 40%, rgba(255,240,245,.2) 65%, rgba(255,255,255,.38) 100%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 22px 44px -28px rgba(255,255,255,.95), inset 0 -30px 60px -36px rgba(214, 51, 108, .3), 0 40px 80px -30px rgba(125, 15, 40, .45);
+  animation: ask-in 1s var(--spring) both .15s;
+}
+.ask-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.2) 25%, rgba(244,154,182,.45) 50%, rgba(255,255,255,.15) 75%, #fff 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+@keyframes ask-in { from { transform: translateY(40px) scale(.92); opacity: 0; } }
+.ask.leaving .ask-card { animation: ask-out .55s cubic-bezier(.55,0,1,.45) forwards; }
+@keyframes ask-out { to { transform: translateY(24px) scale(.86); opacity: 0; } }
+.ask-kicker { display: inline-flex; align-items: center; gap: 9px; margin: 0; padding: 8px 15px 8px 11px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); background: rgba(255,255,255,.66); box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(125, 15, 40, .12); }
+.ask-kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rose); box-shadow: 0 0 0 4px rgba(214, 51, 108, .18); animation: dot 1.6s ease-in-out infinite; }
+@keyframes dot { 50% { box-shadow: 0 0 0 8px rgba(214, 51, 108, 0); } }
+.ask-name { margin: 18px 0 0; font-family: var(--font-hand); font-size: clamp(54px, 15vw, 84px); line-height: 1; color: var(--rose); }
+.ask-q { margin: 10px 0 0; font-family: var(--font-letter); font-weight: 700; font-size: clamp(28px, 7vw, 40px); line-height: 1.15; color: var(--ink); text-wrap: balance; }
+.ask-answers { margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px; }
+.no-slot { display: inline-flex; }
+.btn-yes, .btn-no { font: 800 17px/1 var(--font-ui); border: 0; border-radius: 999px; padding: 17px 30px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.btn-yes { position: relative; color: var(--white); background: linear-gradient(180deg, #ef6b97 0%, var(--rose) 50%, #a8164a 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 8px rgba(90, 0, 30, .28), 0 14px 28px -12px rgba(160, 20, 70, .75); transform: scale(var(--grow, 1)); transition: transform .5s var(--spring); }
+.btn-yes::after { content: ""; position: absolute; inset: -4px; border-radius: inherit; border: 2px solid rgba(214, 51, 108, .5); animation: ring 1.9s ease-out infinite; pointer-events: none; }
+@keyframes ring { from { transform: scale(.96); opacity: .9; } to { transform: scale(1.16, 1.3); opacity: 0; } }
+.btn-yes:active { transform: scale(calc(var(--grow, 1) * .95)); }
+.btn-no { color: var(--ink-soft); background: rgba(255,255,255,.6); box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(255,255,255,.6), 0 4px 12px -6px rgba(63, 22, 38, .3); }
+.btn-no.is-loose { position: fixed; z-index: 7; left: 0; top: 0; background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(12px) saturate(180%); backdrop-filter: blur(12px) saturate(180%); transition: left .42s var(--spring), top .42s var(--spring); }
+.btn-no.is-surrender { color: var(--rose); }
+.btn-yes:focus-visible, .btn-no:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; box-shadow: 0 0 0 6px var(--rose); }
+.ask-hint { margin: 18px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-soft); min-height: 1.45em; }
+/* the envelope arrives after "yes" */
+.scene.arrive .env-wrap { animation: arrive 1.15s cubic-bezier(.3, 1.35, .5, 1) both; }
+@keyframes arrive { 0% { transform: translateY(75vh) scale(.55); opacity: 0; } 35% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+.scene.arrive .to, .scene.arrive .tap { animation: fade-up .7s var(--ease) both; }
+.scene.arrive .to { animation-delay: 1s; }
+.scene.arrive .tap { animation: fade-up .7s var(--ease) both 1.6s, blink 1.8s ease-in-out infinite 2.3s; }
+@keyframes fade-up { from { transform: translateY(10px); opacity: 0; } }
+.scene.arrive .env:not(.opening) .seal { animation: stamp .55s cubic-bezier(.2, .9, .3, 1.25) both .95s, pulse 1.8s ease-in-out infinite 1.6s; }
+@keyframes stamp { from { transform: translate(-50%, -50%) scale(2.6); opacity: 0; } 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
 
 /* ---------- the letter ---------- */
 .reading { position: relative; z-index: 10; min-height: 100%; display: grid; place-items: center; padding: 40px max(16px, env(safe-area-inset-right, 0px)) 56px max(16px, env(safe-area-inset-left, 0px)); }
 .letter {
   position: relative; width: min(100%, 580px); padding: clamp(30px, 7vw, 56px) clamp(24px, 7vw, 58px) clamp(28px, 6vw, 48px);
   border-radius: 8px; color: var(--ink);
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, .9), transparent 60%),
-    repeating-linear-gradient(180deg, transparent 0 33px, var(--paper-line) 33px 34px),
-    var(--paper);
-  background-position: 0 0, 0 14px, 0 0;
+  background: radial-gradient(120% 70% at 50% 0%, #ffffff, rgba(255, 255, 255, 0) 60%), var(--paper);
   box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 30px 60px -24px rgba(125, 15, 40, .45), 0 10px 20px -10px rgba(63, 22, 38, .25);
-  transform: rotate(-.6deg);
   transform-origin: 50% 0;
 }
 .letter::before { content: ""; position: absolute; inset: 10px; border: 1px solid rgba(201, 154, 75, .35); border-radius: 4px; pointer-events: none; }
-.stamp { position: absolute; right: clamp(14px, 4vw, 26px); top: clamp(14px, 4vw, 24px); width: clamp(54px, 13vw, 70px); transform: rotate(8deg); }
+.stamp { position: absolute; right: clamp(14px, 4vw, 26px); top: clamp(14px, 4vw, 24px); width: clamp(52px, 13vw, 66px); }
 .stamp svg { display: block; width: 100%; height: auto; }
 .when-line { margin: 0 70px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); }
 .dear { margin: 18px 0 0; font-family: var(--font-hand); font-size: clamp(34px, 9vw, 52px); line-height: 1.05; color: var(--rose); }
 .dear b { font-weight: 400; color: var(--wax-deep); }
 .text { margin: 14px 0 0; font-family: var(--font-letter); font-size: clamp(19px, 4.6vw, 23px); line-height: 1.5; color: var(--ink); text-wrap: pretty; }
 .plan { list-style: none; margin: 26px 0 6px; padding: 0; position: relative; display: grid; gap: 18px; }
-.plan::before { content: ""; position: absolute; left: calc(clamp(64px, 17vw, 84px) + 21px); top: 22px; bottom: 22px; border-left: 2px dashed rgba(214, 51, 108, .35); }
+.conn { position: absolute; width: 0; border-left: 2px dashed rgba(214, 51, 108, .4); z-index: 0; opacity: 0; }
+.reading.written .conn { opacity: 1; transition: opacity .6s ease .9s; }
 .ev { display: grid; grid-template-columns: clamp(64px, 17vw, 84px) 44px minmax(0, 1fr); align-items: center; gap: 0 12px; }
 .ev-time { font-family: var(--font-letter); font-style: italic; font-weight: 700; font-size: clamp(26px, 6.6vw, 34px); line-height: 1; color: var(--wax-deep); font-variant-numeric: tabular-nums; text-align: right; }
 .ev-ico { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; background: #fff; box-shadow: 0 0 0 2px rgba(214, 51, 108, .25), 0 6px 12px -6px rgba(125, 15, 40, .4); }
@@ -162,7 +210,20 @@ body.sealed { overflow: hidden; }
 </div>
 <canvas id="hearts" aria-hidden="true"></canvas>
 
-<div class="scene" id="scene">
+<div class="ask" id="ask">
+  <section class="ask-card" aria-labelledby="ask-q">
+    <p class="ask-kicker"><span class="dot" aria-hidden="true"></span>У меня к тебе вопрос</p>
+    <p class="ask-name">Dilnoz,</p>
+    <h2 class="ask-q" id="ask-q" tabindex="-1">Пойдёшь со мной на свидание?</h2>
+    <div class="ask-answers">
+      <button class="btn-yes" id="yes" type="button">Да <span aria-hidden="true">💖</span></button>
+      <span class="no-slot" id="no-slot"><button class="btn-no" id="no" type="button">Нет</button></span>
+    </div>
+    <p class="ask-hint" id="hint" aria-live="polite">Подсказка: правильный ответ розовый 💗</p>
+  </section>
+</div>
+
+<div class="scene" id="scene" hidden>
   <div class="env-wrap">
     <p class="to"><small>Тебе письмо</small>Для Dilnoz</p>
     <button class="env" id="env" type="button" aria-label="Открыть конверт">
@@ -170,19 +231,20 @@ body.sealed { overflow: hidden; }
       <span class="mini-letter" id="mini" aria-hidden="true"><span class="ml-dear">Дорогая Dilnoz,</span><i></i><i></i><i></i></span>
       <svg class="env-front" viewBox="0 0 310 200" preserveAspectRatio="none" aria-hidden="true">
         <defs>
-          <linearGradient id="sideL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ecc2cb"/><stop offset="1" stop-color="#f6dbe0"/></linearGradient>
-          <linearGradient id="sideR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ecc2cb"/><stop offset="1" stop-color="#f6dbe0"/></linearGradient>
-          <linearGradient id="bottomF" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f1cdd4"/><stop offset="1" stop-color="#fbe7ea"/></linearGradient>
+          <linearGradient id="sideL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ecc3cc"/><stop offset="1" stop-color="#f5d8de"/></linearGradient>
+          <linearGradient id="sideR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ecc3cc"/><stop offset="1" stop-color="#f5d8de"/></linearGradient>
+          <linearGradient id="bottomF" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f2ced5"/><stop offset="1" stop-color="#fbe6ea"/></linearGradient>
         </defs>
-        <path d="M0 0 L158 108 L0 200 Z" fill="url(#sideL)"/>
-        <path d="M310 0 L152 108 L310 200 Z" fill="url(#sideR)"/>
-        <path d="M0 200 L155 96 L310 200 Z" fill="url(#bottomF)"/>
-        <path d="M0 200 L155 96 L310 200" fill="none" stroke="#e2adb9" stroke-width="1"/>
+        <path d="M0 0 L155 112 L0 200 Z" fill="url(#sideL)"/>
+        <path d="M310 0 L155 112 L310 200 Z" fill="url(#sideR)"/>
+        <path d="M0 200 L155 112 L310 200 Z" fill="url(#bottomF)"/>
+        <path d="M0 0 L155 112 L310 0 M0 200 L155 112 L310 200" fill="none" stroke="#dfa7b4" stroke-width="1" vector-effect="non-scaling-stroke"/>
+        <rect x="0" y="0" width="310" height="200" fill="none" stroke="#e2adb9" stroke-width="1" vector-effect="non-scaling-stroke"/>
       </svg>
       <span class="env-label" aria-hidden="true">Dilnoz ♥</span>
-      <span class="flap" aria-hidden="true">
-        <svg class="outer" viewBox="0 0 310 124" preserveAspectRatio="none"><defs><linearGradient id="flapO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7dde2"/><stop offset="1" stop-color="#eec5ce"/></linearGradient></defs><path d="M0 0 L310 0 L155 124 Z" fill="url(#flapO)"/><path d="M0 0 L155 124 L310 0" fill="none" stroke="#e0a9b6" stroke-width="1"/></svg>
-        <svg class="inner" viewBox="0 0 310 124" preserveAspectRatio="none"><defs><linearGradient id="flapI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d998a8"/><stop offset="1" stop-color="#e8b5c1"/></linearGradient></defs><path d="M0 0 L310 0 L155 124 Z" fill="url(#flapI)"/></svg>
+      <span class="flap" id="flap" aria-hidden="true">
+        <svg class="outer" viewBox="0 0 310 200" preserveAspectRatio="none"><defs><linearGradient id="flapO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e0e5"/><stop offset="1" stop-color="#efc8d0"/></linearGradient></defs><path d="M0 0 L310 0 L155 118 Z" fill="url(#flapO)"/><path d="M0 0 L155 118 L310 0" fill="none" stroke="#dca2b0" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
+        <svg class="inner" viewBox="0 0 310 200" preserveAspectRatio="none"><defs><linearGradient id="flapI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d494a5"/><stop offset="1" stop-color="#e6b2bf"/></linearGradient></defs><path d="M0 0 L310 0 L155 118 Z" fill="url(#flapI)"/></svg>
       </span>
       <span class="seal" aria-hidden="true">
         <svg viewBox="0 0 100 100">
@@ -318,6 +380,101 @@ body.sealed { overflow: hidden; }
   renderCount();
   setInterval(renderCount, 30000);
 
+  /* ---------- dashed line between the plan icons, centre to centre ---------- */
+  function drawConnectors() {
+    const plan = $(".plan");
+    plan.querySelectorAll(".conn").forEach((e) => e.remove());
+    const icons = [...plan.querySelectorAll(".ev-ico")];
+    // layout offsets ignore the fade-in transforms, so the line lands on the final icon centres
+    const within = (el) => { let x = 0, y = 0, e = el; while (e && e !== plan) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return { x, y }; };
+    for (let i = 0; i < icons.length - 1; i++) {
+      const a = icons[i], b = icons[i + 1], pa = within(a), pb = within(b);
+      const x = pa.x + a.offsetWidth / 2 - 1, y1 = pa.y + a.offsetHeight / 2, y2 = pb.y + b.offsetHeight / 2;
+      const c = document.createElement("span");
+      c.className = "conn";
+      c.style.cssText = `left:${x}px;top:${y1}px;height:${y2 - y1}px`;
+      plan.prepend(c);
+    }
+  }
+  // Redraw whenever the plan's layout changes (late web fonts, rotation, resize).
+  let connRaf = 0;
+  new ResizeObserver(() => { if ($("#reading").hidden) return; cancelAnimationFrame(connRaf); connRaf = requestAnimationFrame(drawConnectors); }).observe($(".plan"));
+  // Load the letter's fonts now, so the text does not re-wrap after the letter opens.
+  if (document.fonts && document.fonts.load) {
+    ["italic 700 30px 'Cormorant Garamond'", "italic 500 18px 'Cormorant Garamond'", "700 22px 'Cormorant Garamond'", "500 20px 'Cormorant Garamond'", "40px 'Marck Script'"]
+      .forEach((f) => document.fonts.load(f, "Дорогая Dilnoz 18:00").catch(() => {}));
+    document.fonts.ready.then(() => { if (!$("#reading").hidden) drawConnectors(); });
+  }
+
+  /* ---------- the question: a "no" that cannot be pressed ---------- */
+  const ask = $("#ask"), yesBtn = $("#yes"), noBtn = $("#no"), slot = $("#no-slot"), hint = $("#hint");
+  const NO_TEXTS = ["Нет", "Точно нет?", "Подумай ещё 🥺", "Ну пожалуйста!", "Я расстроюсь", "Последний шанс…", "Ладно, да 💕"];
+  const HINTS = ["Подсказка: правильный ответ розовый 💗", "Ой, кнопка «Нет» сегодня очень стеснительная", "Кажется, она не хочет, чтобы её нажимали 🙈", "Зато кнопка «Да» становится всё больше", "Сердечки уже волнуются 💓", "Конверт тоже ждёт твоего ответа 💌", "Всё, кнопка «Нет» сдалась"];
+  const SURRENDER = NO_TEXTS.length - 1;
+  let dodges = 0, lastDodge = 0, movingTimer = 0, answered = false;
+  function placeNo(avoidX, avoidY) {
+    const b = noBtn.getBoundingClientRect(), y0 = yesBtn.getBoundingClientRect();
+    const m = 16, W = vw(), H = vh(), pad = 28;
+    const onYes = (x, y) => x < y0.right + pad && x + b.width > y0.left - pad && y < y0.bottom + pad && y + b.height > y0.top - pad;
+    let best = null;
+    for (let k = 0; k < 40; k++) {
+      const x = rnd(m, Math.max(m, W - b.width - m)), y = rnd(m + 10, Math.max(m + 10, H - b.height - m - 40));
+      if (onYes(x, y)) continue;
+      const dist = Math.hypot(x + b.width / 2 - avoidX, y + b.height / 2 - avoidY);
+      if (!best || dist > best.dist) best = { x, y, dist };
+      if (dist > 180) break;
+    }
+    if (!best) best = { x: m, y: m + 10 };
+    noBtn.style.pointerEvents = "none";
+    clearTimeout(movingTimer);
+    movingTimer = setTimeout(() => { noBtn.style.pointerEvents = ""; }, 460);
+    noBtn.style.left = best.x + "px"; noBtn.style.top = best.y + "px";
+  }
+  function dodge(e) {
+    if (noBtn.dataset.surrender || answered) return;
+    if (e) e.preventDefault();
+    lastDodge = performance.now();
+    dodges++;
+    const r = noBtn.getBoundingClientRect();
+    if (!noBtn.classList.contains("is-loose")) {
+      slot.style.width = r.width + "px"; slot.style.height = r.height + "px";
+      noBtn.classList.add("is-loose");
+      noBtn.style.transition = "none";
+      noBtn.style.left = r.left + "px"; noBtn.style.top = r.top + "px";
+      document.body.appendChild(noBtn);
+      void noBtn.offsetWidth;
+      noBtn.style.transition = "";
+    }
+    noBtn.textContent = NO_TEXTS[Math.min(dodges, SURRENDER)];
+    hint.textContent = HINTS[Math.min(dodges, HINTS.length - 1)];
+    if (dodges >= SURRENDER) { noBtn.dataset.surrender = "1"; noBtn.classList.add("is-surrender"); }
+    const ex = e && "clientX" in e ? e.clientX : r.left + r.width / 2, ey = e && "clientY" in e ? e.clientY : r.top + r.height / 2;
+    placeNo(ex, ey);
+    yesBtn.style.setProperty("--grow", (1 + Math.min(dodges, 6) * .06).toFixed(3));
+  }
+  noBtn.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") dodge(e); });
+  noBtn.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") dodge(e); });
+  noBtn.addEventListener("click", (e) => { if (noBtn.dataset.surrender) { sayYes(noBtn); return; } if (performance.now() - lastDodge < 600) return; dodge(e); });
+  window.addEventListener("resize", () => { if (noBtn.classList.contains("is-loose") && !noBtn.hidden) { const b = noBtn.getBoundingClientRect(); if (b.right > vw() || b.bottom > vh()) placeNo(vw() / 2, vh() / 2); } });
+  async function sayYes(fromEl) {
+    if (answered) return;
+    answered = true;
+    const r = fromEl.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 80, 1.2);
+    noBtn.hidden = true;
+    ask.classList.add("leaving");
+    await wait(560);
+    ask.hidden = true;
+    const sc = $("#scene");
+    sc.hidden = false;
+    sc.classList.add("arrive");
+    await wait(1150);
+    const er = $("#env").getBoundingClientRect();
+    burst(er.left + er.width / 2, er.top + er.height * .59, 40, .9);
+    $("#env").focus({ preventScroll: true });
+  }
+  yesBtn.addEventListener("click", () => sayYes(yesBtn));
+
   /* ---------- opening the envelope ---------- */
   const env = $("#env"), scene = $("#scene"), reading = $("#reading"), letter = $("#letter"), mini = $("#mini");
   let busy = false;
@@ -329,10 +486,14 @@ body.sealed { overflow: hidden; }
     env.classList.add("broken");
     burst(sr.left + sr.width / 2, sr.top + sr.height / 2, 24, .6);
     await wait(380);
-    env.classList.add("open-flap");
-    await wait(430);
+    // The flap turns over its top edge: squash to a line, switch to its inner side, unfold upwards.
+    const flap = $("#flap");
+    if (!reduced) await flap.animate([{ transform: "scaleY(1)" }, { transform: "scaleY(0)" }], { duration: 360, easing: "cubic-bezier(.55,0,1,.45)", fill: "forwards" }).finished;
+    flap.classList.add("inside");
     env.classList.add("flap-behind");
-    await wait(450);
+    if (!reduced) await flap.animate([{ transform: "scaleY(0)" }, { transform: "scaleY(-1)" }], { duration: 420, easing: "cubic-bezier(0,.55,.45,1)", fill: "forwards" }).finished;
+    else flap.style.transform = "scaleY(-1)";
+    await wait(120);
     env.classList.add("out");
     await wait(1000);
     // the small letter grows into the full letter (FLIP)
@@ -340,13 +501,17 @@ body.sealed { overflow: hidden; }
     reading.hidden = false;
     body.classList.remove("sealed");
     window.scrollTo(0, 0);
+    drawConnectors();
     const to = letter.getBoundingClientRect();
     scene.classList.add("gone");
     mini.style.visibility = "hidden";
     if (!reduced) {
+      // grow evenly from the small letter's top edge, so nothing is stretched on the way
+      const k = from.width / to.width;
+      const dx = (from.left + from.width / 2) - (to.left + to.width / 2), dy = from.top - to.top;
       await letter.animate([
-        { transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width}, ${from.height / to.height}) rotate(0deg)`, opacity: .9 },
-        { transform: "translate(0, 0) scale(1) rotate(-.6deg)", opacity: 1 }
+        { transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${k.toFixed(4)})`, opacity: .85 },
+        { transform: "translate(0px, 0px) scale(1)", opacity: 1 }
       ], { duration: 900, easing: "cubic-bezier(.22,1,.36,1)" }).finished;
     }
     reading.classList.add("written");
@@ -361,12 +526,16 @@ body.sealed { overflow: hidden; }
     if (busy) return;
     busy = true;
     reading.classList.remove("written");
-    if (!reduced) await letter.animate([{ transform: "rotate(-.6deg) scale(1)", opacity: 1 }, { transform: "rotate(-.6deg) translateY(30px) scale(.9)", opacity: 0 }], { duration: 500, easing: "ease-in" }).finished;
+    if (!reduced) await letter.animate([{ transform: "translateY(0) scale(1)", opacity: 1 }, { transform: "translateY(30px) scale(.94)", opacity: 0 }], { duration: 500, easing: "ease-in" }).finished;
     reading.hidden = true;
     body.classList.add("sealed");
     scene.hidden = false;
     mini.style.visibility = "";
-    env.classList.remove("out", "flap-behind", "open-flap", "broken", "opening");
+    const flap = $("#flap");
+    flap.getAnimations().forEach((x) => x.cancel());
+    flap.style.transform = "";
+    flap.classList.remove("inside");
+    env.classList.remove("out", "flap-behind", "broken", "opening");
     void env.offsetWidth;
     scene.classList.remove("gone");
     env.focus({ preventScroll: true });
